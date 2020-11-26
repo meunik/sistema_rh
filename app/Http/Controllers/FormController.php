@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\DataseColegas;
+use App\Models\{Datas, Colegas, Covid, Hospitais};
+
+use Yajra\DataTables\DataTables;
+use TJGazel\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\{DB, Auth};
-
-use TJGazel\Toastr\Facades\Toastr;
-use App\Services\DataseColegas;
-
-use App\Models\{Datas, Colegas, Covid, Hospitais};
 
 class FormController extends Controller
 {
@@ -35,7 +35,7 @@ class FormController extends Controller
 
         return view('forms.form2', compact('resultados','hospital'));
     }
-    public function getdata($hospital, $data)
+    public function getdata(Request $request)
     {
         $hospital = $request->query('hospital');
         $data = $request->query('data');
@@ -47,7 +47,7 @@ class FormController extends Controller
             'hospital' => $hospital
         ];
 
-        return response()->json($result);
+		return DataTables::of($resultados)->make(true);
     }
     public function create(Request $request)
     {

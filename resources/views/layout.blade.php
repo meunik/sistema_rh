@@ -63,9 +63,6 @@
                                 <a class="waves-effect" href="/form" aria-expanded="false"><i class="icon-chart fa-fw"></i> Form</a>
                             </li>
                             <li>
-                                <a class="waves-effect" href="/form2" aria-expanded="false"><i class="icon-chart fa-fw"></i> Form2</a>
-                            </li>
-                            <li>
                                 <a class="waves-effect" href="/resultado" aria-expanded="false"><i class="icon-chart fa-fw"></i> Resultado</a>
                             </li>
                             

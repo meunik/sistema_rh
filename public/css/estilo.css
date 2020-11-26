@@ -415,11 +415,11 @@ table.dataTable thead .sorting:after {
 table.dataTable {
     border: none;
 }
-.table-responsive {
+/* .table-responsive {
     display: block;
     max-height: 68vh;
     overflow: scroll !important;
-}
+} */
 .dataTables_scrollHeadInner {
     width: 100% !important;
 }

@@ -11,233 +11,17 @@
                 <div id="listaNome"></div>
             </div>
         </div>
+        <div id="dataDiv" class="form-group d-none">
+            <label for="data" class="col-sm-2 control-label">Data:</label>
+            <div class="col-sm-3">
+                <input type="date" class="form-control" class="w-200" autocomplete="off" id="data" name="data" onchange="dataInput(this.value)">
+            </div>
+        </div>
         @if($resultados->count() > 0)
-            <div id="formDiv" class="col-sm-12 row p-0 hidden">
+            <div id="formDiv" class="col-sm-12 row p-0 hidden m-t-20 d-none">
                 <div class="table-responsive">
                     <table id="resultado" class="table table-bordered table-condensed">
-                        <thead>
-                            <tr class="active text-center text-nowrap">
-                                <th>
-                                    ACOMPANHAMENTO DIÁRIO
-                                </th>
-                                <th class="text-left" class="w-200">
-                                    <label for="data" class="control-label p-0">Data:</label>
-                                    <div class="">
-                                        <input type="date" class="form-control" class="w-200" autocomplete="off" id="data" name="data" onchange="dataInput(this.value)">
-                                    </div>
-                                </th>
-                                <th></th>
-                                <th>
-                                    <label for="data" class="control-label p-0">Pesquisar Nome:</label>
-                                    <div class="">
-                                        <input id="searchName" class="form-control w-200" onkeyup="searchName(this.value)" type="text" placeholder="Pesquisar Nome" />
-                                    </div>
-                                </th>
-                                <th colspan="9"></th>
-                                <th></th>
-                            </tr>
-                            <tr class="success">
-                                <th class="text-center w-300">Nome</th>
-                                <th class="w-200"></th>
-                                <th class="w-200"></th>
-                                <th class="w-200">Cod</th>
-                                <th colspan="9"></th>
-                                <th class="w-100"></th>
-                            </tr>
-                            {{-- <tr class="success">
-                                <th class="text-center w-300">
-                                    <input id="searchName" onkeyup="searchName(this.value)" type="text" placeholder="Pesquisar Nome" />
-                                </th>
-                                <th class="w-200"></th>
-                                <th class="w-200"></th>
-                                <th class="w-200"></th>
-                                <th colspan="9"></th>
-                                <th class="w-100"></th>
-                            </tr> --}}
-                        </thead>
-                        <tbody class="d-none">
-                        @foreach ($resultados as $resultado)
-                            <tr>
-                                <form method="POST" autocomplete="off">
-                                    @csrf
-                                    <td>
-                                        <div class="{{$resultado->data_inicial ? 'label label-table label-info' : ''}}">
-                                            {{$resultado['nome']}}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="input-invisivel" name="id" id="colegas_id{{$resultado->id}}" value="{{$resultado->id}}">
-                                        <div class="text-left form-group row m-0">
-                                            <label for="tipo{{$resultado->id}}" class="control-label p-0">Tipo:</label>
-                                            <div class="">
-                                                <select id="tipo{{$resultado->id}}" name="tipo" class="form-control" autocomplete="off">
-                                                    <option selected disabled>Selecione</option>
-                                                    <option value="ES" {{$resultado->tipo == "ES" ? "selected" : ""}}>Trabalho no Escritório</option>
-                                                    <option value="CL" {{$resultado->tipo == "CL" ? "selected" : ""}}>Clínica</option>
-                                                    <option value="SH" {{$resultado->tipo == "SH" ? "selected" : ""}}>Serviços Hospitalares</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <!-- <td>
-                                        <div class="text-left form-group row m-0">
-                                            <label for="grupo_de_risco{{$resultado->id}}" class="control-label p-0">Grupo de Disco:</label>
-                                            <div class="">
-                                                <select id="grupo_de_risco{{$resultado->id}}" name="grupo_de_risco" class="form-control" autocomplete="off">
-                                                    <option selected disabled>Selecione</option>
-                                                    <option value=0 {{$resultado->grupo_de_risco == 0 ? "selected" : ""}}>Não</option>
-                                                    <option value=1 {{$resultado->grupo_de_risco == 1 ? "selected" : ""}}>Sim</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </td> -->
-                                    <td>
-                                        <div class="text-left form-group row m-0" style="width: 100px;">
-                                            <label for="telefone{{$resultado->id}}" class="control-label p-0">
-                                                Telefone:
-                                                <button class="btn btn-sm btn-info btn-outline font-10 btnEditTel" type="button" data-toggle="modal" data-target="#editTell" onclick="telModal({{$resultado->id}},'{{$resultado->nome}}','{{$resultado->telefone ? $resultado->telefone : null }}')"><i class="icon-note"></i></button>
-                                            </label>
-                                            <div class="">
-                                                <p class="font-bold">{{$resultado->telefone ? $resultado->telefone : ""}}</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td id="medico{{$resultado->id}}" class="">
-                                        <div class="text-left form-group row m-0">
-                                            <label for="medico{{$resultado->id}}" class="control-label p-0">
-                                                Médico:
-                                            </label>
-                                            <div class="">
-                                                <input type="text" class="form-control w-200" autocomplete="off" name="medico" value="{{$resultado->medico}}" id="medico{{$resultado->id}}" placeholder="Médico">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td id="crm{{$resultado->id}}" class="">
-                                        <div class="text-left form-group row m-0">
-                                            <label for="crm{{$resultado->id}}" class="control-label p-0">
-                                                CRM:
-                                            </label>
-                                            <div class="">
-                                                <input type="text" class="form-control w-200" autocomplete="off" name="crm" value="{{$resultado->crm}}" id="crm{{$resultado->id}}" placeholder="CRM">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="text-left form-group row m-0">
-                                            <label for="cod{{$resultado->id}}" class="control-label p-0">COD:</label>
-                                            <div class="">
-                                                <select id="cod{{$resultado->id}}" name="cod" class="form-control w-130" autocomplete="off" onchange="codSelect(this.value, {{$resultado->id}})" style="width: 150px;">
-                                                    <option selected disabled>Selecione</option>
-                                                    <option value="FA" {{$resultado->cod == "FA" ? "selected" : ""}}>FALTA</option>
-                                                    <option value="AT" {{$resultado->cod == "AT" ? "selected" : ""}}>ATESTADO</option>
-                                                    <option value="FE" {{$resultado->cod == "FE" ? "selected" : ""}}>FÉRIAS</option>
-                                                    <option value="DE" {{$resultado->cod == "DE" ? "selected" : ""}}>DEMITIDO</option>
-                                                    <option value="FO" {{$resultado->cod == "FO" ? "selected" : ""}}>FOLGA</option>
-                                                    <option value="CO" {{$resultado->cod == "CO" ? "selected" : ""}}>COVID</option>
-                                                    <option value="GR" {{$resultado->cod == "GR" ? "selected" : ""}}>GRUPO DE RISCO</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td id="cid{{$resultado->id}}" class="d-none">
-                                        <div class="text-left form-group row m-0 ">
-                                            <label for="cid{{$resultado->id}}" class="control-label p-0">CID:</label>
-                                            <div class="">
-                                                <input type="text" class="form-control" autocomplete="off" name="cids_nome" value="{{$resultado->cid}}" id="cids_nome{{$resultado->id}}" placeholder="Cid" onKeyUp="getCid(this.value, {{$resultado->id}})" style="width: 150px;">
-                                                <div id="listaCid{{$resultado->id}}"></div>
-                                                <input type="text" class="input-invisivel" autocomplete="off" name="cids_id" value="{{$resultado->cids_id}}" id="cids_id{{$resultado->id}}">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td id="covid{{$resultado->id}}" class="d-none">
-                                        <div class="text-left form-group row m-0">
-                                            <label for="covid{{$resultado->id}}" class="control-label p-0">COVID:</label>
-                                            <div class="">
-                                                <select id="covid{{$resultado->id}}" name="covid" class="form-control w-100" autocomplete="off">
-                                                    <option selected disabled>Selecione</option>
-                                                    <option value="Suspeito" {{$resultado->covid == "Suspeito" ? "selected" : ""}}>Suspeito</option>
-                                                    <option value="Confirmado" {{$resultado->covid == "Confirmado" ? "selected" : ""}}>Confirmado</option>
-                                                    <option value="Descartado" {{$resultado->covid == "Descartado" ? "selected" : ""}}>Descartado</option>
-                                                    <option value="Óbito" {{$resultado->covid == "Óbito" ? "selected" : ""}}>Óbito</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td id="data_inicial{{$resultado->id}}" class="d-none">
-                                        <div class="text-left form-group row m-0">
-                                            <label for="data_inicial{{$resultado->id}}" class="control-label p-0">
-                                                Data inicial:
-                                            </label>
-                                            <div class="">
-                                                <input type="date" class="form-control data_inicial w-180" autocomplete="off" name="data_inicial" value="{{$resultado->data_inicial}}" id="data_inicial{{$resultado->id}}">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td id="data_final{{$resultado->id}}" class="d-none">
-                                        <div class="text-left form-group row m-0">
-                                            <label for="$resultado->id{{$resultado->id}}" class="control-label p-0">
-                                                Data final:
-                                            </label>
-                                            <div class="">
-                                                <input type="date" class="form-control w-180" autocomplete="off" name="data_final" value="{{$resultado->data_final}}" id="$resultado->id{{$resultado->id}}">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td id="data_dos_sintomas{{$resultado->id}}" class="d-none">
-                                        <div class="text-left form-group row m-0">
-                                            <label for="data_dos_sintomas{{$resultado->id}}" class="control-label p-0">
-                                                Data dos sintomas:
-                                            </label>
-                                            <div class="">
-                                                <input type="date" class="form-control w-180" autocomplete="off" name="data_dos_sintomas" value="{{$resultado->data_dos_sintomas}}" id="data_dos_sintomas{{$resultado->id}}">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td id="motivo{{$resultado->id}}" class="d-none">
-                                        <div class="text-left form-group row m-0">
-                                            <label for="motivo{{$resultado->id}}" class="control-label p-0">Motivo:</label>
-                                            <div class="">
-                                                <textarea class="form-control w-300" autocomplete="off" name="motivo" value="{{$resultado->motivo}}" id="motivo{{$resultado->id}}" placeholder="Motivo..." maxlength="191"></textarea>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td id="data_do_teste{{$resultado->id}}" class="d-none">
-                                        <div class="text-left form-group row m-0">
-                                            <label for="data_do_teste{{$resultado->id}}" class="control-label p-0">
-                                                Data do teste:
-                                            </label>
-                                            <div class="">
-                                                <input type="date" class="form-control w-180" autocomplete="off" name="data_do_teste" value="{{$resultado->data_do_teste}}" id="data_do_teste{{$resultado->id}}">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td id="tipo_do_teste{{$resultado->id}}" class="d-none">
-                                        <div class="text-left form-group row m-0">
-                                            <label for="tipo_do_teste{{$resultado->id}}" class="control-label p-0">
-                                                Tipo do Teste:
-                                            </label>
-                                            <div class="">
-                                                <input type="text" class="form-control w-200" autocomplete="off" name="tipo_do_teste" value="{{$resultado->tipo_do_teste}}" id="tipo_do_teste{{$resultado->id}}" placeholder="Tipo do Teste">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td id="observacao{{$resultado->id}}" class="observacao d-none">
-                                        <div class="text-left form-group row m-0">
-                                            <label for="observacao{{$resultado->id}}" class="control-label p-0">Observação:</label>
-                                            <div class="w-200">
-                                                <textarea class="form-control" autocomplete="off" name="observacao" id="observacao{{$resultado->id}}" placeholder="Observação..." maxlength="500">{{$resultado->observacao}}</textarea>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td colspan="10">
-                                        <div class="text-right p-0">
-                                            <button class="btn btn-sm btn-info btn-outline font-16 m-b-5" type="button" data-toggle="modal" data-target="#dataList" onclick="getList({{$resultado->id}},'{{$resultado->nome}}')"><i class="icon-list"></i></button>
-                                            <button class="btn btn-sm btn-primary btn-outline font-16 m-b-5" type="submit"><i class="fa fa-save"></i></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </form>
-                        @endforeach
+                        <tbody>
                         </tbody>
                     </table>
                 </div>
@@ -253,11 +37,16 @@
 <script>
     $(document).ready( function () {
         var data = getUrlParameter('data');
+        var hospital = getUrlParameter('hospital');
 
+        if(hospital) {
+            $('#dataDiv').removeClass('d-none');
+        }
         if(data) {
             $('#data').val(data);
             $('.data_inicial').val(data);
-            $('tbody').removeClass('d-none');
+            $('#dataDiv').removeClass('d-none');
+            $('#formDiv').removeClass('d-none');
         }
 
         let resultados = {!! json_encode($resultados) !!};
@@ -514,42 +303,398 @@
         }
     }
     $(document).ready( function () {
+        var hospital = getUrlParameter('hospital') || '';
+        var data = getUrlParameter('data') || '';
+            
+        var params = {
+            'hospital':hospital,
+            'data': data
+        };
+        var url = jQuery.param(params);
+
         const table = $('#resultado').DataTable({
-            "language": {
+            ajax: {
+                "url": `{{ url('/form/getdata?${url}') }}`,
+            },
+            language: {
                 "url": "/Portuguese-Brasil.json"
-            }
+            },
+			columns: [
+				{ 
+				    class: 'd-none',
+					data: null,
+				    orderable: false,
+				    searchable: false,
+					render: (row) => {
+                        var id = row.id;
+						var html = `<form method="POST" autocomplete="off">
+                                    @csrf`;
+						return html;
+					},
+                },
+				{ 
+                    title: "Nome",
+                    data: null,
+					render: (row) => {
+                        var data_inicial = (row.data_inicial) ? "label label-table label-info" : "";
+                        var nome = (row.nome) ? row.nome : "";
+                        var id = row.id;
+						var html = `<div class="${data_inicial}">${nome}</div>`;
+						return html;
+					},
+                    createdCell: function (td, row) {
+                        $(td).css('min-width', '200px');
+                    },
+                },
+				{
+					data: null,
+				    orderable: false,
+				    searchable: false,
+					render: (row) => {
+                        var es = (row.tipo == "ES") ? "selected" : "";
+                        var cl = (row.tipo == "CL") ? "selected" : "";
+                        var sh = (row.tipo == "SH") ? "selected" : "";
+                        var id = row.id;
+						var html = `<input type="text" class="input-invisivel" name="id" id="colegas_id${id}" value="${id}">
+                                    <div class="text-left form-group row m-0" style="width: 150px;">
+                                        <label for="tipo${id}" class="control-label p-0">Tipo:</label>
+                                        <div class="">
+                                            <select id="tipo${id}" name="tipo" class="form-control" autocomplete="off">
+                                                <option selected disabled>Selecione</option>
+                                                <option value="ES" ${es}>Trabalho no Escritório</option>
+                                                <option value="CL" ${cl}>Clínica</option>
+                                                <option value="SH" ${sh}>Serviços Hospitalares</option>
+                                            </select>
+                                        </div>
+                                    </div>`;
+						return html;
+					},
+				},
+				{ 
+					data: null,
+				    orderable: false,
+				    searchable: false,
+					render: (row) => {
+                        var telefone = (row.telefone) ? row.telefone : "";
+                        var nome = (row.nome) ? row.nome : "";
+                        var id = row.id;
+						var html = `<div class="text-left form-group row m-0" style="width: 100px;">
+                                        <label for="telefone${id}" class="control-label p-0">
+                                            Telefone:
+                                            <button class="btn btn-sm btn-info btn-outline font-10 btnEditTel" type="button" data-toggle="modal" data-target="#editTell" onclick="telModal(${id},'${nome}','${telefone}')"><i class="icon-note"></i></button>
+                                        </label>
+                                        <div class="">
+                                            <p class="font-bold">${telefone}</p>
+                                        </div>
+                                    </div>`;
+						return html;
+					},
+				},
+				{
+					data: null,
+				    orderable: false,
+				    searchable: false,
+					render: (row) => {
+                        var medico = (row.medico) ? row.medico : "";
+                        var id = row.id;
+						var html = `<div class="text-left form-group row m-0">
+                                        <label for="medico${id}" class="control-label p-0">
+                                            Médico:
+                                        </label>
+                                        <div class="">
+                                            <input type="text" class="form-control w-200" autocomplete="off" name="medico" value="${medico}" id="medico${id}" placeholder="Médico">
+                                        </div>
+                                    </div>`;
+						return html;
+					},
+                    createdCell: function (td, row) {
+                        $(td).attr('id', 'medico'+row.id);
+                    },
+				},
+				{
+					data: null,
+				    orderable: false,
+				    searchable: false,
+					render: (row) => {
+                        var crm = (row.crm) ? row.crm : "";
+                        var id = row.id;
+						var html = `<div class="text-left form-group row m-0">
+                                        <label for="crm${id}" class="control-label p-0">
+                                            CRM:
+                                        </label>
+                                        <div class="">
+                                            <input type="text" class="form-control w-200" autocomplete="off" name="crm" value="${crm}" id="crm${id}" placeholder="CRM">
+                                        </div>
+                                    </div>`;
+						return html;
+					},
+                    createdCell: function (td, row) {
+                        $(td).attr('id', 'crm'+row.id);
+                    },
+				},
+				{
+					data: null,
+				    orderable: false,
+				    searchable: false,
+					render: (row) => {
+                        var fa = (row.cod == "FA") ? "selected" : "";
+                        var at = (row.cod == "AT") ? "selected" : "";
+                        var fe = (row.cod == "FE") ? "selected" : "";
+                        var de = (row.cod == "DE") ? "selected" : "";
+                        var fo = (row.cod == "FO") ? "selected" : "";
+                        var co = (row.cod == "CO") ? "selected" : "";
+                        var gr = (row.cod == "GR") ? "selected" : "";
+                        var id = row.id;
+						var html = `<div class="text-left form-group row m-0">
+                                        <label for="cod${id}" class="control-label p-0">COD:</label>
+                                        <div class="">
+                                            <select id="cod${id}" name="cod" class="form-control w-130" autocomplete="off" onchange="codSelect(this.value, ${id})" style="width: 150px;">
+                                                <option selected disabled>Selecione</option>
+                                                <option value="FA" ${fa}>FALTA</option>
+                                                <option value="AT" ${at}>ATESTADO</option>
+                                                <option value="FE" ${fe}>FÉRIAS</option>
+                                                <option value="DE" ${de}>DEMITIDO</option>
+                                                <option value="FO" ${fo}>FOLGA</option>
+                                                <option value="CO" ${co}>COVID</option>
+                                                <option value="GR" ${gr}>GRUPO DE RISCO</option>
+                                            </select>
+                                        </div>
+                                    </div>`;
+						return html;
+					},
+				},
+				{
+				    class: 'd-none',
+					data: null,
+				    orderable: false,
+				    searchable: false,
+					render: (row) => {
+                        var cid = (row.cid) ? row.cid : "";
+                        var cids_id = (row.cids_id) ? row.cids_id : "";
+                        var id = row.id;
+						var html = `<div class="text-left form-group row m-0 ">
+                                        <label for="cid${id}" class="control-label p-0">CID:</label>
+                                        <div class="">
+                                            <input type="text" class="form-control" autocomplete="off" name="cids_nome" value="${cid}" id="cids_nome${id}" placeholder="Cid" onKeyUp="getCid(this.value, ${id})" style="width: 150px;">
+                                            <div id="listaCid${id}"></div>
+                                            <input type="text" class="input-invisivel" autocomplete="off" name="cids_id" value="${cids_id}" id="cids_id${id}">
+                                        </div>
+                                    </div>`;
+						return html;
+					},
+                    createdCell: function (td, row) {
+                        $(td).attr('id', 'cid'+row.id);
+                    },
+				},
+				{
+				    class: 'd-none',
+					data: null,
+				    orderable: false,
+				    searchable: false,
+					render: (row) => {
+                        var suspeito = (row.covid == "Suspeito") ? "selected" : "";
+                        var confirmado = (row.covid == "Confirmado") ? "selected" : "";
+                        var descartado = (row.covid == "Descartado") ? "selected" : "";
+                        var obito = (row.covid == "Óbito") ? "selected" : "";
+                        var id = row.id;
+						var html = `<div class="text-left form-group row m-0">
+                                        <label for="covid${id}" class="control-label p-0">COVID:</label>
+                                        <div class="">
+                                            <select id="covid${id}" name="covid" class="form-control w-100" autocomplete="off">
+                                                <option selected disabled>Selecione</option>
+                                                <option value="Suspeito" ${suspeito}>Suspeito</option>
+                                                <option value="Confirmado" ${confirmado}>Confirmado</option>
+                                                <option value="Descartado" ${descartado}>Descartado</option>
+                                                <option value="Óbito" ${obito}>Óbito</option>
+                                            </select>
+                                        </div>
+                                    </div>`;
+						return html;
+					},
+                    createdCell: function (td, row) {
+                        $(td).attr('id', 'covid'+row.id);
+                    },
+				},
+				{
+				    class: 'd-none',
+					data: null,
+				    orderable: false,
+				    searchable: false,
+					render: (row) => {
+                        var data_inicial = (row.data_inicial) ? row.data_inicial : "";
+                        var id = row.id;
+						var html = `<div class="text-left form-group row m-0">
+                                        <label for="data_inicial${id}" class="control-label p-0">
+                                            Data inicial:
+                                        </label>
+                                        <div class="">
+                                            <input type="date" class="form-control data_inicial w-180" autocomplete="off" name="data_inicial" value="${data_inicial}" id="data_inicial${id}">
+                                        </div>
+                                    </div>`;
+						return html;
+					},
+                    createdCell: function (td, row) {
+                        $(td).attr('id', 'data_inicial'+row.id);
+                    },
+				},
+				{
+				    class: 'd-none',
+					data: null,
+				    orderable: false,
+				    searchable: false,
+					render: (row) => {
+                        var data_final = (row.data_final) ? row.data_final : "";
+                        var id = row.id;
+						var html = `<div class="text-left form-group row m-0">
+                                        <label for="$resultado->id${id}" class="control-label p-0">
+                                            Data final:
+                                        </label>
+                                        <div class="">
+                                            <input type="date" class="form-control w-180" autocomplete="off" name="data_final" value="${data_final}" id="$resultado->id${id}">
+                                        </div>
+                                    </div>`;
+						return html;
+					},
+                    createdCell: function (td, row) {
+                        $(td).attr('id', 'data_final'+row.id);
+                    },
+				},
+				{
+				    class: 'd-none',
+					data: null,
+				    orderable: false,
+				    searchable: false,
+					render: (row) => {
+                        var data_dos_sintomas = (row.data_dos_sintomas) ? row.data_dos_sintomas : "";
+                        var id = row.id;
+						var html = `<div class="text-left form-group row m-0">
+                                        <label for="data_dos_sintomas${id}" class="control-label p-0">
+                                            Data dos sintomas:
+                                        </label>
+                                        <div class="">
+                                            <input type="date" class="form-control w-180" autocomplete="off" name="data_dos_sintomas" value="${data_dos_sintomas}" id="data_dos_sintomas${id}">
+                                        </div>
+                                    </div>`;
+						return html;
+					},
+                    createdCell: function (td, row) {
+                        $(td).attr('id', 'data_dos_sintomas'+row.id);
+                    },
+				},
+				{
+				    class: 'd-none',
+					data: null,
+				    orderable: false,
+				    searchable: false,
+					render: (row) => {
+                        var motivo = (row.motivo) ? row.motivo : "";
+                        var id = row.id;
+						var html = `<div class="text-left form-group row m-0">
+                                        <label for="motivo${id}" class="control-label p-0">Motivo:</label>
+                                        <div class="">
+                                            <textarea class="form-control w-300" autocomplete="off" name="motivo" value="${motivo}" id="motivo${id}" placeholder="Motivo..." maxlength="191"></textarea>
+                                        </div>
+                                    </div>`;
+						return html;
+					},
+                    createdCell: function (td, row) {
+                        $(td).attr('id', 'motivo'+row.id);
+                    },
+				},
+				{
+				    class: 'd-none',
+					data: null,
+				    orderable: false,
+				    searchable: false,
+					render: (row) => {
+                        var data_do_teste = (row.data_do_teste) ? row.data_do_teste : "";
+                        var id = row.id;
+						var html = `<div class="text-left form-group row m-0">
+                                        <label for="data_do_teste${id}" class="control-label p-0">
+                                            Data do teste:
+                                        </label>
+                                        <div class="">
+                                            <input type="date" class="form-control w-180" autocomplete="off" name="data_do_teste" value="${data_do_teste}" id="data_do_teste${id}">
+                                        </div>
+                                    </div>`;
+						return html;
+					},
+                    createdCell: function (td, row) {
+                        $(td).attr('id', 'data_do_teste'+row.id);
+                    },
+				},
+				{
+				    class: 'd-none',
+					data: null,
+				    orderable: false,
+				    searchable: false,
+					render: (row) => {
+                        var tipo_do_teste = (row.tipo_do_teste) ? row.tipo_do_teste : "";
+                        var id = row.id;
+						var html = `<div class="text-left form-group row m-0">
+                                        <label for="tipo_do_teste${id}" class="control-label p-0">
+                                            Tipo do Teste:
+                                        </label>
+                                        <div class="">
+                                            <input type="text" class="form-control w-200" autocomplete="off" name="tipo_do_teste" value="${tipo_do_teste}" id="tipo_do_teste${id}" placeholder="Tipo do Teste">
+                                        </div>
+                                    </div>`;
+						return html;
+					},
+                    createdCell: function (td, row) {
+                        $(td).attr('id', 'tipo_do_teste'+row.id);
+                    },
+				},
+				{
+				    class: 'observacao d-none',
+					data: null,
+				    orderable: false,
+				    searchable: false,
+					render: (row) => {
+                        var observacao = (row.observacao) ? row.observacao : "";
+                        var id = row.id;
+						var html = `<div class="text-left form-group row m-0">
+                                        <label for="observacao${id}" class="control-label p-0">Observação:</label>
+                                        <div class="w-200">
+                                            <textarea class="form-control" autocomplete="off" name="observacao" id="observacao${id}" placeholder="Observação..." maxlength="500">${observacao}</textarea>
+                                        </div>
+                                    </div>`;
+						return html;
+					},
+                    createdCell: function (td, row) {
+                        $(td).attr('id', 'observacao'+row.id);
+                    },
+				},
+				{
+					data: null,
+				    orderable: false,
+				    searchable: false,
+					render: (row) => {
+                        var nome = (row.nome) ? row.nome : "";
+                        var id = row.id;
+						var html = `<div class="text-right p-0">
+                                        <button class="btn btn-sm btn-info btn-outline font-16 m-b-5" type="button" data-toggle="modal" data-target="#dataList" onclick="getList(${id},'${nome}')"><i class="icon-list"></i></button>
+                                        <button class="btn btn-sm btn-primary btn-outline font-16 m-b-5" type="submit"><i class="fa fa-save"></i></button>
+                                    </div>`;
+						return html;
+					},
+                    createdCell: function (td, row) {
+                        $(td).attr('colspan', 10);
+                    },
+				},
+				{ 
+				    class: 'd-none',
+					data: null,
+				    orderable: false,
+				    searchable: false,
+					render: (row) => {
+                        var id = row.id;
+						var html = `</form >`;
+						return html;
+					},
+                },
+			],
         });
-
-        $("#searchName" ).keyup(function() {
-            let value = $("#searchName").val();
-            console.log(value);
-            if (table.column(0).search() !== value) {
-                table.column(0).search(value).draw();
-                console.log(table);
-            }
-        });
-
-        function searchName(value) {
-            console.log('a');
-        }
-
-        const pesquisar = $('#searchName')
-        pesquisar.keyup(function() {
-            const value = pesquisar.val()
-            console.log(value);
-            table.column(0).search(`${value}`).draw()
-        });
-
-        // $( "#searchCod" ).change(function() {
-        //     let value = $("#searchCod").val();
-        //     console.log(value);
-        //     if ( table.column(3).search() !== value ) {
-        //         table
-        //         .column(3)
-        //         .search( 'FALTA' )
-        //         .draw();
-        //     }
-        // });
     });
 </script>
 
