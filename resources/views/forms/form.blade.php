@@ -35,49 +35,6 @@
 @section('script')
 
 <script>
-    $(document).ready( function () {
-        var data = getUrlParameter('data');
-        var hospital = getUrlParameter('hospital');
-
-        if(hospital) {
-            $('#dataDiv').removeClass('d-none');
-        }
-        if(data) {
-            $('#data').val(data);
-            $('.data_inicial').val(data);
-            $('#dataDiv').removeClass('d-none');
-            $('#formDiv').removeClass('d-none');
-        }
-
-        let resultados = {!! json_encode($resultados) !!};
-
-        resultados.map( function(resultado) {
-            codSelect(resultado.cod, resultado.id)
-        });
-
-        $("#formDiv").removeClass('hidden');
-
-    });
-
-    $("form").submit(function(event) {
-        event.preventDefault();
-        $.ajax({
-            type: "POST",
-            url: "/form",
-            data: $(this).serialize(),
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(data){
-                toastr.success(data)
-            },
-            dataType: "text",
-            error: function(error) {
-                var error = JSON.parse(error.responseText).error
-                toastr.error(error)
-            }
-        });
-    });
 
     function getList(id,nome) {
         $.ajax({
@@ -302,6 +259,71 @@
             $("#observacao"+colegas_id).removeClass('d-none');
         }
     }
+
+    function teste(indexLinha) {
+        let submitButton = $(`#submit${indexLinha}`);
+        let tr = submitButton.closest('tr');
+        
+        var date = getUrlParameter('data') || '';
+        let inputData_inicial = date;
+
+        let inputId = tr.find( "[name='id']" ).val();
+        let inputTipo = tr.find( "[name='tipo']" ).val();
+        let inputMedico = tr.find( "[name='medico']" ).val();
+        let inputCrm = tr.find( "[name='crm']" ).val();
+        let inputCod = tr.find( "[name='cod']" ).val();
+        let inputCids_nome = tr.find( "[name='cids_nome']" ).val();
+        let inputCovid = tr.find( "[name='covid']" ).val();
+        let inputData_final = tr.find( "[name='data_final']" ).val();
+        let inputData_dos_sintomas = tr.find( "[name='data_dos_sintomas']" ).val();
+        let inputMotivo = tr.find( "[name='motivo']" ).val();
+        let inputData_do_teste = tr.find( "[name='data_do_teste']" ).val();
+        let inputTipo_do_teste = tr.find( "[name='tipo_do_teste']" ).val();
+        let inputObservacao = tr.find( "[name='observacao']" ).val();
+        if (inputData_inicial) {
+            let inputData_inicial = tr.find( "[name='data_inicial']" ).val();
+        } else {
+            let inputData_inicial = date;
+        }
+
+        let data = {
+            "id": inputId,
+            "tipo": inputTipo,
+            "medico": inputMedico,
+            "crm": inputCrm,
+            "cod": inputCod,
+            "cids_nome": inputCids_nome,
+            "covid": inputCovid,
+            "data_inicial": inputData_inicial,
+            "data_final": inputData_final,
+            "data_dos_sinto": inputData_dos_sintomas,
+            "motivo": inputMotivo,
+            "data_do_teste": inputData_do_teste,
+            "tipo_do_teste": inputTipo_do_teste,
+            "observacao": inputObservacao,
+            "data": date,
+        }
+
+        let json = data
+
+        $.ajax({
+            type: "POST",
+            url: "/form",
+            data: json,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(data){
+                toastr.success(data)
+            },
+            dataType: "text",
+            error: function(error) {
+                var error = JSON.parse(error.responseText).error
+                toastr.error(error)
+            }
+        });
+    };
+
     $(document).ready( function () {
         var hospital = getUrlParameter('hospital') || '';
         var data = getUrlParameter('data') || '';
@@ -320,18 +342,6 @@
                 "url": "/Portuguese-Brasil.json"
             },
 			columns: [
-				{ 
-				    class: 'd-none',
-					data: null,
-				    orderable: false,
-				    searchable: false,
-					render: (row) => {
-                        var id = row.id;
-						var html = `<form method="POST" autocomplete="off">
-                                    @csrf`;
-						return html;
-					},
-                },
 				{ 
                     title: "Nome",
                     data: null,
@@ -669,32 +679,44 @@
 					data: null,
 				    orderable: false,
 				    searchable: false,
-					render: (row) => {
+					render: (row, type, full, meta) => {
+                        let indexLinha = meta.row
                         var nome = (row.nome) ? row.nome : "";
                         var id = row.id;
 						var html = `<div class="text-right p-0">
                                         <button class="btn btn-sm btn-info btn-outline font-16 m-b-5" type="button" data-toggle="modal" data-target="#dataList" onclick="getList(${id},'${nome}')"><i class="icon-list"></i></button>
-                                        <button class="btn btn-sm btn-primary btn-outline font-16 m-b-5" type="submit"><i class="fa fa-save"></i></button>
+                                        <button id="submit${indexLinha}" class="btn btn-sm btn-primary btn-outline font-16 m-b-5" type="button" onclick="teste(${indexLinha})"><i class="fa fa-save"></i></button>
                                     </div>`;
 						return html;
 					},
                     createdCell: function (td, row) {
                         $(td).attr('colspan', 10);
+                        $(td).attr('id', 'submitTr'+row.id);
                     },
 				},
-				{ 
-				    class: 'd-none',
-					data: null,
-				    orderable: false,
-				    searchable: false,
-					render: (row) => {
-                        var id = row.id;
-						var html = `</form >`;
-						return html;
-					},
-                },
 			],
         });
+
+        var data = getUrlParameter('data');
+        var hospital = getUrlParameter('hospital');
+
+        if(hospital) {
+            $('#dataDiv').removeClass('d-none');
+        }
+        if(data) {
+            $('#data').val(data);
+            $('.data_inicial').val(data);
+            $('#dataDiv').removeClass('d-none');
+            $('#formDiv').removeClass('d-none');
+        }
+
+        let resultados = {!! json_encode($resultados) !!};
+
+        resultados.map( function(resultado) {
+            codSelect(resultado.cod, resultado.id)
+        });
+
+        $("#formDiv").removeClass('hidden');
     });
 </script>
 
