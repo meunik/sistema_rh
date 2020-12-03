@@ -29,6 +29,25 @@ class UserController extends Controller
         
         return view('forms.formUsers', compact('users', 'hospitais', 'user'));
     }
+    public function create(Request $request)
+    {
+        $user = User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+        ]);
+        
+        if(isset($request['hospitais_id'])) {
+            $hospitais_ids = $request['hospitais_id'];
+                for ($i=0; $i < count($request['hospitais_id']); $i++) { 
+                $userHospitais = UserHospitais::create([
+                    'users_id' => $user->id,
+                    'hospitais_id' => $hospitais_ids[$i]
+                ]);
+            }
+        }
+        return back();
+    }
     public function update(Request $request)
     {
         $id = $request->id;

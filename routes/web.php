@@ -35,7 +35,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['admin'])->group(function () {
         Route::get('/users', 'UserController@index')->name('admin_users');
-        Route::post('/users', 'UserController@create');
+        Route::post('/usersCreate', 'UserController@create');
+        Route::post('/users', 'UserController@update');
         Route::put('/users', 'UserController@update');
         Route::delete('/users', 'UserController@remove');
         Route::get('/users/{user_id}/approve', 'UserController@approve')->name('admin.users.approve');
