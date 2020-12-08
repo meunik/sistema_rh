@@ -136,7 +136,6 @@
         });
     }
 
-
     function dataInput(value) {
         $('.data_inicial').val(value);
 
@@ -225,6 +224,7 @@
     }
 
     function codSelect(value, colegas_id) {
+        console.log("codSelect: "+value+", "+colegas_id);
         $("#cid"+colegas_id).addClass('d-none');
         $("#data_dos_sintomas"+colegas_id).addClass('d-none');
         $("#data_inicial"+colegas_id).addClass('d-none');
@@ -235,6 +235,7 @@
         $("#data_do_teste"+colegas_id).addClass('d-none');
         $("#tipo_do_teste"+colegas_id).addClass('d-none');
         $("#observacao"+colegas_id).addClass('d-none');
+
         if (value == 'AT') {
             $("#cid"+colegas_id).removeClass('d-none');
             $("#data_inicial"+colegas_id).removeClass('d-none');
@@ -260,7 +261,7 @@
         }
     }
 
-    function teste(indexLinha) {
+    function salvarForm(indexLinha) {
         let submitButton = $(`#submit${indexLinha}`);
         let tr = submitButton.closest('tr');
         
@@ -315,6 +316,7 @@
             },
             success: function(data){
                 toastr.success(data)
+                window.setTimeout(function(){location.reload()},2000)
             },
             dataType: "text",
             error: function(error) {
@@ -474,7 +476,6 @@
 					},
 				},
 				{
-				    class: 'd-none',
 					data: null,
 				    orderable: false,
 				    searchable: false,
@@ -494,10 +495,10 @@
 					},
                     createdCell: function (td, row) {
                         $(td).attr('id', 'cid'+row.id);
+                        if (row.cod != 'AT') $(td).attr('class', 'd-none')
                     },
 				},
 				{
-				    class: 'd-none',
 					data: null,
 				    orderable: false,
 				    searchable: false,
@@ -523,10 +524,10 @@
 					},
                     createdCell: function (td, row) {
                         $(td).attr('id', 'covid'+row.id);
+                        if (row.cod != 'CO') $(td).attr('class', 'd-none')
                     },
 				},
 				{
-				    class: 'd-none',
 					data: null,
 				    orderable: false,
 				    searchable: false,
@@ -545,10 +546,18 @@
 					},
                     createdCell: function (td, row) {
                         $(td).attr('id', 'data_inicial'+row.id);
+                        switch (row.cod) {
+                            case 'AT': break;
+                            case 'FE': break;
+                            case 'CO': break;
+                            case 'GR': break;
+                            default:
+                                $(td).attr('class', 'd-none')
+                                break;
+                        }
                     },
 				},
 				{
-				    class: 'd-none',
 					data: null,
 				    orderable: false,
 				    searchable: false,
@@ -567,10 +576,18 @@
 					},
                     createdCell: function (td, row) {
                         $(td).attr('id', 'data_final'+row.id);
+                        switch (row.cod) {
+                            case 'AT': break;
+                            case 'FE': break;
+                            case 'CO': break;
+                            case 'GR': break;
+                            default:
+                                $(td).attr('class', 'd-none')
+                                break;
+                        }
                     },
 				},
 				{
-				    class: 'd-none',
 					data: null,
 				    orderable: false,
 				    searchable: false,
@@ -589,10 +606,10 @@
 					},
                     createdCell: function (td, row) {
                         $(td).attr('id', 'data_dos_sintomas'+row.id);
+                        if (row.cod != 'CO') $(td).attr('class', 'd-none')
                     },
 				},
 				{
-				    class: 'd-none',
 					data: null,
 				    orderable: false,
 				    searchable: false,
@@ -602,17 +619,17 @@
 						var html = `<div class="text-left form-group row m-0">
                                         <label for="motivo${id}" class="control-label p-0">Motivo:</label>
                                         <div class="">
-                                            <textarea class="form-control w-300" autocomplete="off" name="motivo" value="${motivo}" id="motivo${id}" placeholder="Motivo..." maxlength="191"></textarea>
+                                            <textarea class="form-control w-300" autocomplete="off" name="motivo" id="motivo${id}" placeholder="Motivo..." maxlength="191">${motivo}</textarea>
                                         </div>
                                     </div>`;
 						return html;
 					},
                     createdCell: function (td, row) {
                         $(td).attr('id', 'motivo'+row.id);
+                        if (row.cod != 'AT') $(td).attr('class', 'd-none')
                     },
 				},
 				{
-				    class: 'd-none',
 					data: null,
 				    orderable: false,
 				    searchable: false,
@@ -631,10 +648,10 @@
 					},
                     createdCell: function (td, row) {
                         $(td).attr('id', 'data_do_teste'+row.id);
+                        if (row.cod != 'CO') $(td).attr('class', 'd-none')
                     },
 				},
 				{
-				    class: 'd-none',
 					data: null,
 				    orderable: false,
 				    searchable: false,
@@ -653,10 +670,11 @@
 					},
                     createdCell: function (td, row) {
                         $(td).attr('id', 'tipo_do_teste'+row.id);
+                        if (row.cod != 'CO') $(td).attr('class', 'd-none')
                     },
 				},
 				{
-				    class: 'observacao d-none',
+				    class: 'observacao',
 					data: null,
 				    orderable: false,
 				    searchable: false,
@@ -673,6 +691,13 @@
 					},
                     createdCell: function (td, row) {
                         $(td).attr('id', 'observacao'+row.id);
+                        switch (row.cod) {
+                            case 'CO': break;
+                            case 'GR': break;
+                            default:
+                                $(td).attr('class', 'd-none')
+                                break;
+                        }
                     },
 				},
 				{
@@ -685,7 +710,7 @@
                         var id = row.id;
 						var html = `<div class="text-right p-0">
                                         <button class="btn btn-sm btn-info btn-outline font-16 m-b-5" type="button" data-toggle="modal" data-target="#dataList" onclick="getList(${id},'${nome}')"><i class="icon-list"></i></button>
-                                        <button id="submit${indexLinha}" class="btn btn-sm btn-primary btn-outline font-16 m-b-5" type="button" onclick="teste(${indexLinha})"><i class="fa fa-save"></i></button>
+                                        <button id="submit${indexLinha}" class="btn btn-sm btn-primary btn-outline font-16 m-b-5" type="button" onclick="salvarForm(${indexLinha})"><i class="fa fa-save"></i></button>
                                     </div>`;
 						return html;
 					},
@@ -709,12 +734,6 @@
             $('#dataDiv').removeClass('d-none');
             $('#formDiv').removeClass('d-none');
         }
-
-        let resultados = {!! json_encode($resultados) !!};
-
-        resultados.map( function(resultado) {
-            codSelect(resultado.cod, resultado.id)
-        });
 
         $("#formDiv").removeClass('hidden');
     });
