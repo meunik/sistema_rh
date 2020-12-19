@@ -81,9 +81,8 @@ class FormController extends Controller
 
         $colegas = Colegas::where('id', $request->id)->first();
 
-        // if(isset($request->tipo)){$colegas->tipo = $request->tipo;}
+        if(isset($request->tipo)){$colegas->tipo = $request->tipo;}
 
-        if(isset($request->tipo)){$data->tipo = $request->tipo;}
         if(isset($request->medico)){$data->medico = $request->medico;}
         if(isset($request->crm)){$data->crm = $request->crm;}
         if(isset($request->cod)){$data->cod = $request->cod;}

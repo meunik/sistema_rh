@@ -22,6 +22,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/nome', 'PesquisaController@nome');
         Route::get('/hospital', 'PesquisaController@hospital');
         Route::get('/cid', 'PesquisaController@cid');
+        Route::get('/cidCategoria', 'PesquisaController@cidCategoria');
+        Route::get('/cidSubCategoria', 'PesquisaController@cidSubCategoria');
     });
 
     Route::get('/form', 'FormController@index')->name('home');

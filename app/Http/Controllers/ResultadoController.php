@@ -137,6 +137,8 @@ class ResultadoController extends Controller
 
                 $resultados[$colega->nome]['datas'][$i]['cod'] = 'X';
                 $resultados[$colega->nome]['situacao'] = 'Ativo';
+                $resultados[$colega->nome]['cid'] = isset($data->cids_id)?$data->cids_id:'-';
+                $resultados[$colega->nome]['motivo'] = isset($data->motivo)?$data->motivo:'-';
 
                 if ($colega->demissao != null && $colega->demissao <= $query['inicial']) {
                     $resultados[$colega->nome]['datas'][$i]['cod'] = 'DE';

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Pesquisa;
 
-use App\Models\{Cids, Colegas, UserHospitais, Hospitais};
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Models\{Cids, Colegas, UserHospitais, Hospitais, CidCategoria, CidSubcategoria};
 
 class PesquisaController extends Controller
 {
@@ -45,5 +45,19 @@ class PesquisaController extends Controller
             $nomes = Cids::where('nome','like',$input.'%')->limit(5)->get();
         };
         return view('pesquisa.cid', compact('nomes', 'colegas_id'));
+    }
+
+    public function cidCategoria()
+    {
+        $pesquisa = CidCategoria::all();
+        return response()->json($pesquisa);
+    }
+
+    public function cidSubCategoria(Request $request)
+    {
+        $id = $request->input('id');
+        $cat = CidCategoria::find($id);
+        $pesquisa = CidSubcategoria::whereBetween('categoria', [$cat->inicio, $cat->fim])->get();
+        return response()->json($pesquisa);
     }
 }

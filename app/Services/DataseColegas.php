@@ -237,6 +237,8 @@ class DataseColegas
         'datas.medico',
         'datas.crm',
         'datas.cids_id',
+        'datas.cid_categoria_id',
+        'datas.cid_sub_categoria_id',
         'datas.data_inicial',
         'datas.data_final',
         'datas.motivo',

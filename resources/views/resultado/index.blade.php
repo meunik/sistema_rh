@@ -35,6 +35,7 @@
                         @foreach($datas as $data)
                             <th class="text-center text-nowrap">{{$data}}</th>
                         @endforeach
+                        <th class="text-center text-nowrap">CID</th>
                         <th class="text-center text-nowrap">Data do Afastamento</th>
                         <th class="text-center text-nowrap">Data final do atestado</th>
                         <!--<th class="text-center text-nowrap">Classificação</th>-->
@@ -43,6 +44,7 @@
                         <th class="text-center text-nowrap">Data da Realização do Teste</th>
                         <th class="text-center text-nowrap">Tipo do Teste</th>
                         <th class="text-center text-nowrap">Telefone do Colega</th>
+                        <th class="text-center text-nowrap">Motivo</th>
                         <th class="text-center text-nowrap">Observação</th>
                         <th class="text-center text-nowrap">Obs. Assistente Social</th>
                         <th class="text-center text-nowrap">Grupo de Risco</th>
@@ -68,6 +70,7 @@
                                 @endisset
                             </td>
                         @endforeach
+                        <td>{{$resultado['cid']}}</td>
                         <td>
                             @if($resultado['data_inicio_afastamento'])
                                 {{date('d/m/Y', strtotime($resultado['data_inicio_afastamento']))}}
@@ -91,6 +94,7 @@
                         </td>
                         <td>{{$resultado['tipo_do_teste']}}</td>
                         <td>{{$resultado['telefone']}}</td>
+                        <td>{{$resultado['motivo']}}</td>
                         <td>@foreach($resultado['observacao'] as $observacao) {{  $observacao }} <br>@endforeach</td>
                         <td>{{$resultado['assistente_social']}}</td>
                         <td>{{$resultado['grupo_de_risco']}}</td>
@@ -231,19 +235,6 @@
             buttons: [
                 {
                     extend: 'excelHtml5',
-                    // customize: function ( xlsx ) {
-                    //     let sheet = xlsx.xl.worksheets['sheet1.xml'];
-                    //     let row = 0;
-
-                    //     $('row', sheet).each( function (x) {
-                    //         if ($(table.row(':eq('+row+')').node()).hasClass('danger')) {;
-                    //             $('row:nth-child('+(x+1)+') c', sheet).attr('s', '2');
-                    //         } else if ($(table.row(':eq('+row+')').node()).hasClass('warning')) {
-                    //             $('row:nth-child('+(x+1)+') c', sheet).attr('s', '2');
-                    //         }
-                    //         row++
-                    //     });
-                    // }
                 }
             ],
 

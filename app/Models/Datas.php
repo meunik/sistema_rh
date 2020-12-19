@@ -17,6 +17,8 @@ class Datas extends Model
         'data_final',
         'retornou',
         'cids_id',
+        'cid_categoria_id',
+        'cid_sub_categoria_id',
         'motivo',
         'obervacao',
         'created_by',

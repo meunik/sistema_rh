@@ -10,6 +10,8 @@ class FormService
     {
         if(isset($request->data_final)){$data->data_final = $request->data_final;}
         if(isset($request->cids_id)){$data->cids_id = $request->cids_id;}
+        if(isset($request->cid_categoria_id)){$data->cid_categoria_id = $request->cid_categoria_id;}
+        if(isset($request->cid_sub_categoria_id)){$data->cid_sub_categoria_id = $request->cid_sub_categoria_id;}
         if(isset($request->motivo)){$data->motivo = $request->motivo;}
     }
 
