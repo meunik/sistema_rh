@@ -27,11 +27,13 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::get('/form', 'FormController@index')->name('home');
+    Route::get('/form2', 'FormController@form2');
     Route::get('/form/getdata', 'FormController@getdata');
     Route::post('/form', 'FormController@create');
     Route::put('/form', 'FormController@update');
     Route::delete('/form', 'FormController@delete');
     Route::post('/editTel', 'FormController@editTel');
+    Route::post('/atestadoFile', 'FormController@atestadoFile');
     
     Route::get('/datas', 'DatasController@index')->name('datas');
 

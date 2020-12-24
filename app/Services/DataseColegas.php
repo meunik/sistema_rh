@@ -233,6 +233,7 @@ class DataseColegas
         'covid.tipo_do_teste',
         'covid.observacao',
         'cids.nome as cid',
+        'datas.id as data_id',
         'datas.cod',
         'datas.medico',
         'datas.crm',
@@ -242,6 +243,7 @@ class DataseColegas
         'datas.data_inicial',
         'datas.data_final',
         'datas.motivo',
+        'datas.motivoSelect',
         'datas.covid')
         ->orderBy('colegas.nome')
         ->get();

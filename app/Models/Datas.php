@@ -20,6 +20,9 @@ class Datas extends Model
         'cid_categoria_id',
         'cid_sub_categoria_id',
         'motivo',
+        'motivoSelect',
+        'atestadoFIle',
+        'atestadoNomeFIle',
         'obervacao',
         'created_by',
         'updated_by'

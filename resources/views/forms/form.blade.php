@@ -230,7 +230,9 @@
         $("#data_dos_sintomas"+colegas_id).addClass('d-none');
         $("#data_inicial"+colegas_id).addClass('d-none');
         $("#data_final"+colegas_id).addClass('d-none');
-        $("#motivo"+colegas_id).addClass('d-none');
+        $("#motivoSelectTd"+colegas_id).addClass('d-none');
+        $("#motivoTd"+colegas_id).addClass('d-none');
+        $("#atestadoFIle"+colegas_id).addClass('d-none');
         $("#covid"+colegas_id).addClass('d-none');
         $("#data_dos_sintomas"+colegas_id).addClass('d-none');
         $("#data_do_teste"+colegas_id).addClass('d-none');
@@ -242,7 +244,9 @@
             $("#cidCategoria"+colegas_id).removeClass('d-none');
             $("#data_inicial"+colegas_id).removeClass('d-none');
             $("#data_final"+colegas_id).removeClass('d-none');
-            $("#motivo"+colegas_id).removeClass('d-none');
+            $("#motivoSelectTd"+colegas_id).removeClass('d-none');
+            if ($("#motivoSelect"+colegas_id).val() == 3) $("#motivoTd"+colegas_id).removeClass('d-none');
+            $("#atestadoFIle"+colegas_id).removeClass('d-none');
         }
         else if (value == 'FE') {
             $("#data_inicial"+colegas_id).removeClass('d-none');
@@ -282,6 +286,7 @@
         let inputData_final = tr.find( "[name='data_final']" ).val();
         let inputData_dos_sintomas = tr.find( "[name='data_dos_sintomas']" ).val();
         let inputMotivo = tr.find( "[name='motivo']" ).val();
+        let inputMotivoSelect = tr.find( "[name='motivoSelect']" ).val();
         let inputData_do_teste = tr.find( "[name='data_do_teste']" ).val();
         let inputTipo_do_teste = tr.find( "[name='tipo_do_teste']" ).val();
         let inputObservacao = tr.find( "[name='observacao']" ).val();
@@ -305,6 +310,7 @@
             "data_final": inputData_final,
             "data_dos_sinto": inputData_dos_sintomas,
             "motivo": inputMotivo,
+            "motivoSelect": inputMotivoSelect,
             "data_do_teste": inputData_do_teste,
             "tipo_do_teste": inputTipo_do_teste,
             "observacao": inputObservacao,
@@ -389,6 +395,54 @@
             });
         }
         return options;
+    };
+
+    function cidMotivo(value, colegas_id) {
+        if (value == 3) {
+            $("#motivoTd"+colegas_id).removeClass('d-none');
+        } else {
+            $("#motivoTd"+colegas_id).addClass('d-none');
+        }
+    };
+
+    function atestadoFIle(id) {
+        $("#atestadoFIle_id").val(id);
+        $("#atestadoNomeFIle_input").val(null);
+        $("#atestadoFIle_input").val(null);
+    };
+    
+    function atestadoFileSubmit() {
+        var formData = new FormData($("#atestadoFIleForm").get(0));
+
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "/atestadoFile",
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            xhr: function() { // Custom XMLHttpRequest
+                var myXhr = $.ajaxSettings.xhr();
+                if (myXhr.upload) { // Avalia se tem suporte a propriedade upload
+                    myXhr.upload.addEventListener('progress', function() {
+                        /* faz alguma coisa durante o progresso do upload */
+                    }, false);
+                }
+                return myXhr;
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(data){
+                toastr.success("Salvo com sucesso!")
+                window.setTimeout(function(){location.reload()},2000)
+            },
+            error: function(error) {
+                var error = JSON.parse(error.responseText).error
+                toastr.error(error)
+            }
+        });
     };
 
     $(document).ready( function () {
@@ -578,28 +632,6 @@
                                                 <option value="20" ${selected[20]}>(V01 - Y98) Causas externas de morbidade e de mortalidade</option>
                                                 <option value="21" ${selected[21]}>(Z00 - Z99) Fatores que influenciam o estado de saúde e o contato com os serviços de saúde</option>
                                                 <option value="22" ${selected[22]}>(U04 - U99) Códigos para propósitos especiais</option>
-                                                <option value="23" ${selected[23]}>(A00 - B99) Algumas doenças infecciosas e parasitárias</option>
-                                                <option value="24" ${selected[24]}>(C00 - D48) Neoplasias [tumores]</option>
-                                                <option value="25" ${selected[25]}>(D50 - D89) Doenças do sangue e dos órgãos hematopoéticos e alguns transtornos imunitários</option>
-                                                <option value="26" ${selected[26]}>(E00 - E90) Doenças endócrinas, nutricionais e metabólicas</option>
-                                                <option value="27" ${selected[27]}>(F00 - F99) Transtornos mentais e comportamentais</option>
-                                                <option value="28" ${selected[28]}>(G00 - G99) Doenças do sistema nervoso</option>
-                                                <option value="29" ${selected[29]}>(H00 - H59) Doenças do olho e anexos</option>
-                                                <option value="30" ${selected[30]}>(H60 - H95) Doenças do ouvido e da apófise mastóide</option>
-                                                <option value="31" ${selected[31]}>(I00 - I99) Doenças do aparelho circulatório</option>
-                                                <option value="32" ${selected[32]}>(J00 - J99) Doenças do aparelho respiratório</option>
-                                                <option value="33" ${selected[33]}>(K00 - K93) Doenças do aparelho digestivo</option>
-                                                <option value="34" ${selected[34]}>(L00 - L99) Doenças da pele e do tecido subcutâneo</option>
-                                                <option value="35" ${selected[35]}>(M00 - M99) Doenças do sistema osteomuscular e do tecido conjuntivo</option>
-                                                <option value="36" ${selected[36]}>(N00 - N99) Doenças do aparelho geniturinário</option>
-                                                <option value="37" ${selected[37]}>(O00 - O99) Gravidez, parto e puerpério</option>
-                                                <option value="38" ${selected[38]}>(P00 - P96) Algumas afecções originadas no período perinatal</option>
-                                                <option value="39" ${selected[39]}>(Q00 - Q99) Malformações congênitas, deformidades e anomalias cromossômicas</option>
-                                                <option value="40" ${selected[40]}>(R00 - R99) Sintomas, sinais e achados anormais de exames clín… de laboratório, não classificados em outra parte</option>
-                                                <option value="41" ${selected[41]}>(S00 - T98) Lesões, envenenamento e algumas outras consequências de causas externas</option>
-                                                <option value="42" ${selected[42]}>(V01 - Y98) Causas externas de morbidade e de mortalidade</option>
-                                                <option value="43" ${selected[43]}>(Z00 - Z99) Fatores que influenciam o estado de saúde e o contato com os serviços de saúde</option>
-                                                <option value="44" ${selected[44]}>(U04 - U99) Códigos para propósitos especiais</option>
                                             </select>
                                         </div>
                                     </div>`;
@@ -763,18 +795,66 @@
 				    orderable: false,
 				    searchable: false,
 					render: (row) => {
-                        var motivo = (row.motivo) ? row.motivo : "";
+                        var motivoSelect = (row.motivoSelect) ? row.motivoSelect : "";
+                        var selected = {motivoSelect: null};
+                        selected[`${motivoSelect}`] = "selected";
                         var id = row.id;
-						var html = `<div class="text-left form-group row m-0">
-                                        <label for="motivo${id}" class="control-label p-0">Motivo:</label>
+
+                        var html = `<div class="text-left form-group row m-0">
+                                        <label for="motivoSelect${id}" class="control-label p-0">Motivo:</label>
                                         <div class="">
-                                            <textarea class="form-control w-300" autocomplete="off" name="motivo" id="motivo${id}" placeholder="Motivo..." maxlength="191">${motivo}</textarea>
+                                            <select id="motivoSelect${id}" name="motivoSelect" class="form-control w-130" autocomplete="off" style="width: 250px;" onchange="cidMotivo(this.value, ${id})">
+                                                <option selected disabled>Selecione</option>
+                                                <option value="1" ${selected[1]}>Acidente Trabalho ou Doença Ocupacional</option>
+                                                <option value="2" ${selected[2]}>Licença Maternidade</option>
+                                                <option value="3" ${selected[3]}>Outros</option>
+                                            </select>
                                         </div>
                                     </div>`;
 						return html;
 					},
                     createdCell: function (td, row) {
-                        $(td).attr('id', 'motivo'+row.id);
+                        $(td).attr('id', 'motivoSelectTd'+row.id);
+                        if (row.cod != 'AT') $(td).attr('class', 'd-none')
+                    },
+				},
+				{
+					data: null,
+				    orderable: false,
+				    searchable: false,
+					render: (row) => {
+                        var motivo = (row.motivo) ? row.motivo : "";
+                        var id = row.id;
+						var html = `<div class="text-left form-group row m-0">
+                                        <label for="motivo${id}" class="control-label p-0">Outros:</label>
+                                        <div class="">
+                                            <textarea class="form-control w-300" autocomplete="off" name="motivo" id="motivo${id}" placeholder="Outros motivos..." maxlength="191">${motivo}</textarea>
+                                        </div>
+                                    </div>`;
+						return html;
+					},
+                    createdCell: function (td, row) {
+                        $(td).attr('id', 'motivoTd'+row.id);
+                        if ((row.cod != 'AT') || (row.motivoSelect != 3)) $(td).attr('class', 'd-none')
+                    },
+				},
+				{
+					data: null,
+				    orderable: false,
+				    searchable: false,
+					render: (row) => {
+                        var id = row.data_id;
+                        // var id = row.id;
+						var html = `<div class="text-left p-0">
+                                        <label for="motivo${id}" class="col-sm-12 control-label p-0">Adicionar arquivo:</label>
+                                        <button class="btn btn-sm btn-info btn-outline font-16 m-b-5" type="button" data-toggle="modal" data-target="#atestadoFIle" onclick="atestadoFIle('${id}')">
+                                            <i class="fa fa-plus"></i> Arquivo <i class="fa fa-file"></i>
+                                        </button>
+                                    </div>`;
+						return html;
+					},
+                    createdCell: function (td, row) {
+                        $(td).attr('id', 'atestadoFIle'+row.id);
                         if (row.cod != 'AT') $(td).attr('class', 'd-none')
                     },
 				},
@@ -864,7 +944,7 @@
 						return html;
 					},
                     createdCell: function (td, row) {
-                        $(td).attr('colspan', 10);
+                        $(td).attr('colspan', 15);
                         $(td).attr('id', 'submitTr'+row.id);
                     },
 				},

@@ -140,4 +140,21 @@ class FormController extends Controller
         $colegas->telefone = $request->editTell_input;
         $colegas->save();
     }
+
+    public function atestadoFile(Request $request)
+    {
+        if ($request->atestadoNomeFIle_input === null) {
+            return response()->json(['error' => 'O campo "Nome do arquivo" é obrigatório!'],404);
+        }
+        if ($request->atestadoFIle_input === null) {
+            return response()->json(['error' => 'O campo "Adicionar arquivo" é obrigatório!'],404);
+        }
+
+        $arquivo = $request->file('atestadoFIle_input')->store('atestados');
+
+        $colegas = Datas::find($request->atestadoFIle_id);
+        $colegas->atestadoFIle = $arquivo;
+        $colegas->atestadoNomeFIle = $request->atestadoNomeFIle_input;
+        $colegas->save();
+    }
 }

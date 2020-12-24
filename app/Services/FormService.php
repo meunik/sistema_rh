@@ -13,6 +13,7 @@ class FormService
         if(isset($request->cid_categoria_id)){$data->cid_categoria_id = $request->cid_categoria_id;}
         if(isset($request->cid_sub_categoria_id)){$data->cid_sub_categoria_id = $request->cid_sub_categoria_id;}
         if(isset($request->motivo)){$data->motivo = $request->motivo;}
+        if(isset($request->motivoSelect)){$data->motivoSelect = $request->motivoSelect;}
     }
 
     public static function ferias($request, $data)
