@@ -14,6 +14,7 @@ class Datas extends Model
         'crm',
         'covid',
         'data_inicial',
+        'dias_atestado',
         'data_final',
         'retornou',
         'cids_id',
@@ -27,7 +28,7 @@ class Datas extends Model
         'created_by',
         'updated_by'
     ];
-    
+
     public function colega()
     {
         return $this->hasOne('App\Models\Colegas', 'id', 'colegas_id');
@@ -37,7 +38,7 @@ class Datas extends Model
     {
         return $this->hasOne('App\Models\Covid', 'colegas_id', 'colegas_id');
     }
-    
+
     public function user()
     {
         return $this->hasOne('App\User', 'id', 'updated_by');

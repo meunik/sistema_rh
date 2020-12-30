@@ -14,6 +14,7 @@ class FormService
         if(isset($request->cid_sub_categoria_id)){$data->cid_sub_categoria_id = $request->cid_sub_categoria_id;}
         if(isset($request->motivo)){$data->motivo = $request->motivo;}
         if(isset($request->motivoSelect)){$data->motivoSelect = $request->motivoSelect;}
+        if(isset($request->dias_atestado)){$data->dias_atestado = $request->dias_atestado;}
     }
 
     public static function ferias($request, $data)
@@ -21,7 +22,7 @@ class FormService
         if(isset($request->data_final)){$data->data_final = $request->data_final;}
     }
 
-    public static function demitido($request, $data)
+    public static function demitido($request, $colegas)
     {
         if(isset($request->data_inicial)){$colegas->demissao = $request->data_inicial;}
         $colegas->save();
@@ -50,5 +51,4 @@ class FormService
         if(isset($request->observacao)){$data->observacao = $request->observacao;}
         if(isset($request->grupo_de_risco)){$data->grupo_de_risco = $request->grupo_de_risco;}
     }
-    
 }

@@ -17,7 +17,7 @@ class DataseColegas
         if($query['hospitais'] != "TD") {
             $query['hospitais'] = explode(',', $query['hospitais']);
         }
-        
+
         $query['tipo'] = $request->query('tipo');
         $query['inicial'] = $request->query('inicial');
         $query['final'] = $request->query('final');
@@ -42,7 +42,7 @@ class DataseColegas
             where('tipo',$query['tipo'])
             ->get();
             }
-            
+
         } else {
             if($query['hospitais'] != "TD") {
                 $colegas = Colegas::whereIn('hospitais_id',$query['hospitais'])
@@ -50,7 +50,7 @@ class DataseColegas
             } else {
                 $colegas = Colegas::all();
             }
-            
+
         }
 
         $resultados = [];
@@ -189,7 +189,7 @@ class DataseColegas
 
         $return['resultados'] = $resultados;
         $return['datas'] = $datas;
-        
+
         return $return;
     }
     public static function colegas()
@@ -241,6 +241,7 @@ class DataseColegas
         'datas.cid_categoria_id',
         'datas.cid_sub_categoria_id',
         'datas.data_inicial',
+        'datas.dias_atestado',
         'datas.data_final',
         'datas.motivo',
         'datas.motivoSelect',

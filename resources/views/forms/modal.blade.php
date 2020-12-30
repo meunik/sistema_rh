@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title" id="dataList_label"></h4> 
+                <h4 class="modal-title" id="dataList_label"></h4>
             </div>
             <div class="modal-body">
                 <div class="table-responsive">
@@ -40,7 +40,7 @@
             <form id="editTellForm">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <h4 class="modal-title" id="editTell_label"></h4> 
+                    <h4 class="modal-title" id="editTell_label"></h4>
                 </div>
                 <div class="modal-body">
                     <div class="text-left form-group row m-0">
@@ -72,9 +72,13 @@
                         <span class="text-info font-16 m-b-5">
                             <i class="fa fa-plus"></i> Arquivo <i class="fa fa-file"></i>
                         </span>
-                    </h4> 
+                    </h4>
                 </div>
                 <div class="modal-body row">
+                    <b>OBS:</b>
+                    <li>Para cadastrar arquivos é necessário que o atestando ja esteje salvo.</li>
+                    <li>Primeiro salve o atestado depois cadastre o arquivo.</li>
+                    <br>
                     <div class="col-sm-6 text-left form-group">
                         <label for="atestadoNomeFIle_input" class="control-label">Nome do arquivo:</label>
                         <div class="">

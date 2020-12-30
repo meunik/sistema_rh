@@ -229,6 +229,7 @@
         $("#cidSubCategoria"+colegas_id).addClass('d-none');
         $("#data_dos_sintomas"+colegas_id).addClass('d-none');
         $("#data_inicial"+colegas_id).addClass('d-none');
+        $("#dias_atestado"+colegas_id).addClass('d-none');
         $("#data_final"+colegas_id).addClass('d-none');
         $("#motivoSelectTd"+colegas_id).addClass('d-none');
         $("#motivoTd"+colegas_id).addClass('d-none');
@@ -238,15 +239,18 @@
         $("#data_do_teste"+colegas_id).addClass('d-none');
         $("#tipo_do_teste"+colegas_id).addClass('d-none');
         $("#observacao"+colegas_id).addClass('d-none');
+        $("#data_final_input"+colegas_id).attr('readonly', false);
 
         if (value == 'AT') {
             $("#cid"+colegas_id).removeClass('d-none');
             $("#cidCategoria"+colegas_id).removeClass('d-none');
             $("#data_inicial"+colegas_id).removeClass('d-none');
+            $("#dias_atestado"+colegas_id).removeClass('d-none');
             $("#data_final"+colegas_id).removeClass('d-none');
             $("#motivoSelectTd"+colegas_id).removeClass('d-none');
             if ($("#motivoSelect"+colegas_id).val() == 3) $("#motivoTd"+colegas_id).removeClass('d-none');
             $("#atestadoFIle"+colegas_id).removeClass('d-none');
+            $("#data_final_input"+colegas_id).attr('readonly', true);
         }
         else if (value == 'FE') {
             $("#data_inicial"+colegas_id).removeClass('d-none');
@@ -270,7 +274,7 @@
     function salvarForm(indexLinha) {
         let submitButton = $(`#submit${indexLinha}`);
         let tr = submitButton.closest('tr');
-        
+
         var date = getUrlParameter('data') || '';
         let inputData_inicial = date;
 
@@ -283,6 +287,7 @@
         let inputCidCategoria = tr.find( "[name='cidCategoria']" ).val();
         let inputCidSubCategoria = tr.find( "[name='cidSubCategoria']" ).val();
         let inputCovid = tr.find( "[name='covid']" ).val();
+        let inputDias_atestado = tr.find( "[name='dias_atestado']" ).val();
         let inputData_final = tr.find( "[name='data_final']" ).val();
         let inputData_dos_sintomas = tr.find( "[name='data_dos_sintomas']" ).val();
         let inputMotivo = tr.find( "[name='motivo']" ).val();
@@ -307,8 +312,9 @@
             "cid_sub_categoria_id": inputCidSubCategoria,
             "covid": inputCovid,
             "data_inicial": inputData_inicial,
+            "dias_atestado": inputDias_atestado,
             "data_final": inputData_final,
-            "data_dos_sinto": inputData_dos_sintomas,
+            "data_dos_sintomas": inputData_dos_sintomas,
             "motivo": inputMotivo,
             "motivoSelect": inputMotivoSelect,
             "data_do_teste": inputData_do_teste,
@@ -359,14 +365,14 @@
             });
         } else {
             var resultado = null;
-        }         
+        }
         return resultado;
     };
 
     function cidSubCategoria(value, id, cidSubCatId) {
         $("#cidSubCategoriaSelect"+id).children().remove();
         $(`#cidSubCategoriaSelect${id}`).append(`<option selected disabled>Selecione</option>`);
-                
+
         $("#cidSubCategoria"+id).removeClass('d-none');
 
         var resultado = ajaxSubCategoria(value, id);
@@ -382,8 +388,8 @@
         });
     };
 
-    function optionsSubCategoria(categoriaId, id, subCategoriaId) {  
-        var options; 
+    function optionsSubCategoria(categoriaId, id, subCategoriaId) {
+        var options;
         var resultado = ajaxSubCategoria(categoriaId, id);
         if (resultado != null) {
             resultado.forEach(element => {
@@ -410,7 +416,7 @@
         $("#atestadoNomeFIle_input").val(null);
         $("#atestadoFIle_input").val(null);
     };
-    
+
     function atestadoFileSubmit() {
         var formData = new FormData($("#atestadoFIleForm").get(0));
 
@@ -445,10 +451,21 @@
         });
     };
 
+    function atestadoDataFinal(value, id) {
+        if (value < 1) {
+            toastr.error('Valor deve ser 1 ou superior!');
+        } else {
+            var data_inicial = $('#data_inicial_input'+id).val();
+            var dias = value - 1;
+            var data_final = moment(data_inicial, "YYYY-MM-DD").add(dias, 'days').format('YYYY-MM-DD');
+            $("#data_final_input"+id).val(data_final);
+        }
+    };
+
     $(document).ready( function () {
         var hospital = getUrlParameter('hospital') || '';
         var data = getUrlParameter('data') || '';
-            
+
         var params = {
             'hospital':hospital,
             'data': data
@@ -463,7 +480,7 @@
                 "url": "/Portuguese-Brasil.json"
             },
 			columns: [
-				{ 
+				{/*nome*/
                     title: "Nome",
                     data: null,
 					render: (row) => {
@@ -477,7 +494,7 @@
                         $(td).css('min-width', '200px');
                     },
                 },
-				{
+				{/*tipo*/
 					data: null,
 				    orderable: false,
 				    searchable: false,
@@ -501,7 +518,7 @@
 						return html;
 					},
 				},
-				{ 
+				{/*telefone*/
 					data: null,
 				    orderable: false,
 				    searchable: false,
@@ -521,7 +538,7 @@
 						return html;
 					},
 				},
-				{
+				{/*medico*/
 					data: null,
 				    orderable: false,
 				    searchable: false,
@@ -542,7 +559,7 @@
                         $(td).attr('id', 'medico'+row.id);
                     },
 				},
-				{
+				{/*crm*/
 					data: null,
 				    orderable: false,
 				    searchable: false,
@@ -563,7 +580,7 @@
                         $(td).attr('id', 'crm'+row.id);
                     },
 				},
-				{
+				{/*cod*/
 					data: null,
 				    orderable: false,
 				    searchable: false,
@@ -594,7 +611,7 @@
 						return html;
 					},
 				},
-				{
+				{/*cidCategoria*/
 					data: null,
 				    orderable: false,
 				    searchable: false,
@@ -656,14 +673,14 @@
                         if (row.cod != 'AT') $(td).attr('class', 'd-none')
                     },
 				},
-				{
+				{/*cidSubCategoria*/
 					data: null,
 				    orderable: false,
 				    searchable: false,
 					render: (row) => {
                         var id = row.id;
                         if (row.cod === 'AT') var options = optionsSubCategoria(row.cid_categoria_id, row.id, row.cid_sub_categoria_id);
-                        
+
                         var html = `<div class="text-left form-group row m-0">
                                         <label for="cidSubCategoria${id}" class="control-label p-0">CID Subcategoria:</label>
                                         <div class="">
@@ -679,7 +696,7 @@
                         if (row.cid_categoria_id === null) $(td).attr('class', 'd-none')
                     },
 				},
-				{
+				{/*covid*/
 					data: null,
 				    orderable: false,
 				    searchable: false,
@@ -708,19 +725,19 @@
                         if (row.cod != 'CO') $(td).attr('class', 'd-none')
                     },
 				},
-				{
+				{/*data_inicial*/
 					data: null,
 				    orderable: false,
 				    searchable: false,
 					render: (row) => {
-                        var data_inicial = (row.data_inicial) ? row.data_inicial : "";
+                        var data_inicial = (row.data_inicial) ? row.data_inicial : moment().format("YYYY-MM-DD");
                         var id = row.id;
 						var html = `<div class="text-left form-group row m-0">
-                                        <label for="data_inicial${id}" class="control-label p-0">
+                                        <label for="data_inicial_input${id}" class="control-label p-0">
                                             Data inicial:
                                         </label>
                                         <div class="">
-                                            <input type="date" class="form-control data_inicial w-180" autocomplete="off" name="data_inicial" value="${data_inicial}" id="data_inicial${id}">
+                                            <input type="date" class="form-control data_inicial w-180" autocomplete="off" name="data_inicial" value="${data_inicial}" id="data_inicial_input${id}">
                                         </div>
                                     </div>`;
 						return html;
@@ -738,19 +755,42 @@
                         }
                     },
 				},
-				{
+				{/*dias_atestado*/
 					data: null,
 				    orderable: false,
 				    searchable: false,
 					render: (row) => {
+                        var dias_atestado = (row.dias_atestado) ? row.dias_atestado : '';
+                        var id = row.id;
+						var html = `<div class="text-left form-group row m-0">
+                                        <label for="dias_atestado_input${id}" class="control-label p-0">
+                                            Dias atestado:
+                                        </label>
+                                        <div class="">
+                                            <input type="number" min="1" max="370" step="1" class="form-control" autocomplete="off" name="dias_atestado" value="${dias_atestado}" id="dias_atestado_input${id}" style="width: 80px;" onchange="atestadoDataFinal(this.value, ${id})">
+                                        </div>
+                                    </div>`;
+						return html;
+					},
+                    createdCell: function (td, row) {
+                        $(td).attr('id', 'dias_atestado'+row.id);
+                        if (row.cod != 'AT') $(td).attr('class', 'd-none');
+                    },
+				},
+				{/*data_final*/
+					data: null,
+				    orderable: false,
+				    searchable: false,
+					render: (row) => {
+                        var readonly = (row.cod === 'AT') ? 'readonly' : '';
                         var data_final = (row.data_final) ? row.data_final : "";
                         var id = row.id;
 						var html = `<div class="text-left form-group row m-0">
-                                        <label for="$resultado->id${id}" class="control-label p-0">
+                                        <label for="data_final_input${id}" class="control-label p-0">
                                             Data final:
                                         </label>
                                         <div class="">
-                                            <input type="date" class="form-control w-180" autocomplete="off" name="data_final" value="${data_final}" id="$resultado->id${id}">
+                                            <input type="date" ${readonly} class="form-control w-180" autocomplete="off" name="data_final" value="${data_final}" id="data_final_input${id}">
                                         </div>
                                     </div>`;
 						return html;
@@ -768,7 +808,7 @@
                         }
                     },
 				},
-				{
+				{/*data_dos_sintomas*/
 					data: null,
 				    orderable: false,
 				    searchable: false,
@@ -790,7 +830,7 @@
                         if (row.cod != 'CO') $(td).attr('class', 'd-none')
                     },
 				},
-				{
+				{/*motivoSelect*/
 					data: null,
 				    orderable: false,
 				    searchable: false,
@@ -818,7 +858,7 @@
                         if (row.cod != 'AT') $(td).attr('class', 'd-none')
                     },
 				},
-				{
+				{/*motivo*/
 					data: null,
 				    orderable: false,
 				    searchable: false,
@@ -838,7 +878,7 @@
                         if ((row.cod != 'AT') || (row.motivoSelect != 3)) $(td).attr('class', 'd-none')
                     },
 				},
-				{
+				{/*atestadoFIle*/
 					data: null,
 				    orderable: false,
 				    searchable: false,
@@ -846,8 +886,8 @@
                         var id = row.data_id;
                         // var id = row.id;
 						var html = `<div class="text-left p-0">
-                                        <label for="motivo${id}" class="col-sm-12 control-label p-0">Adicionar arquivo:</label>
-                                        <button class="btn btn-sm btn-info btn-outline font-16 m-b-5" type="button" data-toggle="modal" data-target="#atestadoFIle" onclick="atestadoFIle('${id}')">
+                                        <label for="atestadoFIleLabel${id}" class="col-sm-12 control-label p-0">Adicionar arquivo:</label>
+                                        <button id="atestadoFIleLabel${id}" class="btn btn-sm btn-info btn-outline font-16 m-b-5" type="button" data-toggle="modal" data-target="#atestadoFIle" onclick="atestadoFIle('${id}')">
                                             <i class="fa fa-plus"></i> Arquivo <i class="fa fa-file"></i>
                                         </button>
                                     </div>`;
@@ -858,7 +898,7 @@
                         if (row.cod != 'AT') $(td).attr('class', 'd-none')
                     },
 				},
-				{
+				{/*data_do_teste*/
 					data: null,
 				    orderable: false,
 				    searchable: false,
@@ -880,7 +920,7 @@
                         if (row.cod != 'CO') $(td).attr('class', 'd-none')
                     },
 				},
-				{
+				{/*tipo_do_teste*/
 					data: null,
 				    orderable: false,
 				    searchable: false,
@@ -902,7 +942,7 @@
                         if (row.cod != 'CO') $(td).attr('class', 'd-none')
                     },
 				},
-				{
+				{/*observacao*/
 				    class: 'observacao',
 					data: null,
 				    orderable: false,
@@ -929,7 +969,7 @@
                         }
                     },
 				},
-				{
+				{/*submit*/
 					data: null,
 				    orderable: false,
 				    searchable: false,

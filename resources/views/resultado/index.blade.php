@@ -67,6 +67,11 @@
                             <td>
                                 @isset($data['cod'])
                                     {{$data['cod']}}
+                                    @if ($data['cod'] === 'AT')
+                                        <button id="atestadoLabel" class="btn btn-sm btn-info btn-outline font-10 m-b-5 btn-plus" type="button" data-toggle="modal" data-target="#atestado" onclick='atestado(`{!! json_encode($resultado) !!}`,`{!!($nome)!!}`)'>
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    @endif
                                 @endisset
                             </td>
                         @endforeach
@@ -111,10 +116,115 @@
         </div>
     </div>
 </div>
+@include('resultado.modal')
 @endsection
 
 @section('script')
 <script>
+
+    function getList(id,nome) {
+        $.ajax({
+            type: "GET",
+            url: "/atestadoHistoricoDatas?id="+id,
+            success: function(data){
+                $("#dataList_body").html(data);
+
+                var elems = document.querySelectorAll('.js-switch');
+
+                for (var i = 0; i < elems.length; i++) {
+                    var switchery = new Switchery(elems[i]);
+                }
+            }
+        });
+    }
+    function atestado(resultado, nome) {
+        let result = JSON.parse(resultado);
+        // console.log(result);
+        var tel = (result.telefone) ? result.telefone : 'Sem Telefone';
+
+        $(`#atestadoId`).text(result.data_id);
+        $(`#atestadoNome`).text(nome);
+        $(`#atestadoTelefone`).text(tel);
+
+        $(`#atestadoData_inicio_afastamento`).text(moment(result.data_inicio_afastamento, "YYYY-MM-DD").format("DD/MM/YYYY"));
+        $(`#atestadoDias_atestado`).text(result.dias_atestado);
+        $(`#atestadoData_final_atestado`).text(moment(result.data_final_atestado, "YYYY-MM-DD").format("DD/MM/YYYY"));
+
+        $(`#atestadoMotivo`).text(result.motivo);
+        var cidCategoria = result.cid_categoria_id.substring(0,60)+'...';
+        $(`#atestadoCid_categoria_id`).text(cidCategoria);
+        $(`#atestadoCid_categoria_id`).attr('title', result.cid_categoria_id);
+        var cidSubCategoria = result.cid_sub_categoria_id.substring(0,80)+'...';
+        $(`#atestadoCid_sub_categoria_id`).text(cidSubCategoria);
+        $(`#atestadoCid_categoria_id`).attr('title', result.cid_sub_categoria_id);
+
+        $('#encaminhado_inss').prop('checked', result.encaminhado_inss);
+        $(`#data_proximo_contato`).val(result.data_proximo_contato);
+        $(`#data_encerramento_acompanhamento`).val(result.data_encerramento_acompanhamento);
+
+        $(`#data_de_contato`).val(result.data_de_contato);
+        $(`#observacao_inss`).val(result.observacao_inss);
+
+        $(`#atestado_id`).val(result.data_id);
+
+        getList(result.colega_id, nome)
+    }
+
+    function atestadoSubmite() {
+        var encaminhado_inss = $("#encaminhado_inss").is(":checked");
+        var data_proximo_contato = $(`#data_proximo_contato`).val();
+        var data_encerramento_acompanhamento = $(`#data_encerramento_acompanhamento`).val();
+
+        var data_de_contato = $(`#data_de_contato`).val();
+        var observacao_inss = $(`#observacao_inss`).val();
+
+        var atestado_id = $(`#atestado_id`).val();
+
+        if (!encaminhado_inss) {
+            return toastr.error('"Encaminhado INSS" não preenchido. Todos os campos são obrigatórios!');
+        }
+        if (!data_proximo_contato){
+            return toastr.error('"Data Proximo Contato" não preenchido. Todos os campos são obrigatórios!');
+        }
+        if (!data_encerramento_acompanhamento){
+            return toastr.error('"Data Encerramento Acompanhamento" não preenchido. Todos os campos são obrigatórios!');
+        }
+        if (!data_de_contato){
+            return toastr.error('"Data de Contato" não preenchido. Todos os campos são obrigatórios!');
+        }
+        if (!observacao_inss){
+            return toastr.error('"Observação" não preenchido. Todos os campos são obrigatórios!');
+        }
+
+        let data = {
+            "encaminhado_inss": encaminhado_inss,
+            "data_proximo_contato": data_proximo_contato,
+            "data_encerramento_acompanhamento": data_encerramento_acompanhamento,
+            "data_de_contato": data_de_contato,
+            "observacao_inss": observacao_inss,
+            "atestado_id": atestado_id,
+        }
+
+        let json = data
+
+        $.ajax({
+            type: "POST",
+            url: "/atestadoFormResult",
+            data: json,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(data){
+                toastr.success("Salvo com sucesso!")
+                window.setTimeout(function(){location.reload()},2000)
+            },
+            error: function(error) {
+                var error = JSON.parse(error.responseText).error
+                toastr.error(error)
+            }
+        });
+    }
+
     $("#hospitais_todos").change(function(event) {
         if(this.checked) {
             $('#hospitais').find('input[type=checkbox]').prop('checked', true);

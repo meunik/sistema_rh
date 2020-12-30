@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
-use App\Models\{Hospitais, UserHospitais, Colegas, Datas};
+use App\Models\{Hospitais, UserHospitais, Colegas, Datas, CidCategoria, CidSubcategoria};
 
 class ResultadoController extends Controller
 {
@@ -138,7 +138,20 @@ class ResultadoController extends Controller
                 $resultados[$colega->nome]['datas'][$i]['cod'] = 'X';
                 $resultados[$colega->nome]['situacao'] = 'Ativo';
                 $resultados[$colega->nome]['cid'] = isset($data->cids_id)?$data->cids_id:'-';
-                $resultados[$colega->nome]['motivo'] = isset($data->motivo)?$data->motivo:'-';
+                $resultados[$colega->nome]['colega_id'] = $colega->id;
+
+                $resultados[$colega->nome]['encaminhado_inss'] = isset($data->encaminhado_inss)?$data->encaminhado_inss:'';
+                $resultados[$colega->nome]['data_proximo_contato'] = isset($data->data_proximo_contato)?$data->data_proximo_contato:'';
+                $resultados[$colega->nome]['data_encerramento_acompanhamento'] = isset($data->data_encerramento_acompanhamento)?$data->data_encerramento_acompanhamento:'';
+                $resultados[$colega->nome]['data_de_contato'] = isset($data->data_de_contato)?$data->data_de_contato:'';
+                $resultados[$colega->nome]['observacao_inss'] = isset($data->observacao_inss)?$data->observacao_inss:'';
+
+                $resultados[$colega->nome]['cid_categoria_id'] = $this->cidCategoriaId($data);
+                $resultados[$colega->nome]['cid_sub_categoria_id'] = $this->cidSubCategoriaId($data);
+                $resultados[$colega->nome]['motivo'] = $this->motivo($data);
+
+                $resultados[$colega->nome]['data_id'] = isset($data->id)?$data->id:'-';
+                $resultados[$colega->nome]['dias_atestado'] = isset($data->dias_atestado)?$data->dias_atestado:'-';
 
                 if ($colega->demissao != null && $colega->demissao <= $query['inicial']) {
                     $resultados[$colega->nome]['datas'][$i]['cod'] = 'DE';
@@ -256,5 +269,50 @@ class ResultadoController extends Controller
         }
 
         return view('resultado.index', compact('hospitais', 'resultados', 'datas'));
+    }
+
+    public function motivo($data)
+    {
+        if (isset($data->motivoSelect)) {
+            switch ($data->motivoSelect) {
+                case 1:
+                    return 'Acidente Trabalho ou Doença Ocupacional';
+                    break;
+                case 2:
+                    return 'Licença Maternidade';
+                    break;
+                case 3:
+                    return $data->motivo;
+                    break;
+
+                default:
+                    return 'Sem Motivo';
+                    break;
+            }
+        } else {
+            return 'Sem Motivo';
+        }
+    }
+
+    public function cidCategoriaId($data)
+    {
+        if (isset($data->cid_categoria_id)) {
+            $cidCategoria = CidCategoria::find($data->cid_categoria_id);
+            $string = '('.$cidCategoria->inicio.' - '.$cidCategoria->fim.') '.$cidCategoria->nome;
+            return $string;
+        } else {
+            return 'Sem CID Categoria';
+        }
+    }
+
+    public function cidSubCategoriaId($data)
+    {
+        if (isset($data->cid_sub_categoria_id)) {
+            $cidSubCategoria = CidSubcategoria::find($data->cid_sub_categoria_id);
+            $string = '('.$cidSubCategoria->categoria.') '.$cidSubCategoria->nome;
+            return $string;
+        } else {
+            return 'Sem CID Subcategoria';
+        }
     }
 }

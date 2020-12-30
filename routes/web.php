@@ -34,8 +34,10 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/form', 'FormController@delete');
     Route::post('/editTel', 'FormController@editTel');
     Route::post('/atestadoFile', 'FormController@atestadoFile');
-    
+    Route::post('/atestadoFormResult', 'FormController@atestadoFormResult');
+
     Route::get('/datas', 'DatasController@index')->name('datas');
+    Route::get('/atestadoHistoricoDatas', 'DatasController@atestadoHistoricoDatas');
 
     Route::middleware(['admin'])->group(function () {
         Route::get('/users', 'UserController@index')->name('admin_users');

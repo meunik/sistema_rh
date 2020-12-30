@@ -89,7 +89,7 @@ class FormController extends Controller
 
         if ($request->cod === 'AT') FormService::atestado($request, $data);
         if ($request->cod === 'FE') FormService::ferias($request, $data);
-        if ($request->cod === 'DE') FormService::ferias($request, $colegas);
+        if ($request->cod === 'DE') FormService::demitido($request, $colegas);
         if ($request->cod === 'CO') FormService::covid($request, $data);
         if ($request->cod === 'GR') FormService::grupoDeRisco($request, $data);
         $data->save();
@@ -143,6 +143,11 @@ class FormController extends Controller
 
     public function atestadoFile(Request $request)
     {
+        $colegas = Datas::find($request->atestadoFIle_id);
+
+        if ($colegas === null) {
+            return response()->json(['error' => 'Primeiro salve o atestado depois cadastre o arquivo.'],404);
+        }
         if ($request->atestadoNomeFIle_input === null) {
             return response()->json(['error' => 'O campo "Nome do arquivo" é obrigatório!'],404);
         }
@@ -151,10 +156,21 @@ class FormController extends Controller
         }
 
         $arquivo = $request->file('atestadoFIle_input')->store('atestados');
-
-        $colegas = Datas::find($request->atestadoFIle_id);
         $colegas->atestadoFIle = $arquivo;
         $colegas->atestadoNomeFIle = $request->atestadoNomeFIle_input;
         $colegas->save();
+    }
+
+    public function atestadoFormResult(Request $request)
+    {
+        $data = Datas::find($request->atestado_id);
+
+        if(isset($request->encaminhado_inss)){$data->encaminhado_inss = $request->encaminhado_inss;}
+        if(isset($request->data_proximo_contato)){$data->data_proximo_contato = $request->data_proximo_contato;}
+        if(isset($request->data_encerramento_acompanhamento)){$data->data_encerramento_acompanhamento = $request->data_encerramento_acompanhamento;}
+        if(isset($request->data_de_contato)){$data->data_de_contato = $request->data_de_contato;}
+        if(isset($request->observacao_inss)){$data->observacao_inss = $request->observacao_inss;}
+
+        $data->save();
     }
 }
