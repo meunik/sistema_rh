@@ -91,7 +91,7 @@
 
                         <h4 class="modal-title" id="atestadoFIle_label">
                             <span class="text-info font-16 m-b-5">
-                                <i class="fa fa-history"></i> Histórico últimos 60 dias
+                                <i class="fa fa-history"></i> Histórico últimos 120 dias
                             </span>
                         </h4>
                         <table class="table table-bordered table-condensed b-0">

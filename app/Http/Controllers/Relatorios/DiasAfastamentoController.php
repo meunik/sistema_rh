@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Relatorios;
 
-use App\Http\Controllers\Controller;
-
+use App\Models\Datas;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Carbon;
-
-use App\Models\{Colegas,Datas,Hospitais,UserHospitais};
+use App\Services\UserService;
+use App\Services\FiltroService;
+use App\Http\Controllers\Controller;
 
 class DiasAfastamentoController extends Controller
 {
@@ -18,135 +16,103 @@ class DiasAfastamentoController extends Controller
     }
     public function index(Request $request)
     {
-        if (Auth::user()->is_admin == 'AD') {
-            $hospitais = Hospitais::select('id','nome')->orderBy('nome')->get();
-        } else {
-            $hospitais = UserHospitais::leftjoin('hospitais', 'hospitais_id', '=', 'hospitais.id')
-                ->where('users_hospitais.users_id', Auth::user()->id)
-                ->select('hospitais.id','hospitais.nome')
-                ->orderBy('hospitais.nome')
-                ->get();
-        }
-
-        $query['hospitais'] = $request->query('hospitais');
-        $query['hospitais'] = explode(',', $query['hospitais']);
-        $query['tipo'] = $request->query('tipo');
-        $query['inicial'] = $request->query('inicial');
-        $query['final'] = $request->query('final');
-
-        if($query['inicial'] == null) {
-            $query['inicial'] = Carbon::today();
-        } else {
-            $query['inicial'] = Carbon::parse($query['inicial']);
-        }
-
-        if($query['final'] == null) {
-            $query['final'] = Carbon::today();
-        } else {
-            $query['final'] = Carbon::parse($query['final']);
-        }
+        $hospitais = UserService::hospitaisVinculados();
+        $query = FiltroService::datasTabelaAfastados($request);
 
         $resultados = [];
 
-        $resultados['RET']['AT'] = 0;
-        $resultados['RET']['CO-S'] = 0;
-        $resultados['RET']['CO+'] = 0;
+        $resultados['RET'] = $this->retornaramAndAfastaram($query, '=', 'data_final');
+        $resultados['AF'] = $this->retornaramAndAfastaram($query, '!=', 'data_inicial');
+        $resultados['AF-C'] = $this->continuamAfastados($resultados, $query);
 
-        $resultados['AF']['AT'] = 0;
-        $resultados['AF']['CO-S'] = 0;
-        $resultados['AF']['CO+'] = 0;
+        return view('relatorios.dias-afastamento',compact('hospitais','resultados'));
+    }
 
-        $resultados['AF-C']['AT'] = 0;
-        $resultados['AF-C']['CO-S'] = 0;
-        $resultados['AF-C']['CO+'] = 0;
+    public function retornaramAndAfastaram($query, $sinal, $tipoData)
+    {
+        $resultados['AT'] = 0;
+        $resultados['CO-S'] = 0;
+        $resultados['CO+'] = 0;
 
-        $retornaram = Datas::whereIn('cod',['AT','CO'])
-        ->whereBetween('data_final',[$query['inicial'],$query['final']])
-        ->where('retornou',1)
+        $retornaram = Datas::whereIn('cod', ['AT','CO'])
+        ->whereBetween($tipoData, [$query['inicial'], $query['final']])
+        ->where('retornou', $sinal, 1)
         ->select('colegas_id')
         ->groupBy('colegas_id')
         ->get();
 
         foreach($retornaram as $retornou) {
-            $data = Datas::whereIn('cod',['AT','CO'])
-            ->whereBetween('data_final',[$query['inicial'],$query['final']])
-            ->where('retornou',1)
-            ->where('colegas_id',$retornou->colegas_id)
+            $data = Datas::whereIn('cod', ['AT','CO'])
+            ->whereBetween($tipoData, [$query['inicial'], $query['final']])
+            ->where('retornou', $sinal, 1)
+            ->where('colegas_id', $retornou->colegas_id)
             ->first();
 
             if($data->colega->demissao == null || $data->colega->demissao > $query['final']) {
+
                 if($data->cod == 'AT') {
-                    $resultados['RET']['AT']++;
+                    $resultados['AT']++;
                 } else if($data->cod == 'CO') {
+
                     if($data->covid == 'Suspeito') {
-                        $resultados['RET']['CO-S']++;
+                        $resultados['CO-S']++;
                     } else if ($data->covid == 'Confirmado') {
-                        $resultados['RET']['CO+']++;
+                        $resultados['CO+']++;
                     }
+
                 }
+
             }
         }
 
-        $resultados['RET']['TOTAL'] = $resultados['RET']['AT'] + $resultados['RET']['CO-S'] + $resultados['RET']['CO+'];
-        
-        $afastaram = Datas::whereIn('cod',['AT','CO'])
-        ->whereBetween('data_inicial',[$query['inicial'],$query['final']])
-        ->where('retornou','!=',1)
-        ->select('colegas_id')
-        ->groupBy('colegas_id')
-        ->get();
+        $resultados['TOTAL'] = $resultados['AT'] + $resultados['CO-S'] + $resultados['CO+'];
 
-        foreach($afastaram as $afastou) {
-            $data = Datas::whereIn('cod',['AT','CO'])
-            ->whereBetween('data_inicial',[$query['inicial'],$query['final']])
-            ->where('retornou','!=',1)
-            ->where('colegas_id',$afastou->colegas_id)
-            ->first();
-            
-            if($data->colega->demissao == null || $data->colega->demissao > $query['final']) {
-                if($data->cod == 'AT') {
-                    $resultados['AF']['AT']++;
-                } else if($data->cod == 'CO') {
-                    if($data->covid == 'Suspeito') {
-                        $resultados['AF']['CO-S']++;
-                    } else if ($data->covid == 'Confirmado') {
-                        $resultados['AF']['CO+']++;
-                    }
-                }
-            }
-        }
+        return $resultados;
+    }
 
-        $resultados['AF']['TOTAL'] = $resultados['AF']['AT'] + $resultados['AF']['CO-S'] + $resultados['AF']['CO+'];
+    public function continuamAfastados($resultados, $query)
+    {
+        $ress['AT'] = 0;
+        $ress['CO-S'] = 0;
+        $ress['CO+'] = 0;
 
         $continuam = Datas::whereIn('cod',['AT','CO'])
         ->where('data_inicial','<',$query['inicial'])
-        ->where('retornou','!=',1)
+        ->where('retornou', '!=', 1)
         ->select('colegas_id')
         ->groupBy('colegas_id')
         ->get();
 
         foreach($continuam as $continua) {
-            $data = Datas::whereIn('cod',['AT','CO'])
-            ->where('data_inicial','<',$query['inicial'])
-            ->where('retornou','!=',1)
-            ->where('colegas_id',$continua->colegas_id)
+            $data = Datas::whereIn('cod', ['AT','CO'])
+            ->where('data_inicial', '<', $query['inicial'])
+            ->where('retornou', '!=', 1)
+            ->where('colegas_id', $continua->colegas_id)
             ->first();
-            
+
             if($data->colega->demissao == null || $data->colega->demissao > $query['final']) {
+
                 if($data->cod == 'AT') {
-                    $resultados['AF-C']['AT']++;
+                    $ress['AT']++;
                 } else if($data->cod == 'CO') {
+
                     if($data->covid == 'Suspeito') {
-                        $resultados['AF-C']['CO-S']++;
+                        $ress['CO-S']++;
                     } else if ($data->covid == 'Confirmado') {
-                        $resultados['AF-C']['CO+']++;
+                        $ress['CO+']++;
                     }
+
                 }
+
             }
         }
 
-        $resultados['AF-C']['TOTAL'] = $resultados['AF-C']['AT'] + $resultados['AF-C']['CO-S'] + $resultados['AF-C']['CO+'];
-        
-        return view('relatorios.dias-afastamento',compact('hospitais','resultados'));
+        $ress['AT'] = ($ress['AT'] - $resultados['RET']['AT']) + $resultados['AF']['AT'];
+        $ress['CO-S'] = ($ress['CO-S'] - $resultados['RET']['CO-S']) + $resultados['AF']['CO-S'];
+        $ress['CO+'] = ($ress['CO+'] - $resultados['RET']['CO+']) + $resultados['AF']['CO+'];
+
+        $ress['TOTAL'] = $ress['AT'] + $ress['CO-S'] + $ress['CO+'];
+
+        return $ress;
     }
 }

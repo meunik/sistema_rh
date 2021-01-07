@@ -25,25 +25,25 @@
                             <td>AT</td>
                             <td>@isset($resultados['RET']['AT']) {{$resultados['RET']['AT']}} @endisset</td>
                             <td>@isset($resultados['AF']['AT']) {{$resultados['AF']['AT']}} @endisset</td>
-                            <td>@if(@isset($resultados['AF']['AT']) && @isset($resultados['RET']['AT'])) {{$resultados['AF']['AT']-$resultados['RET']['AT']}} @endisset</td>
+                            <td>@isset($resultados['AF-C']['AT']) {{$resultados['AF-C']['AT']}} @endisset</td>
                         </tr>
                         <tr>
                             <td>CO-S</td>
                             <td>@isset($resultados['RET']['CO-S']) {{$resultados['RET']['CO-S']}} @endisset</td>
                             <td>@isset($resultados['AF']['CO-S']) {{$resultados['AF']['CO-S']}} @endisset</td>
-                            <td>@if(@isset($resultados['AF']['CO-S']) && @isset($resultados['RET']['CO-S'])) {{$resultados['AF']['CO-S']-$resultados['RET']['CO-S']}} @endisset</td>
+                            <td>@isset($resultados['AF-C']['CO-S']) {{$resultados['AF-C']['CO-S']}} @endisset</td>
                         </tr>
                         <tr>
                             <td>CO+</td>
                             <td>@isset($resultados['RET']['CO+']) {{$resultados['RET']['CO+']}} @endisset</td>
                             <td>@isset($resultados['AF']['CO+']) {{$resultados['AF']['CO+']}} @endisset</td>
-                            <td>@if(@isset($resultados['AF']['CO+']) && @isset($resultados['RET']['CO+'])) {{$resultados['AF']['CO+']-$resultados['RET']['CO+']}} @endisset</td>
+                            <td>@isset($resultados['AF-C']['CO+']) {{$resultados['AF-C']['CO+']}} @endisset</td>
                         </tr>
                         <tr>
                             <td>TOTAL</td>
                             <td>@isset($resultados['RET']['TOTAL']) {{$resultados['RET']['TOTAL']}} @endisset</td>
                             <td>@isset($resultados['AF']['TOTAL']) {{$resultados['AF']['TOTAL']}} @endisset</td>
-                            <td>@if(@isset($resultados['AF']['TOTAL']) && @isset($resultados['RET']['TOTAL'])) {{$resultados['AF']['TOTAL']-$resultados['RET']['TOTAL']}} @endisset</td>
+                            <td>@isset($resultados['AF-C']['TOTAL']) {{$resultados['AF-C']['TOTAL']}} @endisset</td>
                         </tr>
                     </tbody>
                 </table>
@@ -81,7 +81,7 @@
                 return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
             }
         }
-};
+    };
 
     var newUrl = function newUrl(inicial,final) {
         var params = {
@@ -112,7 +112,7 @@
 
             newUrl(today,today);
         }
-});
+    });
 
 </script>
 

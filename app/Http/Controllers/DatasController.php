@@ -26,7 +26,7 @@ class DatasController extends Controller
     {
         date_default_timezone_set('America/Sao_Paulo');
         $dataHoje = date('Y-m-d', time());
-        $dataRetroativa = date('Y-m-d', strtotime("-60 days"));
+        $dataRetroativa = date('Y-m-d', strtotime("-120 days"));
 
         $id = $request->query('id');
 
