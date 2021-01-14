@@ -65,7 +65,7 @@
                             <li>
                                 <a class="waves-effect" href="/resultado" aria-expanded="false"><i class="icon-chart fa-fw"></i> Resultado</a>
                             </li>
-                            
+
                             <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="icon-pie-chart fa-fw"></i> Relatórios <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
@@ -85,7 +85,17 @@
                                     @endif
                                 </ul>
                             </li>
-                            
+                            @if(Auth::user()->is_admin != null)
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bar-chart-o"></i> Gráficos <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="/graficos/atestados"><i class="fa fa-bar-chart-o"></i> Atestados</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            @endif
+
                             <li>
                                 <a href="/password"><i class="icon-lock fa-fw"></i> Alterar Senha</a>
                             </li>

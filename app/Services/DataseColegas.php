@@ -200,8 +200,6 @@ class DataseColegas
             $hospitais = Hospitais::select('id')->where('users_id', Auth::user()->id)->get();
         }
 
-        echo $hospitais;
-        exit;
         foreach ($hospitais as $hosp) {
             $hospIds[] = $hosp->id;
         }

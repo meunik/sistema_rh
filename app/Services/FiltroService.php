@@ -2,12 +2,14 @@
 
 namespace App\Services;
 
+use Carbon\CarbonImmutable;
 use Illuminate\Support\Carbon;
 
 /**
  *  Criado 05/01/2021, por isso poucos lugares ultilizam esse Service
  *  ultilizado {
  *      App\Http\Controllers\Relatorios\DiasAfastamentoController,
+ *      App\Http\Controllers\Graficos\AtestadosController,
  *  }
  */
 class FiltroService
@@ -36,5 +38,16 @@ class FiltroService
         }
 
         return $query;
+    }
+
+    public static function esteMes()
+    {
+        $now = Carbon::now();
+        $umMesAtraz = CarbonImmutable::now()->subMonths();
+        $dias = [
+            "hoje" => $now,
+            "umMesAtraz" => $umMesAtraz,
+        ];
+        return $dias;
     }
 }

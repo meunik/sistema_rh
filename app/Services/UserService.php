@@ -10,12 +10,14 @@ use Illuminate\Support\Facades\Auth;
  *  Criado 05/01/2021, por isso poucos lugares ultilizam esse Service
  *  ultilizado {
  *      App\Http\Controllers\Relatorios\DiasAfastamentoController,
+ *      App\Http\Controllers\Graficos\AtestadosController,
  *  }
  */
 class UserService
 {
     /**
      *  Filtra os hospitais de a cordo com o nivel de permissão do user
+     *  Retorna id e nome
      */
     public static function hospitaisVinculados()
     {
@@ -28,5 +30,24 @@ class UserService
                 ->orderBy('hospitais.nome')
                 ->get();
         }
+    }
+    /**
+     *  Filtra os hospitais de a cordo com o nivel de permissão do user
+     *  Retorna id
+     */
+    public static function hospitaisVinculadosOnlyId()
+    {
+        if (Auth::user()->is_admin == 'AD') {
+            $hospitais = Hospitais::select('id')->get();
+        } else {
+            $hospitais = UserHospitais::leftjoin('hospitais', 'hospitais_id', '=', 'hospitais.id')
+                ->where('users_hospitais.users_id', Auth::user()->id)
+                ->select('hospitais.id')
+                ->get();
+        }
+        foreach ($hospitais as $hosp) {
+            $ids[] = $hosp->id;
+        }
+        return $ids;
     }
 }

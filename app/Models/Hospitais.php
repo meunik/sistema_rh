@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Colegas;
 use Illuminate\Database\Eloquent\Model;
 
 class Hospitais extends Model
@@ -20,5 +21,9 @@ class Hospitais extends Model
     public function coligada()
     {
         return $this->hasOne('App\Models\Coligadas', 'id', 'coligadas_id');
+    }
+    public function colegas()
+    {
+        return $this->hasMany('App\Models\Colegas', 'hospitais_id', 'id');
     }
 }

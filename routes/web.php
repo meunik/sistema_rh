@@ -17,6 +17,16 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dias-afastamento', 'DiasAfastamentoController@index');
     });
 
+    Route::group(['prefix'=>'/graficos', 'namespace' => 'Graficos'], function (){
+        Route::get('/atestados', 'AtestadosController@index');
+        Route::get('/atestados/getdata', 'AtestadosController@returnDataTables');
+        Route::get('/atestados/totalQtdDias', 'AtestadosController@totalQtdDias');
+        Route::get('/atestados/qtdAtestadosPorHosp', 'AtestadosController@qtdAtestadosPorHosp');
+        Route::get('/atestados/qtdDiasPerdidosPorHosp', 'AtestadosController@qtdDiasPerdidosPorHosp');
+        Route::get('/atestados/topCincoQtdAtestados', 'AtestadosController@topCincoQtdAtestados');
+        Route::get('/atestados/topCincoQtdDiasPerdidos', 'AtestadosController@topCincoQtdDiasPerdidos');
+    });
+
 
     Route::group(['prefix'=>'/pesquisa', 'namespace' => 'Pesquisa'], function (){
         Route::get('/nome', 'PesquisaController@nome');
