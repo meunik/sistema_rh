@@ -789,8 +789,12 @@ ul.li-hriz li {
     padding: 0px;
     margin: 0px;
 }
-.background-yellow {
-    background: rgba(255, 255, 0, 0.445) !important;
+.background-tabelas-graficos {
+    background: #00bbd97a !important;
+    border-bottom: 1px solid #85deed !important;
+}
+.tabelas-graficos-thead {
+    border-radius: 5px 5px 0px 0px !important;
 }
 
 

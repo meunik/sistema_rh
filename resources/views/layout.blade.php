@@ -92,6 +92,9 @@
                                     <li>
                                         <a href="/graficos/atestados"><i class="fa fa-bar-chart-o"></i> Atestados</a>
                                     </li>
+                                    <li>
+                                        <a href="/graficos/covid"><i class="fa fa-bar-chart-o"></i> Covid</a>
+                                    </li>
                                 </ul>
                             </li>
                             @endif

@@ -142,7 +142,7 @@ class AtestadosController extends Controller
     }
 
     /**
-     *  "Quantidade de atestados por unidade"
+     *  "Quantidade de dias perdidos por unidade"
      */
     public function qtdDiasPerdidosPorHosp()
     {

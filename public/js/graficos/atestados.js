@@ -9,7 +9,7 @@ $(document).ready( function () {
         buttons: [ 'copy', 'excel', 'pdf' ],
         columns: [
             { data: 'hospital_nome', className: 'text-center' },
-            { data: 'colegasAtivos', className: 'text-center background-yellow' },
+            { data: 'colegasAtivos', className: 'text-center background-tabelas-graficos' },
             { data: 'totalDeAtestados', className: 'text-center' },
             { data: 'atestadosPorAcidenteOuDoenca', className: 'text-center' },
             { data: 'atestadosPorOutrosMotivos', className: 'text-center' },
@@ -19,7 +19,7 @@ $(document).ready( function () {
             { data: 'atestados3A15Dias', className: 'text-center' },
             { data: 'atestadosAcimaDe15Dias', className: 'text-center' },
             { data: 'qtdDiasPerdidosMes', className: 'text-center' },
-            { data: 'porcentagemDeAtestadosPorColegas', className: 'text-center background-yellow' },
+            { data: 'porcentagemDeAtestadosPorColegas', className: 'text-center background-tabelas-graficos' },
         ],
     });
 

@@ -1,10 +1,10 @@
 
-/** Quantidade de atestados por unidade **/
-    function qtdAtestadosPorHosp() {
+/** Total casos COVID por unidade **/
+    function totalCasosCovid() {
         var resultado;
         $.ajax({
             type: "GET",
-            url: `/graficos/atestados/qtdAtestadosPorHosp`,
+            url: `/graficos/covid/totalCasosCovid`,
             dataType: "JSON",
             async: false,
             headers: {
@@ -20,14 +20,14 @@
         return resultado;
     };
 
-    var qtdAtestadosPorHosp = qtdAtestadosPorHosp().data;
+    var totalCasosCovid = totalCasosCovid().data;
     google.charts.load('current', {'packages':['bar']});
-    google.charts.setOnLoadCallback(qtdAtestadosPorHospCharts);
+    google.charts.setOnLoadCallback(totalCasosCovidCharts);
 
-    function qtdAtestadosPorHospCharts() {
-        var data = google.visualization.arrayToDataTable(qtdAtestadosPorHosp);
+    function totalCasosCovidCharts() {
+        var data = google.visualization.arrayToDataTable(totalCasosCovid);
         var options = {
-            title: 'Quantidade de atestados por unidade',
+            title: 'Total casos COVID por unidade',
             legend: {
                 position: 'none',
                 textStyle: {
@@ -44,17 +44,17 @@
             },
             legendpagination: true,
         };
-        var chart = new google.charts.Bar(document.getElementById('qtdAtestadosPorHospCharts'));
+        var chart = new google.charts.Bar(document.getElementById('totalCasosCovidCharts'));
         chart.draw(data, google.charts.Bar.convertOptions(options));
     }
-/** /Quantidade de atestados por unidade **/
+/** /Total casos COVID por unidade **/
 
 /** Quantidade de dias perdidos por unidade **/
-    function qtdDiasPerdidosPorHosp() {
+    function qtdDiasPerdidosMes() {
         var resultado;
         $.ajax({
             type: "GET",
-            url: `/graficos/atestados/qtdDiasPerdidosPorHosp`,
+            url: `/graficos/covid/qtdDiasPerdidosMes`,
             dataType: "JSON",
             async: false,
             headers: {
@@ -70,12 +70,12 @@
         return resultado;
     };
 
-    var qtdDiasPerdidosPorHosp = qtdDiasPerdidosPorHosp().data;
+    var qtdDiasPerdidosMes = qtdDiasPerdidosMes().data;
     google.charts.load('current', {'packages':['bar']});
-    google.charts.setOnLoadCallback(qtdDiasPerdidosPorHospCharts);
+    google.charts.setOnLoadCallback(qtdDiasPerdidosMesCharts);
 
-    function qtdDiasPerdidosPorHospCharts() {
-        var data = google.visualization.arrayToDataTable(qtdDiasPerdidosPorHosp);
+    function qtdDiasPerdidosMesCharts() {
+        var data = google.visualization.arrayToDataTable(qtdDiasPerdidosMes);
         var options = {
             title: 'Quantidade de dias perdidos por unidade',
             legend: {
@@ -94,7 +94,7 @@
             },
             legendpagination: true,
         };
-        var chart = new google.charts.Bar(document.getElementById('qtdDiasPerdidosPorHospCharts'));
+        var chart = new google.charts.Bar(document.getElementById('qtdDiasPerdidosMesCharts'));
         chart.draw(data, google.charts.Bar.convertOptions(options));
     }
 /** /Quantidade de dias perdidos por unidade **/

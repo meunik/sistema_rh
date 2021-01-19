@@ -76,7 +76,7 @@
                 </div>
                 <div class="modal-body row">
                     <b>OBS:</b>
-                    <li>Para cadastrar arquivos é necessário que o atestando ja esteje salvo.</li>
+                    <li>Para cadastrar arquivos é necessário que o atestado ja esteja salvo.</li>
                     <li>Primeiro salve o atestado depois cadastre o arquivo.</li>
                     <br>
                     <div class="col-sm-6 text-left form-group">

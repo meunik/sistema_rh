@@ -18,13 +18,21 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::group(['prefix'=>'/graficos', 'namespace' => 'Graficos'], function (){
-        Route::get('/atestados', 'AtestadosController@index');
-        Route::get('/atestados/getdata', 'AtestadosController@returnDataTables');
-        Route::get('/atestados/totalQtdDias', 'AtestadosController@totalQtdDias');
-        Route::get('/atestados/qtdAtestadosPorHosp', 'AtestadosController@qtdAtestadosPorHosp');
-        Route::get('/atestados/qtdDiasPerdidosPorHosp', 'AtestadosController@qtdDiasPerdidosPorHosp');
-        Route::get('/atestados/topCincoQtdAtestados', 'AtestadosController@topCincoQtdAtestados');
-        Route::get('/atestados/topCincoQtdDiasPerdidos', 'AtestadosController@topCincoQtdDiasPerdidos');
+        Route::group(['prefix'=>'/atestados'], function (){
+            Route::get('', 'AtestadosController@index');
+            Route::get('/getdata', 'AtestadosController@returnDataTables');
+            Route::get('/totalQtdDias', 'AtestadosController@totalQtdDias');
+            Route::get('/qtdAtestadosPorHosp', 'AtestadosController@qtdAtestadosPorHosp');
+            Route::get('/qtdDiasPerdidosPorHosp', 'AtestadosController@qtdDiasPerdidosPorHosp');
+            Route::get('/topCincoQtdAtestados', 'AtestadosController@topCincoQtdAtestados');
+            Route::get('/topCincoQtdDiasPerdidos', 'AtestadosController@topCincoQtdDiasPerdidos');
+        });
+        Route::group(['prefix'=>'/covid'], function (){
+            Route::get('', 'CovidController@index');
+            Route::get('/getdata', 'CovidController@returnDataTables');
+            Route::get('/totalCasosCovid', 'CovidController@totalCasosCovid');
+            Route::get('/qtdDiasPerdidosMes', 'CovidController@qtdDiasPerdidosMes');
+        });
     });
 
 
@@ -59,9 +67,9 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::get('/colegas', 'ColegasController@index');
-    Route::get('/colegas/importar', 'ColegasController@import');
-    Route::post('/colegas/sendFile', 'ColegasController@sendFile')->name('colegasSendFile');;
     Route::post('/colegas', 'ColegasController@form')->name('colegas');
+    Route::get('/colegas/importar', 'ColegasController@import');
+    Route::post('/colegas/sendFile', 'ColegasController@sendFile')->name('colegasSendFile');
 
 });
 

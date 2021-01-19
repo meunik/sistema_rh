@@ -162,12 +162,53 @@
         var data = google.visualization.arrayToDataTable(qtdAtestadosPorHosp);
         var options = {
             title: `Quantidade de atestados por unidade`,
+            axisTitlesPosition: 'in',
             pieHole: 0.4,
-            legend: 'right',
+            legend: 'bottom',
             backgroundColor: 'transparent',
-            chartArea: {left:0,right:0,top:50}
+            chartArea: {left:0,right:10,top:50}
         };
         var chart = new google.visualization.PieChart(document.getElementById('qtdAtestadosPorHospPie'));
         chart.draw(data, options);
     }
 /** /Quantidade de atestados por unidade **/
+
+/** Quantidade de dias perdidos por unidade **/
+    function qtdDiasPerdidosPorHosp() {
+        var resultado;
+        $.ajax({
+            type: "GET",
+            url: `/graficos/atestados/qtdDiasPerdidosPorHosp`,
+            dataType: "JSON",
+            async: false,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(data){
+                resultado = data;
+            },
+            error: function(error) {
+                resultado = null;
+            }
+        });
+        return resultado;
+    };
+
+    var qtdDiasPerdidosPorHosp = qtdDiasPerdidosPorHosp().data;
+    console.log(qtdDiasPerdidosPorHosp);
+    google.charts.load('current', {packages:['corechart']});
+    google.charts.setOnLoadCallback(qtdDiasPerdidosPorHospPie);
+
+    function qtdDiasPerdidosPorHospPie() {
+        var data = google.visualization.arrayToDataTable(qtdDiasPerdidosPorHosp);
+        var options = {
+            title: `Quantidade de dias perdidos por unidade`,
+            pieHole: 0.4,
+            legend: 'bottom',
+            backgroundColor: 'transparent',
+            chartArea: {left:10,right:0,top:50}
+        };
+        var chart = new google.visualization.PieChart(document.getElementById('qtdDiasPerdidosPorHospPie'));
+        chart.draw(data, options);
+    }
+/** /Quantidade de dias perdidos por unidade **/

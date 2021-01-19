@@ -52,8 +52,8 @@ class ColegasController extends Controller
         return view('colegas.import');
     }
     public function sendFile(Request $request) {
-        if ($request->hasFile('fileUpload') && $request->file('fileUpload')->isValid()){     
-            
+        if ($request->hasFile('fileUpload') && $request->file('fileUpload')->isValid()){
+
             $file = fopen($request->fileUpload, "r");
 
             $count = 0;
@@ -63,11 +63,11 @@ class ColegasController extends Controller
                 $split = explode(';', fgets($file), 12);
 
                 if($split[0] != "Nome do Colega") {
-                
+
                     if(isset($split[11])) {
-    
+
                         $colega = Colegas::where('nome',$split[0])->first();
-    
+
                         if($colega) {
                             toastr()->warning("O colega " . $colega->nome . " não foi importado pois já existe um colega com esse nome cadastrado!");
                             $teste++;
@@ -77,9 +77,9 @@ class ColegasController extends Controller
                             if($hospital) {
                                 $split[2] = str_replace('/', '-',$split[2]);
                                 $split[7] = str_replace('/', '-',$split[7]);
-        
+
                                 $colega = new Colegas;
-        
+
                                 $colega->nome = $split[0];
                                 $colega->hospitais_id = $hospital->id;
                                 $colega->data_de_nascimento = Carbon::parse($split[2])->format('Y-m-d');
@@ -92,29 +92,29 @@ class ColegasController extends Controller
                                 $colega->horario =  $split[9];
                                 $colega->jornada =  $split[10];
                                 $colega->telefone =  $split[11];
-        
+
                                 $colega->save();
                                 $count++;
                             } else {
                                 toastr()->warning("O colega " . $split[0] . " não foi importado pois o hospital". $split[1] ." não foi encontrado!");
                             }
-                            
+
                         }
-    
+
                     }
                 }
             }
         }
-        
+
         if($count > 0) {
             toastr()->success('Importado com sucesso!');
         }
-        
+
         // if($teste > 0) {
         //     toastr()->warning($teste);
         // }
-        
-        
+
+
         return back();
     }
 }
