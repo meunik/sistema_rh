@@ -35,7 +35,7 @@
                     (quantidade de dias)`,
             legend: 'bottom',
             backgroundColor: 'transparent',
-            chartArea: {left:0,right:0,top:50}
+            chartArea: {left:0,right:0,top:50,bottom:40}
         };
         var chart = new google.visualization.PieChart(document.getElementById('totalQtdDiasPie'));
         chart.draw(data, options);
@@ -80,7 +80,7 @@
             title: `Top 5 unidades com maior quantidade de atestados`,
             legend: 'bottom',
             backgroundColor: 'transparent',
-            chartArea: {left:0,right:0,top:50}
+            chartArea: {left:0,right:0,top:50,bottom:40}
         };
         var chart = new google.visualization.PieChart(document.getElementById('topCincoQtdAtestadosPie'));
         chart.draw(data, options);
@@ -125,7 +125,7 @@
             title: `Top 5 unidades com maior quantidade de dias perdidos`,
             legend: 'bottom',
             backgroundColor: 'transparent',
-            chartArea: {left:0,right:0,top:50}
+            chartArea: {left:0,right:0,top:50,bottom:40}
         };
         var chart = new google.visualization.PieChart(document.getElementById('topCincoQtdDiasPerdidosPie'));
         chart.draw(data, options);
@@ -166,7 +166,7 @@
             pieHole: 0.4,
             legend: 'bottom',
             backgroundColor: 'transparent',
-            chartArea: {left:0,right:10,top:50}
+            chartArea: {left:0,right:10,top:50,bottom:40}
         };
         var chart = new google.visualization.PieChart(document.getElementById('qtdAtestadosPorHospPie'));
         chart.draw(data, options);
@@ -202,11 +202,12 @@
     function qtdDiasPerdidosPorHospPie() {
         var data = google.visualization.arrayToDataTable(qtdDiasPerdidosPorHosp);
         var options = {
+            top: 30,
             title: `Quantidade de dias perdidos por unidade`,
             pieHole: 0.4,
             legend: 'bottom',
             backgroundColor: 'transparent',
-            chartArea: {left:10,right:0,top:50}
+            chartArea: {left:10,right:0,top:50,bottom:40}
         };
         var chart = new google.visualization.PieChart(document.getElementById('qtdDiasPerdidosPorHospPie'));
         chart.draw(data, options);

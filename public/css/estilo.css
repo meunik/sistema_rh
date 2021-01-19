@@ -205,7 +205,7 @@ tr:hover.semHover td {
     display: block;
 }
 svg {
-    margin-top: -40px;
+    margin-top: 0px;
     white-space: pre;
 }
 i.qd-danger {

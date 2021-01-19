@@ -126,7 +126,7 @@ class AtestadosController extends Controller
 
         $totalDeAtestados = AtestadosService::totalDeAtestados($data);
 
-        $retorno[] = ['Task', 'Quantidade de atestados por unidade'];
+        $retorno[] = ['', 'Atestados'];
         foreach ($data as $dt) {
             $retorno[$dt->hospital_id] = [
                 $dt->hospital_nome,
@@ -150,7 +150,7 @@ class AtestadosController extends Controller
 
         $qtdDiasPerdidosMes = AtestadosService::qtdDiasPerdidosMes($data);
 
-        $retorno[] = ['Task', 'Quantidade de dias perdidos por unidade'];
+        $retorno[] = ['', 'Dias'];
         foreach ($data as $dt) {
             $retorno[$dt->hospital_id] = [
                 $dt->hospital_nome,

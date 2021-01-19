@@ -28,12 +28,20 @@
         var data = google.visualization.arrayToDataTable(qtdAtestadosPorHosp);
         var options = {
             title: 'Quantidade de atestados por unidade',
+            titleTextStyle: {
+                color: '#333b3f',
+                fontSize: 16,
+                bold: false
+            },
             legend: {
                 position: 'none',
                 textStyle: {
                     fontSize: 10,
                     bold: true,
                 }
+            },
+            hAxis: {
+                textStyle: { color: 'transparent' },
             },
             backgroundColor: 'transparent',
             chartArea: {
@@ -78,12 +86,20 @@
         var data = google.visualization.arrayToDataTable(qtdDiasPerdidosPorHosp);
         var options = {
             title: 'Quantidade de dias perdidos por unidade',
+            titleTextStyle: {
+                color: '#333b3f',
+                fontSize: 16,
+                bold: false
+            },
             legend: {
                 position: 'none',
                 textStyle: {
                     fontSize: 10,
                     bold: true,
                 }
+            },
+            hAxis: {
+                textStyle: { color: 'transparent' },
             },
             backgroundColor: 'transparent',
             chartArea: {

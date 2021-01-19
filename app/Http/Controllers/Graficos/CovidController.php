@@ -121,7 +121,7 @@ class CovidController extends Controller
         $data = $this->base();
         $totalDeCovid = CovidService::totalDeCovid($data);
 
-        $retorno[] = ['', 'Total casos COVID por unidade'];
+        $retorno[] = ['', 'Casos de COVID'];
         foreach ($data as $dt) {
             $retorno[$dt->hospital_id] = [
                 $dt->hospital_nome,
@@ -144,7 +144,7 @@ class CovidController extends Controller
         $data = $this->base();
         $qtdDiasPerdidosMes = CovidService::qtdDiasPerdidosMes($data);
 
-        $retorno[] = ['', 'Total casos COVID por unidade'];
+        $retorno[] = ['', 'Casos de COVID'];
         foreach ($data as $dt) {
             $retorno[$dt->hospital_id] = [
                 $dt->hospital_nome,
