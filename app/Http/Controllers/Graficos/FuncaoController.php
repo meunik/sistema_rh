@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Graficos;
 
-use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
+use App\Services\Graficos\FuncaoService;
 use App\Services\{UserService, FiltroService};
-use App\Services\Graficos\{ColegasAtivos, FuncaoService};
 
 class FuncaoController extends Controller
 {
@@ -70,7 +69,7 @@ class FuncaoController extends Controller
         $retorno[] = ['', 'Atestados'];
         foreach ($data as $dt) {
             $retorno[$dt->funcao] = [
-                $dt->hospital_nome,
+                $dt->funcao,
                 $totalDeAtestados[$dt->funcao]
             ];
         }
@@ -93,7 +92,7 @@ class FuncaoController extends Controller
         $retorno[] = ['', 'Atestados'];
         foreach ($data as $dt) {
             $retorno[$dt->funcao] = [
-                $dt->hospital_nome,
+                $dt->funcao,
                 $qtdDiasPerdidosMes[$dt->funcao]
             ];
         }

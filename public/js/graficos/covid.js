@@ -15,7 +15,7 @@ $(document).ready( function () {
             { data: 'coNull', className: 'text-center' },
             { data: 'coS', className: 'text-center' },
             { data: 'coMais', className: 'text-center' },
-            { data: 'coMenos', className: 'text-center' },
+            { data: 'co', className: 'text-center' },
             { data: 'qtdAtestadosNaoCotatados', className: 'text-center' },
             { data: 'qtdDiasPerdidosMes', className: 'text-center' },
             { data: 'porcentagemDeAtestadosPorColegas', className: 'text-center background-tabelas-graficos' },

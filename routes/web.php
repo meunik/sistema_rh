@@ -39,6 +39,16 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/totalAtestados', 'FuncaoController@totalAtestados');
             Route::get('/qtdDiasPerdidosMes', 'FuncaoController@qtdDiasPerdidosMes');
         });
+        Route::group(['prefix'=>'/cid'], function (){
+            Route::get('', 'CidController@index');
+            Route::get('/getdata', 'CidController@returnDataTables');
+            Route::get('/totalAtestados', 'CidController@totalAtestados');
+            Route::get('/qtdDiasPerdidosMes', 'CidController@qtdDiasPerdidosMes');
+        });
+        // Route::group(['prefix'=>'/inss'], function (){
+        //     Route::get('', 'InssController@index');
+        //     Route::get('/getdata', 'InssController@returnDataTables');
+        // });
     });
 
 

@@ -73,26 +73,6 @@ class FuncaoService
     }
 
     /**
-     *  Dados da coluna "Atestado outros motivos"
-     *  Retorna {"funcao": quantidade,...}
-     */
-    public static function atestadosPorOutrosMotivos($data)
-    {
-        $resultados = array();
-        $resultados['total'] = 0;
-        foreach ($data as $dt) {
-            if (($dt->motivoSelect == 3) || ($dt->motivo != null)) {
-                $resultados[$dt->funcao] = isset($resultados[$dt->funcao]) ? $resultados[$dt->funcao] + 1 : 1;
-                $resultados['total']++;
-            } else {
-                $resultados[$dt->funcao] = isset($resultados[$dt->funcao]) ? $resultados[$dt->funcao] : 0;
-            }
-        }
-
-		return $resultados;
-    }
-
-    /**
      *  Dados da coluna "Quantidade atestados nao contatados"
      *  Retorna {"funcao": quantidade,...}
      */
@@ -133,81 +113,6 @@ class FuncaoService
     }
 
     /**
-     *  Dados da coluna "Atestado de 1 ou 2 dias"
-     *  Retorna {"funcao": quantidade,...}
-     */
-    public static function atestados1Ou2Dias($data)
-    {
-        $resultados = array();
-        $resultados['total'] = 0;
-        foreach ($data as $dt) {
-
-            $data_inicial = Carbon::parse($dt->data_inicial);
-            $data_final = Carbon::parse($dt->data_final);
-            $diffInDays =  $data_inicial->diffInDays($data_final) + 1;
-
-            if (($dt->data_final != null) && ($diffInDays < 3)) {
-                $resultados[$dt->funcao] = isset($resultados[$dt->funcao]) ? $resultados[$dt->funcao] + 1 : 1;
-                $resultados['total']++;
-            } else {
-                $resultados[$dt->funcao] = isset($resultados[$dt->funcao]) ? $resultados[$dt->funcao] : 0;
-            }
-        }
-
-		return $resultados;
-    }
-
-    /**
-     *  Dados da coluna "Atestado de 3 a 15 dias"
-     *  Retorna {"funcao": quantidade,...}
-     */
-    public static function atestados3A15Dias($data)
-    {
-        $resultados = array();
-        $resultados['total'] = 0;
-        foreach ($data as $dt) {
-
-            $data_inicial = Carbon::parse($dt->data_inicial);
-            $data_final = Carbon::parse($dt->data_final);
-            $diffInDays =  $data_inicial->diffInDays($data_final) + 1;
-
-            if (($dt->data_final != null) && (($diffInDays <= 15) && ($diffInDays >= 3))) {
-                $resultados[$dt->funcao] = isset($resultados[$dt->funcao]) ? $resultados[$dt->funcao] + 1 : 1;
-                $resultados['total']++;
-            } else {
-                $resultados[$dt->funcao] = isset($resultados[$dt->funcao]) ? $resultados[$dt->funcao] : 0;
-            }
-        }
-
-		return $resultados;
-    }
-
-    /**
-     *  Dados da coluna "Atestado acima de 15 dias"
-     *  Retorna {"funcao": quantidade,...}
-     */
-    public static function atestadosAcimaDe15Dias($data)
-    {
-        $resultados = array();
-        $resultados['total'] = 0;
-        foreach ($data as $dt) {
-
-            $data_inicial = Carbon::parse($dt->data_inicial);
-            $data_final = Carbon::parse($dt->data_final);
-            $diffInDays =  $data_inicial->diffInDays($data_final) + 1;
-
-            if (($dt->data_final == null) || ($diffInDays >= 15)) {
-                $resultados[$dt->funcao] = isset($resultados[$dt->funcao]) ? $resultados[$dt->funcao] + 1 : 1;
-                $resultados['total']++;
-            } else {
-                $resultados[$dt->funcao] = isset($resultados[$dt->funcao]) ? $resultados[$dt->funcao] : 0;
-            }
-        }
-
-		return $resultados;
-    }
-
-    /**
      *  Dados da coluna "Quantidade dias perdidos mês"
      *  Retorna {"funcao": quantidade,...}
      */
@@ -228,23 +133,6 @@ class FuncaoService
                 $resultados[$dt->funcao] = isset($resultados[$dt->funcao]) ? $resultados[$dt->funcao] : 0;
             }
         }
-
-		return $resultados;
-    }
-
-    /**
-     *  Dados da coluna "% de atestados por Colegas"
-     *  Retorna {"funcao": quantidade,...}
-     */
-    public static function porcentagemDeAtestadosPorColegas($data, $colegasAtivos, $totalDeAtestados)
-    {
-        $resultados = array();
-        foreach ($data as $dt) {
-            $porcentagem = ($totalDeAtestados[$dt->funcao]/$colegasAtivos[$dt->funcao])*100;
-            $resultados[$dt->funcao] = number_format($porcentagem, 2, ',', '').'%';
-        }
-        $porcentagem = ($totalDeAtestados['total']/$colegasAtivos['total'])*100;
-        $resultados['total'] = number_format($porcentagem, 2, ',', '').'%';
 
 		return $resultados;
     }

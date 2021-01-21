@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Graficos;
 
-use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 use App\Services\{UserService, FiltroService};
@@ -16,26 +15,6 @@ class AtestadosController extends Controller
     }
     public function index()
     {
-        // $data = $this->base();
-
-        // $totalDeAtestados = AtestadosService::totalDeAtestados($data);
-
-        // $retorno[] = ['Task', 'Quantidade de atestados por unidade'];
-        // foreach ($data as $dt) {
-        //     $retorno[$dt->hospital_id] = [
-        //         $dt->hospital_nome,
-        //         $totalDeAtestados[$dt->hospital_id]
-        //     ];
-        // }
-
-        // foreach ($retorno as $result) {
-        //     $resultados[] = $result;
-        // }
-
-        // // // echo json_encode($retorno);
-        // echo json_encode($resultados);
-        // exit;
-
         return view('graficos.atestados');
     }
 

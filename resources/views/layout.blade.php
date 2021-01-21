@@ -98,6 +98,12 @@
                                     <li>
                                         <a href="/graficos/funcao"><i class="fa fa-bar-chart-o"></i> Função</a>
                                     </li>
+                                    <li>
+                                        <a href="/graficos/cid"><i class="fa fa-bar-chart-o"></i> CID</a>
+                                    </li>
+                                    {{-- <li>
+                                        <a href="/graficos/inss"><i class="fa fa-bar-chart-o"></i> Afastadis Pelo INSS</a>
+                                    </li> --}}
                                 </ul>
                             </li>
                             @endif

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Graficos;
 
-use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 use App\Services\{UserService, FiltroService};
@@ -16,48 +15,6 @@ class CovidController extends Controller
     }
     public function index()
     {
-        // $data = $this->base();
-
-        // $colegasAtivos = ColegasAtivos::qtd();
-        // $totalDeCovid = CovidService::totalDeCovid($data);
-        // $co_Null = CovidService::co_Null($data);
-        // $co_s = CovidService::co_s($data);
-        // $coMais = CovidService::coMais($data);
-        // $coMenos = CovidService::coMenos($data);
-        // $qtdAtestadosNaoCotatados = CovidService::qtdAtestadosNaoCotatados($data);
-        // $qtdDiasPerdidosMes = CovidService::qtdDiasPerdidosMes($data);
-        // $porcentagemDeAtestadosPorColegas = CovidService::porcentagemDeAtestadosPorColegas($data, $colegasAtivos, $totalDeCovid);
-
-        // foreach ($data as $dt) {
-        //     $resultados[$dt->hospital_id] = [
-        //         "hospital_nome" => $dt->hospital_nome,
-        //         "colegasAtivos" => $colegasAtivos[$dt->hospital_id],
-        //         "totalDeCovid" => $totalDeCovid[$dt->hospital_id],
-        //         "coNull" => $co_Null[$dt->hospital_id],
-        //         "coS" => $co_s[$dt->hospital_id],
-        //         "coMais" => $coMais[$dt->hospital_id],
-        //         "coMenos" => $coMenos[$dt->hospital_id],
-        //         "qtdAtestadosNaoCotatados" => $qtdAtestadosNaoCotatados[$dt->hospital_id],
-        //         "qtdDiasPerdidosMes" => $qtdDiasPerdidosMes[$dt->hospital_id],
-        //         "porcentagemDeAtestadosPorColegas" => $porcentagemDeAtestadosPorColegas[$dt->hospital_id]
-        //     ];
-        // }
-        // $resultados['total'] = [
-        //     "hospital_nome" => 'TOTAL',
-        //     "colegasAtivos" => $colegasAtivos['total'],
-        //     "totalDeCovid" => $totalDeCovid['total'],
-        //     "coNull" => $co_Null['total'],
-        //     "coS" => $co_s['total'],
-        //     "coMais" => $coMais['total'],
-        //     "coMenos" => $coMenos['total'],
-        //     "qtdAtestadosNaoCotatados" => $qtdAtestadosNaoCotatados['total'],
-        //     "qtdDiasPerdidosMes" => $qtdDiasPerdidosMes['total'],
-        //     "porcentagemDeAtestadosPorColegas" => $porcentagemDeAtestadosPorColegas['total']
-        // ];
-
-        // echo json_encode($resultados);
-        // exit;
-
         return view('graficos.covid');
     }
 
@@ -78,7 +35,7 @@ class CovidController extends Controller
         $co_Null = CovidService::co_Null($data);
         $co_s = CovidService::co_s($data);
         $coMais = CovidService::coMais($data);
-        $coMenos = CovidService::coMenos($data);
+        $co = CovidService::co($data);
         $qtdAtestadosNaoCotatados = CovidService::qtdAtestadosNaoCotatados($data);
         $qtdDiasPerdidosMes = CovidService::qtdDiasPerdidosMes($data);
         $porcentagemDeAtestadosPorColegas = CovidService::porcentagemDeAtestadosPorColegas($data, $colegasAtivos, $totalDeCovid);
@@ -91,7 +48,7 @@ class CovidController extends Controller
                 "coNull" => $co_Null[$dt->hospital_id],
                 "coS" => $co_s[$dt->hospital_id],
                 "coMais" => $coMais[$dt->hospital_id],
-                "coMenos" => $coMenos[$dt->hospital_id],
+                "co" => $co[$dt->hospital_id],
                 "qtdAtestadosNaoCotatados" => $qtdAtestadosNaoCotatados[$dt->hospital_id],
                 "qtdDiasPerdidosMes" => $qtdDiasPerdidosMes[$dt->hospital_id],
                 "porcentagemDeAtestadosPorColegas" => $porcentagemDeAtestadosPorColegas[$dt->hospital_id]
@@ -104,7 +61,7 @@ class CovidController extends Controller
             "coNull" => $co_Null['total'],
             "coS" => $co_s['total'],
             "coMais" => $coMais['total'],
-            "coMenos" => $coMenos['total'],
+            "co" => $co['total'],
             "qtdAtestadosNaoCotatados" => $qtdAtestadosNaoCotatados['total'],
             "qtdDiasPerdidosMes" => $qtdDiasPerdidosMes['total'],
             "porcentagemDeAtestadosPorColegas" => $porcentagemDeAtestadosPorColegas['total']

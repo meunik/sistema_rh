@@ -6,6 +6,9 @@
 @section('content')
 <div class="container-fluid">
     <div class="white-box">
+        <h3 class="box-title m-b-0">Atestados</h3>
+        <p class="m-b-0">Dados referentes aos últimos 30 dias</p>
+        <hr class="m-t-5">
 
         <div class="col-sm-12 p-0">
             <div class="col-sm-12 p-0 b-b-1">
@@ -52,7 +55,10 @@
         </div>
 
         <div class="col-sm-12 m-t-20 p-0">
-            <p><b class="text-danger">OBS:</b> Clique ou passe o mouse nas barras dos gráficos para mais detalhes.</p>
+            <b class="text-danger">OBS:</b>
+            <li>Clique ou passe o mouse nas barras dos gráficos para mais detalhes(nome e valor).</li>
+            <li>Os gáficos seguem a mesma ordem da tabela no final da página</li>
+            <br>
         </div>
         <div class="col-sm-12 p-0">
             <div id="qtdAtestadosPorHospCharts" style="height: 400px;"></div>

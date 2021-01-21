@@ -5,6 +5,7 @@ $(document).ready( function () {
         language: { "url": "/Portuguese-Brasil.json" },
         paging: false,
         info: false,
+        ordering:  false,
         dom: 'Bfrtip',
         buttons: [ 'copy', 'excel', 'pdf' ],
         columns: [

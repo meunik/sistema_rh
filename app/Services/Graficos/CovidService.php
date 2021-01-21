@@ -51,7 +51,7 @@ class CovidService
     }
 
     /**
-     *  Dados da coluna "Quantidade atestados nao contatados"
+     *  Dados da coluna "Indefinidos"
      *  Retorna {"hospital_id": quantidade,...}
      */
     public static function co_Null($data)
@@ -71,7 +71,7 @@ class CovidService
     }
 
     /**
-     *  Dados da coluna "Quantidade atestados nao contatados"
+     *  Dados da coluna "CO-S"
      *  Retorna {"hospital_id": quantidade,...}
      */
     public static function co_s($data)
@@ -111,10 +111,10 @@ class CovidService
     }
 
     /**
-     *  Dados da coluna "CO-"
+     *  Dados da coluna "CO"
      *  Retorna {"hospital_id": quantidade,...}
      */
-    public static function coMenos($data)
+    public static function co($data)
     {
         $resultados = array();
         $resultados['total'] = 0;

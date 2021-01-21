@@ -8,10 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 /**
  *  Criado 05/01/2021, por isso poucos lugares ultilizam esse Service
- *  ultilizado {
- *      App\Http\Controllers\Relatorios\DiasAfastamentoController,
- *      App\Http\Controllers\Graficos\AtestadosController,
- *  }
  */
 class UserService
 {
