@@ -16,6 +16,13 @@
             <div id="qtdDiasPerdidosMesCharts" style="height: 300px;"></div>
         </div>
 
+        {{-- <div class="col-sm-6 m-b-40 p-0">
+            <div id="totalCasosCovidPie" style="height: 500px;"></div>
+        </div>
+        <div class="col-sm-6 m-b-40 p-0">
+            <div id="qtdDiasPerdidosMesPie" style="height: 500px;"></div>
+        </div> --}}
+
         <div class="col-sm-12 row p-0">
             <div class="col-sm-12 table-responsive p-0 p-r-10">
                 <table id="resultado" class="table table-bordered table-condensed">
@@ -50,7 +57,7 @@
 
 <!-- Graficos Pie -->
     {{-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript" src="../js/graficos/atestadosPie.js"></script> --}}
+    <script type="text/javascript" src="../js/graficos/covidPie.js"></script> --}}
 <!-- /Graficos Pie -->
 
 <!-- Graficos Column -->

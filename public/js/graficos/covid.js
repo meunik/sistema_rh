@@ -21,30 +21,4 @@ $(document).ready( function () {
             { data: 'porcentagemDeAtestadosPorColegas', className: 'text-center background-tabelas-graficos' },
         ],
     });
-
-    // const topCincoQtdAtestados = $('#topCincoQtdAtestados').DataTable({
-    //     ajax: { "url": `/graficos/atestados/topCincoQtdAtestados` },
-    //     language: { "url": "/Portuguese-Brasil.json" },
-    //     paging: false,
-    //     info: false,
-    //     searching: false,
-    //     ordering:  false,
-    //     columns: [
-    //         { data: 'hospital_nome', className: 'text-center' },
-    //         { data: 'totalDeAtestados', className: 'text-center' },
-    //     ],
-    // });
-
-    // const topCincoQtdDiasPerdidos = $('#topCincoQtdDiasPerdidos').DataTable({
-    //     ajax: { "url": `/graficos/atestados/topCincoQtdDiasPerdidos` },
-    //     language: { "url": "/Portuguese-Brasil.json" },
-    //     paging: false,
-    //     info: false,
-    //     searching: false,
-    //     ordering:  false,
-    //     columns: [
-    //         { data: 'hospital_nome', className: 'text-center' },
-    //         { data: 'qtdDiasPerdidosMes', className: 'text-center' },
-    //     ],
-    // });
 });

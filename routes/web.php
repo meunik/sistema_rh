@@ -33,6 +33,12 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/totalCasosCovid', 'CovidController@totalCasosCovid');
             Route::get('/qtdDiasPerdidosMes', 'CovidController@qtdDiasPerdidosMes');
         });
+        Route::group(['prefix'=>'/funcao'], function (){
+            Route::get('', 'FuncaoController@index');
+            Route::get('/getdata', 'FuncaoController@returnDataTables');
+            Route::get('/totalAtestados', 'FuncaoController@totalAtestados');
+            Route::get('/qtdDiasPerdidosMes', 'FuncaoController@qtdDiasPerdidosMes');
+        });
     });
 
 

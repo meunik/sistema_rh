@@ -95,6 +95,9 @@
                                     <li>
                                         <a href="/graficos/covid"><i class="fa fa-bar-chart-o"></i> Covid</a>
                                     </li>
+                                    <li>
+                                        <a href="/graficos/funcao"><i class="fa fa-bar-chart-o"></i> Função</a>
+                                    </li>
                                 </ul>
                             </li>
                             @endif
