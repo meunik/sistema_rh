@@ -15,17 +15,17 @@
         <li>Os gáficos seguem a mesma ordem da tabela no final da página</li>
         <br>
 
-        <div class="col-sm-12 p-0">
+        <div class="col-sm-12 m-t-40 p-0">
             <div id="totalCasosCovidCharts" style="height: 300px;"></div>
         </div>
         <div class="col-sm-12 m-t-20 m-b-40 p-0">
             <div id="qtdDiasPerdidosMesCharts" style="height: 300px;"></div>
         </div>
 
-        {{-- <div class="col-sm-6 m-b-40 p-0">
+        {{-- <div class="col-sm-6 m-t-20 m-b-40 p-0">
             <div id="totalCasosCovidPie" style="height: 500px;"></div>
         </div>
-        <div class="col-sm-6 m-b-40 p-0">
+        <div class="col-sm-6 m-t-20 m-b-40 p-0">
             <div id="qtdDiasPerdidosMesPie" style="height: 500px;"></div>
         </div> --}}
 

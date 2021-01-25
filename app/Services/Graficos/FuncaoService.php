@@ -25,7 +25,7 @@ class FuncaoService
             'datas.data_inicial',
             'datas.dias_atestado',
             'datas.data_final',
-            'datas.data_de_contato',
+            'datas.data_de_contato'
         )
         ->get();
 

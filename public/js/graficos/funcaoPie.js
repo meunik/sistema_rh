@@ -21,7 +21,6 @@
     };
 
     var totalAtestados = totalAtestados().data;
-    console.log(totalAtestados);
     google.charts.load('current', {packages:['corechart']});
     google.charts.setOnLoadCallback(totalAtestadosPie);
 
@@ -62,7 +61,6 @@
     };
 
     var qtdDiasPerdidosMes = qtdDiasPerdidosMes().data;
-    console.log(qtdDiasPerdidosMes);
     google.charts.load('current', {packages:['corechart']});
     google.charts.setOnLoadCallback(qtdDiasPerdidosMesPie);
 

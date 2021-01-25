@@ -10,7 +10,7 @@
         <p class="m-b-0">Dados referentes aos últimos 30 dias</p>
         <hr class="m-t-5">
 
-        <div class="col-sm-12 p-0">
+        <div class="col-sm-12 m-t-20 p-0">
             <div class="col-sm-12 p-0 b-b-1">
                 <div id="totalQtdDiasPie" style="width: 100%; height: 400px;"></div>
             </div>

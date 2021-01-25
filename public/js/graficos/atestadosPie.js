@@ -154,7 +154,6 @@
     };
 
     var qtdAtestadosPorHosp = qtdAtestadosPorHosp().data;
-    console.log(qtdAtestadosPorHosp);
     google.charts.load('current', {packages:['corechart']});
     google.charts.setOnLoadCallback(qtdAtestadosPorHospPie);
 
@@ -195,7 +194,6 @@
     };
 
     var qtdDiasPerdidosPorHosp = qtdDiasPerdidosPorHosp().data;
-    console.log(qtdDiasPerdidosPorHosp);
     google.charts.load('current', {packages:['corechart']});
     google.charts.setOnLoadCallback(qtdDiasPerdidosPorHospPie);
 

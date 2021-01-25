@@ -21,7 +21,6 @@
     };
 
     var totalCasosCovid = totalCasosCovid().data;
-    console.log(totalCasosCovid);
     google.charts.load('current', {packages:['corechart']});
     google.charts.setOnLoadCallback(totalCasosCovidPie);
 
@@ -62,7 +61,6 @@
     };
 
     var qtdDiasPerdidosMes = qtdDiasPerdidosMes().data;
-    console.log(qtdDiasPerdidosMes);
     google.charts.load('current', {packages:['corechart']});
     google.charts.setOnLoadCallback(qtdDiasPerdidosMesPie);
 
