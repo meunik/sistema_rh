@@ -243,6 +243,9 @@ class DataseColegas
         'datas.data_final',
         'datas.motivo',
         'datas.motivoSelect',
+        'datas.data_proximo_contato_form',
+        'datas.data_realizacao_exame',
+        'datas.data_de_contato_form',
         'datas.covid')
         ->orderBy('colegas.nome')
         ->get();

@@ -63,7 +63,7 @@
                             <input id="encaminhado_inss" type="checkbox" name="encaminhado_inss" autocomplete="off">
                         </div>
                         <div class="col-sm-4 text-left form-group">
-                            <label for="data_proximo_contato" class="control-label p-0">Data Proximo Contato:</label>
+                            <label for="data_proximo_contato" class="control-label p-0">Data Próximo Contato:</label>
                             <input type="date" class="form-control" autocomplete="off" name="data_proximo_contato" id="data_proximo_contato">
                         </div>
                         <div class="col-sm-5 text-left form-group">

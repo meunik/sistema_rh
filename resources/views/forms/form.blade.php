@@ -241,6 +241,13 @@
         $("#observacao"+colegas_id).addClass('d-none');
         $("#data_final_input"+colegas_id).attr('readonly', false);
 
+        $("#data_inicio_beneficio"+colegas_id).addClass('d-none');
+        $("#data_cessacao_beneficio"+colegas_id).addClass('d-none');
+        $("#especie_do_beneficio_Td"+colegas_id).addClass('d-none');
+        $("#data_proximo_contato_form"+colegas_id).addClass('d-none');
+        $("#data_realizacao_exame"+colegas_id).addClass('d-none');
+        $("#data_de_contato_form"+colegas_id).addClass('d-none');
+
         if (value == 'AT') {
             $("#cid"+colegas_id).removeClass('d-none');
             $("#cidCategoria"+colegas_id).removeClass('d-none');
@@ -268,6 +275,16 @@
             $("#data_inicial"+colegas_id).removeClass('d-none');
             $("#data_final"+colegas_id).removeClass('d-none');
             $("#observacao"+colegas_id).removeClass('d-none');
+        } else if (value == 'INSS') {
+            $("#data_inicio_beneficio"+colegas_id).removeClass('d-none');
+            $("#data_cessacao_beneficio"+colegas_id).removeClass('d-none');
+            $("#especie_do_beneficio_Td"+colegas_id).removeClass('d-none');
+            $("#cidCategoria"+colegas_id).removeClass('d-none');
+            $("#motivoSelectTd"+colegas_id).removeClass('d-none');
+            if ($("#motivoSelect"+colegas_id).val() == 3) $("#motivoTd"+colegas_id).removeClass('d-none');
+            $("#data_proximo_contato_form"+colegas_id).removeClass('d-none');
+            $("#data_realizacao_exame"+colegas_id).removeClass('d-none');
+            $("#data_de_contato_form"+colegas_id).removeClass('d-none');
         }
     }
 
@@ -592,6 +609,7 @@
                         var fo = (row.cod == "FO") ? "selected" : "";
                         var co = (row.cod == "CO") ? "selected" : "";
                         var gr = (row.cod == "GR") ? "selected" : "";
+                        var inss = (row.cod == "INSS") ? "selected" : "";
                         var id = row.id;
 						var html = `<div class="text-left form-group row m-0">
                                         <label for="cod${id}" class="control-label p-0">COD:</label>
@@ -600,6 +618,7 @@
                                                 <option selected disabled>Selecione</option>
                                                 <option value="FA" ${fa}>FALTA</option>
                                                 <option value="AT" ${at}>ATESTADO</option>
+                                                <option value="INSS" ${inss}>AFASTAMENTO INSS</option>
                                                 <option value="FE" ${fe}>FÉRIAS</option>
                                                 <option value="DE" ${de}>DEMITIDO</option>
                                                 <option value="FO" ${fo}>FOLGA</option>
@@ -610,6 +629,78 @@
                                     </div>`;
 						return html;
 					},
+				},
+				{/*data_inicio_beneficio*/
+					data: null,
+				    orderable: false,
+				    searchable: false,
+					render: (row) => {
+                        var data_inicio_beneficio = (row.data_inicio_beneficio) ? row.data_inicio_beneficio : "";
+                        var id = row.id;
+						var html = `<div class="text-left form-group row m-0">
+                                        <label for="data_inicio_beneficio_input${id}" class="control-label p-0">
+                                            Data início benefício:
+                                        </label>
+                                        <div class="">
+                                            <input type="date" class="form-control w-180" autocomplete="off" name="data_inicio_beneficio" value="${data_inicio_beneficio}" id="data_inicio_beneficio_input${id}">
+                                        </div>
+                                    </div>`;
+						return html;
+					},
+                    createdCell: function (td, row) {
+                        $(td).attr('id', 'data_inicio_beneficio'+row.id);
+                        if (row.cod != 'INSS') $(td).attr('class', 'd-none')
+                    },
+				},
+				{/*data_cessacao_beneficio*/
+					data: null,
+				    orderable: false,
+				    searchable: false,
+					render: (row) => {
+                        var data_cessacao_beneficio = (row.data_cessacao_beneficio) ? row.data_cessacao_beneficio : "";
+                        var id = row.id;
+						var html = `<div class="text-left form-group row m-0">
+                                        <label for="data_cessacao_beneficio_input${id}" class="control-label p-0">
+                                            Data cessação benefício:
+                                        </label>
+                                        <div class="">
+                                            <input type="date" class="form-control w-180" autocomplete="off" name="data_cessacao_beneficio" value="${data_cessacao_beneficio}" id="data_cessacao_beneficio_input${id}">
+                                        </div>
+                                    </div>`;
+						return html;
+					},
+                    createdCell: function (td, row) {
+                        $(td).attr('id', 'data_cessacao_beneficio'+row.id);
+                        if (row.cod != 'INSS') $(td).attr('class', 'd-none')
+                    },
+				},
+				{/*especie_do_beneficio*/
+					data: null,
+				    orderable: false,
+				    searchable: false,
+					render: (row) => {
+                        var especie_do_beneficio = (row.especie_do_beneficio) ? row.especie_do_beneficio : "";
+                        var selected = {especie_do_beneficio: null};
+                        selected[`${especie_do_beneficio}`] = "selected";
+                        var id = row.id;
+
+                        var html = `<div class="text-left form-group row m-0">
+                                        <label for="especie_do_beneficio${id}" class="control-label p-0">Espécie do benefício:</label>
+                                        <div class="">
+                                            <select id="especie_do_beneficio${id}" name="especie_do_beneficio" class="form-control w-130" autocomplete="off" style="width: 250px;" onchange="cidMotivo(this.value, ${id})">
+                                                <option selected disabled>Selecione</option>
+                                                <option value="1" ${selected[1]}>Acidente Trabalho ou Doença Ocupacional</option>
+                                                <option value="2" ${selected[2]}>Licença Maternidade</option>
+                                                <option value="3" ${selected[3]}>Outros</option>
+                                            </select>
+                                        </div>
+                                    </div>`;
+						return html;
+					},
+                    createdCell: function (td, row) {
+                        $(td).attr('id', 'especie_do_beneficio_Td'+row.id);
+                        if (row.cod != 'INSS') $(td).attr('class', 'd-none')
+                    },
 				},
 				{/*cidCategoria*/
 					data: null,
@@ -670,7 +761,13 @@
 					},
                     createdCell: function (td, row) {
                         $(td).attr('id', 'cidCategoria'+row.id);
-                        if (row.cod != 'AT') $(td).attr('class', 'd-none')
+                        switch (row.cod) {
+                            case 'AT': break;
+                            case 'INSS': break;
+                            default:
+                                $(td).attr('class', 'd-none')
+                                break;
+                        }
                     },
 				},
 				{/*cidSubCategoria*/
@@ -855,7 +952,13 @@
 					},
                     createdCell: function (td, row) {
                         $(td).attr('id', 'motivoSelectTd'+row.id);
-                        if (row.cod != 'AT') $(td).attr('class', 'd-none')
+                        switch (row.cod) {
+                            case 'AT': break;
+                            case 'INSS': break;
+                            default:
+                                $(td).attr('class', 'd-none')
+                                break;
+                        }
                     },
 				},
 				{/*motivo*/
@@ -875,7 +978,14 @@
 					},
                     createdCell: function (td, row) {
                         $(td).attr('id', 'motivoTd'+row.id);
-                        if ((row.cod != 'AT') || (row.motivoSelect != 3)) $(td).attr('class', 'd-none')
+                        // if ((row.cod != 'AT') || (row.motivoSelect != 3)) $(td).attr('class', 'd-none')
+                        switch (row.cod) {
+                            case 'AT': if (row.motivoSelect != 3) break;
+                            case 'INSS': if (row.motivoSelect != 3) break;
+                            default:
+                                $(td).attr('class', 'd-none')
+                                break;
+                        }
                     },
 				},
 				{/*atestadoFIle*/
@@ -896,6 +1006,72 @@
                     createdCell: function (td, row) {
                         $(td).attr('id', 'atestadoFIle'+row.id);
                         if (row.cod != 'AT') $(td).attr('class', 'd-none')
+                    },
+				},
+				{/*data_proximo_contato_form*/
+					data: null,
+				    orderable: false,
+				    searchable: false,
+					render: (row) => {
+                        var data_proximo_contato_form = (row.data_proximo_contato_form) ? row.data_proximo_contato_form : "";
+                        var id = row.id;
+						var html = `<div class="text-left form-group row m-0">
+                                        <label for="data_proximo_contato_form_input${id}" class="control-label p-0">
+                                            Data próximo contato:
+                                        </label>
+                                        <div class="">
+                                            <input type="date" class="form-control w-180" autocomplete="off" name="data_proximo_contato_form" value="${data_proximo_contato_form}" id="data_proximo_contato_form_input${id}">
+                                        </div>
+                                    </div>`;
+						return html;
+					},
+                    createdCell: function (td, row) {
+                        $(td).attr('id', 'data_proximo_contato_form'+row.id);
+                        if (row.cod != 'INSS') $(td).attr('class', 'd-none')
+                    },
+				},
+				{/*data_realizacao_exame*/
+					data: null,
+				    orderable: false,
+				    searchable: false,
+					render: (row) => {
+                        var data_realizacao_exame = (row.data_realizacao_exame) ? row.data_realizacao_exame : "";
+                        var id = row.id;
+						var html = `<div class="text-left form-group row m-0">
+                                        <label for="data_realizacao_exame_input${id}" class="control-label p-0">
+                                            Data realização exame:
+                                        </label>
+                                        <div class="">
+                                            <input type="date" class="form-control w-180" autocomplete="off" name="data_realizacao_exame" value="${data_realizacao_exame}" id="data_realizacao_exame_input${id}">
+                                        </div>
+                                    </div>`;
+						return html;
+					},
+                    createdCell: function (td, row) {
+                        $(td).attr('id', 'data_realizacao_exame'+row.id);
+                        if (row.cod != 'INSS') $(td).attr('class', 'd-none')
+                    },
+				},
+				{/*data_de_contato_form*/
+					data: null,
+				    orderable: false,
+				    searchable: false,
+					render: (row) => {
+                        var data_de_contato_form = (row.data_de_contato_form) ? row.data_de_contato_form : "";
+                        var id = row.id;
+						var html = `<div class="text-left form-group row m-0">
+                                        <label for="data_de_contato_form_input${id}" class="control-label p-0">
+                                            Data de contato:
+                                        </label>
+                                        <div class="">
+                                            <input type="date" class="form-control w-180" autocomplete="off" name="data_de_contato_form" value="${data_de_contato_form}" id="data_de_contato_form_input${id}">
+                                        </div>
+                                    </div>`;
+						return html;
+					},
+                    createdCell: function (td, row) {
+                        $(td).attr('id', 'data_de_contato_form'+row.id);
+                        if (row.cod != 'INSS') $(td).attr('class', 'd-none')
                     },
 				},
 				{/*data_do_teste*/
@@ -984,7 +1160,7 @@
 						return html;
 					},
                     createdCell: function (td, row) {
-                        $(td).attr('colspan', 15);
+                        $(td).attr('colspan', 20);
                         $(td).attr('id', 'submitTr'+row.id);
                     },
 				},
