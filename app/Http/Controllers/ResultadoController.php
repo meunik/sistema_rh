@@ -130,7 +130,7 @@ class ResultadoController extends Controller
                     ->where('colegas_id', $colega->id)
                     ->OrWhere('data_inicial', '<=', $query['inicial'])
                     ->whereNull('data_final')
-                    ->whereIn('cod', ['CO', 'GR', 'FE', 'AT','AF'])
+                    ->whereIn('cod', ['CO', 'GR', 'FE', 'AT','AF','INSS'])
                     ->where('colegas_id', $colega->id)
                     ->orderBy('id', 'DESC')
                     ->first();
@@ -139,6 +139,14 @@ class ResultadoController extends Controller
                 $resultados[$colega->nome]['situacao'] = 'Ativo';
                 $resultados[$colega->nome]['cid'] = isset($data->cids_id)?$data->cids_id:'-';
                 $resultados[$colega->nome]['colega_id'] = $colega->id;
+
+                $resultados[$colega->nome]['data_inicio_beneficio'] = isset($data->data_inicio_beneficio)?$data->data_inicio_beneficio:null;
+                $resultados[$colega->nome]['data_cessacao_beneficio'] = isset($data->data_cessacao_beneficio)?$data->data_cessacao_beneficio:null;
+                $resultados[$colega->nome]['especie_do_beneficio'] = isset($data->especie_do_beneficio)?$data->especie_do_beneficio:null;
+
+                $resultados[$colega->nome]['data_proximo_contato_form'] = isset($data->data_proximo_contato_form)?$data->data_proximo_contato_form:null;
+                $resultados[$colega->nome]['data_realizacao_exame'] = isset($data->data_realizacao_exame)?$data->data_realizacao_exame:null;
+                $resultados[$colega->nome]['data_de_contato_form'] = isset($data->data_de_contato_form)?$data->data_de_contato_form:null;
 
                 $resultados[$colega->nome]['encaminhado_inss'] = isset($data->encaminhado_inss)?$data->encaminhado_inss:'';
                 $resultados[$colega->nome]['data_proximo_contato'] = isset($data->data_proximo_contato)?$data->data_proximo_contato:'';
@@ -252,6 +260,13 @@ class ResultadoController extends Controller
                                 $resultados[$colega->nome]['dias_de_atestado'] = $inicio->diffInDays($query['final']) + 1;
                             }
                             $resultados[$colega->nome]['retornou'] = "warning";
+                        }
+                    }
+
+                    if ($data->cod == 'INSS') {
+                        $resultados[$colega->nome]['datas'][$i]['cod'] = 'INSS';
+                        if (isset($data->observacao)) {
+                            array_push($resultados[$colega->nome]['observacao'], $data->observacao);
                         }
                     }
                 }

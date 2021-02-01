@@ -102,3 +102,111 @@
     </div>
 </div>
 <!-- /Editar Arquivo Atestado -->
+
+<!-- Vacina -->
+<div class="modal fade" id="vacinaModal" tabindex="-1" role="dialog" aria-labelledby="vacinaModal" style="display: none;">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form id="vacinaModalForm">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="vacinaModal_label">
+                        <span class="text-info font-16 m-b-5">
+                            <img src="plugins/images/injection.png" alt="" class="" style="width: 20px;">
+                            Vacina
+                        </span>
+                    </h4>
+                </div>
+                <div class="modal-body row">
+                    <h4 class="modal-title text-center font-semibold font-16 m-b-5" id="vacinaModal_label2">
+                        Controle de Vacinação dos Profissionais de Saúde
+                    </h4>
+                    <br>
+
+                    <div class="row p-b-10" id="vacinaModa_body"></div>
+
+                    {{-- <div>
+                        <div class="row p-b-10">
+                            <div class="col-sm-12 row m-0 text-left">
+                                <b class="col-sm-3 m-0">Unidade:</b>
+                                <p id="vacinaModalUnidade" class="col-sm-9 m-0">${unidade}</p>
+
+                                <input type="text" class="d-none" autocomplete="off" name="vacinaModal_id" id="vacinaModal_id" value="${id}" readonly>
+                            </div>
+                            <div class="col-sm-12 row m-0 text-left">
+                                <b class="col-sm-3 m-0">Nome:</b>
+                                <p id="vacinaModalNome" class="col-sm-9 m-0">${nome}</p>
+                            </div>
+                            <div class="col-sm-12 row m-0 text-left">
+                                <b class="col-sm-3 m-0">Cargo/Função:</b>
+                                <p id="vacinaModalCargoFuncao" class="col-sm-9 m-0">${funcao}</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 row p-b-10 borda-1">
+                            <div class="col-sm-4 row m-0 p-0 text-left">
+                                <b class="col-sm-12 m-0 p-0 b-b-1">
+                                    <span class="p-l-15">
+                                        Unidade:
+                                    </span>
+                                </b>
+                                <p id="vacinaModalUnidade" class="col-sm-12 m-0">${unidade}</p>
+
+                                <input type="text" class="d-none" autocomplete="off" name="vacinaModal_id" id="vacinaModal_id" value="${id}" readonly>
+                            </div>
+                            <div class="col-sm-4 row m-0 p-0 text-left">
+                                <b class="col-sm-12 m-0 p-0 b-b-1">
+                                    <span class="p-l-15">
+                                        Nome:
+                                    </span>
+                                </b>
+                                <p id="vacinaModalNome" class="col-sm-12 m-0">${nome}</p>
+                            </div>
+                            <div class="col-sm-4 row m-0 p-0 text-left">
+                                <b class="col-sm-12 m-0 p-0 b-b-1">
+                                    <span class="p-l-15">
+                                        Cargo/Função:
+                                    </span>
+                                </b>
+                                <p id="vacinaModalCargoFuncao" class="col-sm-12 m-0">${funcao}</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 row p-b-10 borda-1">
+                            <div class="col-sm-4 row m-0 p-0 text-left">
+                                <b class="col-sm-12 m-0 p-0 b-b-1">
+                                    <span class="p-l-15">
+                                        Unidade:
+                                    </span>
+                                </b>
+                                <p id="vacinaModalUnidade" class="col-sm-12 m-0">${unidade}</p>
+
+                                <input type="text" class="d-none" autocomplete="off" name="vacinaModal_id" id="vacinaModal_id" value="${id}" readonly>
+                            </div>
+                            <div class="col-sm-4 row m-0 p-0 text-left">
+                                <b class="col-sm-12 m-0 p-0 b-b-1">
+                                    <span class="p-l-15">
+                                        Nome:
+                                    </span>
+                                </b>
+                                <p id="vacinaModalNome" class="col-sm-12 m-0">${nome}</p>
+                            </div>
+                            <div class="col-sm-4 row m-0 p-0 text-left">
+                                <b class="col-sm-12 m-0 p-0 b-b-1">
+                                    <span class="p-l-15">
+                                        Cargo/Função:
+                                    </span>
+                                </b>
+                                <p id="vacinaModalCargoFuncao" class="col-sm-12 m-0">${funcao}</p>
+                            </div>
+                        </div>
+                    </div> --}}
+
+                </div>
+                {{-- <div class="modal-footer">
+                    <button type="button" class="btn btn-info" id="vacinaModalSubmit" onclick="vacinaModalSubmit()">Salvar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Sair</button>
+                </div> --}}
+            </form>
+        </div>
+    </div>
+</div>
+<!-- /Vacina -->

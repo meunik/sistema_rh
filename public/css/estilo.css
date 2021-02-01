@@ -322,6 +322,18 @@ iframe.oi {
 .borda-1 {
     border: 1px solid #00000017;
 }
+.borda-color-vacina {
+    border-color:#004c7757 !important;
+}
+.rounded {
+    border-radius: 5px;
+}
+.rounded-6 {
+    border-radius: 6px;
+}
+.box-shadow-vacinas {
+    box-shadow: 0px 10px 10px -10px #004c7780;
+}
 .col-xs-12.p-0.b-b-1 {
     line-height: 0;
     margin: 10px 0px;
@@ -514,64 +526,64 @@ table.dataTable {
 }
 
 .p-l-0 {
-    padding: 0px !important;
+    padding-left: 0px !important;
 }
 .p-l-1 {
-    padding: 1px !important;
+    padding-left: 1px !important;
 }
 .p-l-2 {
-    padding: 2px !important;
+    padding-left: 2px !important;
 }
 .p-l-3 {
-    padding: 3px !important;
+    padding-left: 3px !important;
 }
 .p-l-4 {
-    padding: 4px !important;
+    padding-left: 4px !important;
 }
 .p-l-5 {
-    padding: 5px !important;
+    padding-left: 5px !important;
 }
 .p-l-6 {
-    padding: 6px !important;
+    padding-left: 6px !important;
 }
 .p-l-7 {
-    padding: 7px !important;
+    padding-left: 7px !important;
 }
 .p-l-8 {
-    padding: 8px !important;
+    padding-left: 8px !important;
 }
 .p-l-9 {
-    padding: 9px !important;
+    padding-left: 9px !important;
 }
 .p-l-10 {
-    padding: 10px !important;
+    padding-left: 10px !important;
 }
 .p-l-11 {
-    padding: 11px !important;
+    padding-left: 11px !important;
 }
 .p-l-12 {
-    padding: 12px !important;
+    padding-left: 12px !important;
 }
 .p-l-13 {
-    padding: 13px !important;
+    padding-left: 13px !important;
 }
 .p-l-14 {
-    padding: 14px !important;
+    padding-left: 14px !important;
 }
 .p-l-15 {
-    padding: 15px !important;
+    padding-left: 15px !important;
 }
 .p-l-16 {
-    padding: 16px !important;
+    padding-left: 16px !important;
 }
 .p-l-17 {
-    padding: 17px !important;
+    padding-left: 17px !important;
 }
 .p-l-18 {
-    padding: 18px !important;
+    padding-left: 18px !important;
 }
 .p-l-19 {
-    padding: 19px !important;
+    padding-left: 19px !important;
 }
 
 .p-t-0 {
@@ -795,6 +807,9 @@ ul.li-hriz li {
 }
 .tabelas-graficos-thead {
     border-radius: 5px 5px 0px 0px !important;
+}
+.text-davita {
+    color: #004c77;
 }
 
 

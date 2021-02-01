@@ -1,5 +1,8 @@
 @extends('layout')
 
+@section('head')
+@endsection
+
 @section('content')
 <div class="container-fluid">
     <div class="white-box">
@@ -279,12 +282,14 @@
             $("#data_inicio_beneficio"+colegas_id).removeClass('d-none');
             $("#data_cessacao_beneficio"+colegas_id).removeClass('d-none');
             $("#especie_do_beneficio_Td"+colegas_id).removeClass('d-none');
+            if ($("#especie_do_beneficio_Td"+colegas_id).val() == 4) $("#especie_do_beneficio_outrosTd"+colegas_id).removeClass('d-none');
             $("#cidCategoria"+colegas_id).removeClass('d-none');
             $("#motivoSelectTd"+colegas_id).removeClass('d-none');
             if ($("#motivoSelect"+colegas_id).val() == 3) $("#motivoTd"+colegas_id).removeClass('d-none');
             $("#data_proximo_contato_form"+colegas_id).removeClass('d-none');
             $("#data_realizacao_exame"+colegas_id).removeClass('d-none');
             $("#data_de_contato_form"+colegas_id).removeClass('d-none');
+            $("#observacao"+colegas_id).removeClass('d-none');
         }
     }
 
@@ -300,6 +305,10 @@
         let inputMedico = tr.find( "[name='medico']" ).val();
         let inputCrm = tr.find( "[name='crm']" ).val();
         let inputCod = tr.find( "[name='cod']" ).val();
+        let inputData_inicio_beneficio = tr.find( "[name='data_inicio_beneficio']" ).val();
+        let inputData_cessacao_beneficio = tr.find( "[name='data_cessacao_beneficio']" ).val();
+        let inputEspecie_do_beneficio = tr.find( "[name='especie_do_beneficio']" ).val();
+        let inputEspecie_do_beneficio_outros = tr.find( "[name='especie_do_beneficio_outros']" ).val();
         let inputCids_nome = tr.find( "[name='cids_nome']" ).val();
         let inputCidCategoria = tr.find( "[name='cidCategoria']" ).val();
         let inputCidSubCategoria = tr.find( "[name='cidSubCategoria']" ).val();
@@ -309,6 +318,9 @@
         let inputData_dos_sintomas = tr.find( "[name='data_dos_sintomas']" ).val();
         let inputMotivo = tr.find( "[name='motivo']" ).val();
         let inputMotivoSelect = tr.find( "[name='motivoSelect']" ).val();
+        let inputData_proximo_contato_form = tr.find( "[name='data_proximo_contato_form']" ).val();
+        let inputData_realizacao_exame = tr.find( "[name='data_realizacao_exame']" ).val();
+        let inputData_de_contato_form = tr.find( "[name='data_de_contato_form']" ).val();
         let inputData_do_teste = tr.find( "[name='data_do_teste']" ).val();
         let inputTipo_do_teste = tr.find( "[name='tipo_do_teste']" ).val();
         let inputObservacao = tr.find( "[name='observacao']" ).val();
@@ -324,6 +336,10 @@
             "medico": inputMedico,
             "crm": inputCrm,
             "cod": inputCod,
+            "data_inicio_beneficio": inputData_inicio_beneficio,
+            "data_cessacao_beneficio": inputData_cessacao_beneficio,
+            "especie_do_beneficio": inputEspecie_do_beneficio,
+            "especie_do_beneficio_outros": inputEspecie_do_beneficio_outros,
             "cids_nome": inputCids_nome,
             "cid_categoria_id": inputCidCategoria,
             "cid_sub_categoria_id": inputCidSubCategoria,
@@ -334,6 +350,9 @@
             "data_dos_sintomas": inputData_dos_sintomas,
             "motivo": inputMotivo,
             "motivoSelect": inputMotivoSelect,
+            "data_proximo_contato_form": inputData_proximo_contato_form,
+            "data_realizacao_exame": inputData_realizacao_exame,
+            "data_de_contato_form": inputData_de_contato_form,
             "data_do_teste": inputData_do_teste,
             "tipo_do_teste": inputTipo_do_teste,
             "observacao": inputObservacao,
@@ -428,6 +447,14 @@
         }
     };
 
+    function especieDoBeneficio(value, colegas_id) {
+        if (value == 4) {
+            $("#especie_do_beneficio_outrosTd"+colegas_id).removeClass('d-none');
+        } else {
+            $("#especie_do_beneficio_outrosTd"+colegas_id).addClass('d-none');
+        }
+    };
+
     function atestadoFIle(id) {
         $("#atestadoFIle_id").val(id);
         $("#atestadoNomeFIle_input").val(null);
@@ -479,6 +506,72 @@
         }
     };
 
+    function vacinaModa(id) {
+
+        $.ajax({
+            type: "GET",
+            url: "/vacinaTabela?id="+id,
+            success: function(data){
+                $("#vacinaModa_body").html(data);
+
+                // console.log(data.nome);
+                // $("#vacinaModalUnidade").text(data.unidade);
+                // $("#vacinaModal_id").text(data.id);
+                // $("#vacinaModalNome").text(data.nome);
+                // $("#vacinaModalCargoFuncao").text(data.funcao);
+
+                // var elems = document.querySelectorAll('.js-switch');
+
+                // for (var i = 0; i < elems.length; i++) {
+                //     var switchery = new Switchery(elems[i]);
+                // }
+            }
+        });
+
+
+        // const vacinaTable = $('#vacinaResultado').DataTable({
+        //     ajax: {
+        //         "url": "/vacinaData?id="+id,
+        //     },
+        //     language: { "url": "/Portuguese-Brasil.json" },
+		// 	columns: [
+		// 		{/*unidade, nome, funcao*/
+		// 			data: null,
+		// 		    orderable: false,
+		// 		    searchable: false,
+		// 			render: (row) => {
+        //                 console.log(row);
+        //                 var unidade = (row.unidade) ? row.unidade : "";
+        //                 var id = (row.id) ? row.id : "";
+        //                 var nome = (row.nome) ? row.nome : "";
+        //                 var funcao = (row.funcao) ? row.funcao : "";
+		// 				var html = `
+        //                     <div class="row p-b-10">
+        //                         <div class="col-sm-12 row m-0 text-left">
+        //                             <b class="col-sm-3 m-0">Unidade:</b>
+        //                             <p id="vacinaModalUnidade" class="col-sm-9 m-0">${unidade}</p>
+
+        //                             <input type="text" class="d-none" autocomplete="off" name="vacinaModal_id" id="vacinaModal_id" value="${id}" readonly>
+        //                         </div>
+        //                         <div class="col-sm-12 row m-0 text-left">
+        //                             <b class="col-sm-3 m-0">Nome:</b>
+        //                             <p id="vacinaModalNome" class="col-sm-9 m-0">${nome}</p>
+        //                         </div>
+        //                         <div class="col-sm-12 row m-0 text-left">
+        //                             <b class="col-sm-3 m-0">Cargo/Função:</b>
+        //                             <p id="vacinaModalCargoFuncao" class="col-sm-9 m-0">${funcao}</p>
+        //                         </div>
+        //                     </div>`;
+		// 				return html;
+		// 			},
+        //             createdCell: function (td, row) {
+        //                 $(td).css('min-width', '200px');
+        //             },
+        //         }
+		// 	],
+        // });
+    }
+
     $(document).ready( function () {
         var hospital = getUrlParameter('hospital') || '';
         var data = getUrlParameter('data') || '';
@@ -504,7 +597,12 @@
                         var data_inicial = (row.data_inicial) ? "label label-table label-info" : "";
                         var nome = (row.nome) ? row.nome : "";
                         var id = row.id;
-						var html = `<div class="${data_inicial}">${nome}</div>`;
+						var html = `<div class="label label-table text-dark font-12 p-0">
+                            <span class="${data_inicial}">${nome}</span>
+                            <button class="btn btn-link p-0" type="button" data-toggle="modal" data-target="#vacinaModal" onclick="vacinaModa(${id})">
+                                <img src="plugins/images/injection.png" alt="" class="" style="width: 20px;">
+                            </button>
+                        </div>`;
 						return html;
 					},
                     createdCell: function (td, row) {
@@ -687,11 +785,12 @@
                         var html = `<div class="text-left form-group row m-0">
                                         <label for="especie_do_beneficio${id}" class="control-label p-0">Espécie do benefício:</label>
                                         <div class="">
-                                            <select id="especie_do_beneficio${id}" name="especie_do_beneficio" class="form-control w-130" autocomplete="off" style="width: 250px;" onchange="cidMotivo(this.value, ${id})">
+                                            <select id="especie_do_beneficio${id}" name="especie_do_beneficio" class="form-control w-130" autocomplete="off" style="width: 250px;" onchange="especieDoBeneficio(this.value, ${id})">
                                                 <option selected disabled>Selecione</option>
-                                                <option value="1" ${selected[1]}>Acidente Trabalho ou Doença Ocupacional</option>
-                                                <option value="2" ${selected[2]}>Licença Maternidade</option>
-                                                <option value="3" ${selected[3]}>Outros</option>
+                                                <option value="1" ${selected[1]}>B31</option>
+                                                <option value="2" ${selected[2]}>B80</option>
+                                                <option value="3" ${selected[3]}>B91</option>
+                                                <option value="4" ${selected[4]}>Outros</option>
                                             </select>
                                         </div>
                                     </div>`;
@@ -700,6 +799,26 @@
                     createdCell: function (td, row) {
                         $(td).attr('id', 'especie_do_beneficio_Td'+row.id);
                         if (row.cod != 'INSS') $(td).attr('class', 'd-none')
+                    },
+				},
+				{/*especie_do_beneficio_outros*/
+					data: null,
+				    orderable: false,
+				    searchable: false,
+					render: (row) => {
+                        var especie_do_beneficio_outros = (row.especie_do_beneficio_outros) ? row.especie_do_beneficio_outros : "";
+                        var id = row.id;
+						var html = `<div class="text-left form-group row m-0">
+                                        <label for="especie_do_beneficio_outros${id}" class="control-label p-0">Outros:</label>
+                                        <div class="">
+                                            <textarea class="form-control w-300" autocomplete="off" name="especie_do_beneficio_outros" id="especie_do_beneficio_outros${id}" placeholder="Outros Benefícios..." maxlength="191">${especie_do_beneficio_outros}</textarea>
+                                        </div>
+                                    </div>`;
+						return html;
+					},
+                    createdCell: function (td, row) {
+                        $(td).attr('id', 'especie_do_beneficio_outrosTd'+row.id);
+                        if ((row.cod != 'INSS') || (row.especie_do_beneficio != 4)) $(td).attr('class', 'd-none')
                     },
 				},
 				{/*cidCategoria*/
@@ -776,7 +895,7 @@
 				    searchable: false,
 					render: (row) => {
                         var id = row.id;
-                        if (row.cod === 'AT') var options = optionsSubCategoria(row.cid_categoria_id, row.id, row.cid_sub_categoria_id);
+                        if ((row.cod === 'AT') || (row.cod === 'INSS'))var options = optionsSubCategoria(row.cid_categoria_id, row.id, row.cid_sub_categoria_id);
 
                         var html = `<div class="text-left form-group row m-0">
                                         <label for="cidSubCategoria${id}" class="control-label p-0">CID Subcategoria:</label>
@@ -980,8 +1099,8 @@
                         $(td).attr('id', 'motivoTd'+row.id);
                         // if ((row.cod != 'AT') || (row.motivoSelect != 3)) $(td).attr('class', 'd-none')
                         switch (row.cod) {
-                            case 'AT': if (row.motivoSelect != 3) break;
-                            case 'INSS': if (row.motivoSelect != 3) break;
+                            case 'AT': if (row.motivoSelect === 3) break;
+                            case 'INSS': if (row.motivoSelect === 3) break;
                             default:
                                 $(td).attr('class', 'd-none')
                                 break;
@@ -1124,7 +1243,13 @@
 				    orderable: false,
 				    searchable: false,
 					render: (row) => {
-                        var observacao = (row.observacao) ? row.observacao : "";
+                        if (row.observacao) {
+                            var observacao = row.observacao;
+                        } else if (row.observacao_data) {
+                            var observacao = row.observacao_data;
+                        } else {
+                            var observacao = "";
+                        }
                         var id = row.id;
 						var html = `<div class="text-left form-group row m-0">
                                         <label for="observacao${id}" class="control-label p-0">Observação:</label>
@@ -1139,6 +1264,7 @@
                         switch (row.cod) {
                             case 'CO': break;
                             case 'GR': break;
+                            case 'INSS': break;
                             default:
                                 $(td).attr('class', 'd-none')
                                 break;
@@ -1160,7 +1286,7 @@
 						return html;
 					},
                     createdCell: function (td, row) {
-                        $(td).attr('colspan', 20);
+                        $(td).attr('colspan', 25);
                         $(td).attr('id', 'submitTr'+row.id);
                     },
 				},

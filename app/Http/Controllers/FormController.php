@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Vacinas;
+use Illuminate\Http\Request;
+
+use Illuminate\Support\Carbon;
+use Yajra\DataTables\DataTables;
+
+use TJGazel\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\{DB, Auth};
 use App\Services\{DataseColegas, FormService};
 use App\Models\{Datas, Colegas, Covid, Hospitais};
-
-use Yajra\DataTables\DataTables;
-use TJGazel\Toastr\Facades\Toastr;
-
-use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\{DB, Auth};
 
 class FormController extends Controller
 {
@@ -92,6 +93,7 @@ class FormController extends Controller
         if ($request->cod === 'DE') FormService::demitido($request, $colegas);
         if ($request->cod === 'CO') FormService::covid($request, $data);
         if ($request->cod === 'GR') FormService::grupoDeRisco($request, $data);
+        if ($request->cod === 'INSS') FormService::afastamentoInss($request, $data);
         $data->save();
 
         if($data) {
@@ -172,5 +174,56 @@ class FormController extends Controller
         if(isset($request->observacao_inss)){$data->observacao_inss = $request->observacao_inss;}
 
         $data->save();
+    }
+
+    /**
+     * Cria uma tabela
+     */
+    public function vacinaTabela(Request $request)
+    {
+        $id = $request->query('id');
+        return view('forms.vacina', compact('id'));
+    }
+
+    /**
+     * Dados para inserir na tabela
+     */
+    public function vacinaData(Request $request)
+    {
+        $id = $request->query('id');
+
+        $resultados = Colegas::where('colegas.id', $id)
+        ->leftJoin('hospitais', 'colegas.hospitais_id', '=', 'hospitais.id')
+        ->leftJoin('vacinas', 'colegas.id', '=', 'vacinas.colegas_id')
+        ->select(
+            'colegas.id as colega_id',
+            'colegas.nome',
+            'colegas.funcao',
+            'colegas.secao',
+            'hospitais.nome as unidade',
+            'hospitais.id as hospitais_id',
+            'vacinas.*',
+        )
+        ->get();
+
+        return $resultados;
+    }
+
+    /**
+     * Dados para inserir na tabela
+     */
+    public function vacinaSave(Request $request)
+    {
+        $exists = Vacinas::where('colegas_id', $request->id)->exists();
+        if ($exists != true) {
+            $vacina = Vacinas::create([
+                'colegas_id' => $request->id,
+                $request->stringId => $request->value
+            ]);
+        } else {
+            $vacina = Vacinas::where('colegas_id', $request->id)->first();
+            if(isset($request->value)){$vacina[$request->stringId] = $request->value;}
+            $vacina->save();
+        }
     }
 }

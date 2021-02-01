@@ -1,27 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
-        <meta charset="utf-8">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <link rel="icon" type="image/png" sizes="16x16" href="{{URL::asset('plugins/images/virus.png')}}">
-        <title>Davita - RH</title>
-        <!-- ===== Bootstrap CSS ===== -->
-        <link href="{{URL::asset('bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
-        <!-- ===== Plugin CSS ===== -->
-        <link href="{{URL::asset('plugins/components/icheck/skins/all.css')}}" rel="stylesheet">
-        <link href="{{URL::asset('plugins/components/datatables/jquery.dataTables.min.css')}}" rel="stylesheet" type="text/css">
-        <link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css">
-        <link href="{{URL::asset('plugins/components/switchery/dist/switchery.min.css')}}" rel="stylesheet">
-        <!-- ===== Custom CSS ===== -->
-        <link href="{{URL::asset('css/style.css')}}" rel="stylesheet">
-        <!-- ===== Color CSS ===== -->
-        <link href="{{URL::asset('css/colors/black.css')}}" id="theme" rel="stylesheet">
-        <link href="{{URL::asset('css/estilo.css')}}" rel="stylesheet">
-
-        <!-- Toastr -->
-        <link href="{{URL::asset('css/toastr.min.css')}}" rel="stylesheet">
+        <!-- os "meta", "link" e "title" padrões para todas as pags -->
+        @include('header')
 
         @yield('head')
     </head>
@@ -136,44 +117,8 @@
             </div>
         </div>
 
-        <!-- jQuery -->
-        <script src="{{URL::asset('plugins/components/jquery/dist/jquery.min.js')}}"></script>
-        <!-- Bootstrap Core JavaScript -->
-        <script src="{{URL::asset('bootstrap/dist/js/bootstrap.min.js')}}"></script>
-        <!-- Menu Plugin JavaScript -->
-        <script src="{{URL::asset('js/sidebarmenu.js')}}"></script>
-        <!--slimscroll JavaScript -->
-        <script src="{{URL::asset('js/jquery.slimscroll.js')}}"></script>
-        <!-- Custom Theme JavaScript -->
-        <script src="{{URL::asset('js/custom.js')}}"></script>
-        <script src="{{URL::asset('plugins/components/switchery/dist/switchery.min.js')}}"></script>
-        <script src="{{URL::asset('plugins/components/datatables/jquery.dataTables.min.js')}}"></script>
-        <script src="{{URL::asset('plugins/components/icheck/icheck.js')}}"></script>
-        <script src="{{URL::asset('plugins/components/icheck/icheck.init.js')}}"></script>
-        <!-- start - This is for export functionality only -->
-        <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
-        <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-        <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
-        <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
-        <script src="{{URL::asset('plugins/components/datatables/buttons.html5.js')}}"></script>
-        <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
-        <!-- end - This is for export functionality only -->
-        <!-- Moment -->
-        <script src="{{URL::asset('plugins/components/moment/min/moment.min.js')}}"></script>
-        <!-- Toastr -->
-        <script src="{{URL::asset('js/toastr.min.js')}}" type="text/javascript"></script>
-        <script>
-            toastr.options.closeButton = true;
-            toastr.options.preventDuplicates = true;
-            toastr.options.progressBar = true;
-            toastr.options.positionClass = 'toast-bottom-right';
-        </script>
-        {!! Toastr::render() !!}
-
-        <!-- Start of b2flyhelp Zendesk Widget script -->
-        <script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=2e2e981d-d4db-4603-87ca-61debe54494f"> </script>
-        <!-- End of b2flyhelp Zendesk Widget script -->
+        <!-- os "scripts src" padrões para todas as pags -->
+        @include('scripts')
 
         @yield('script')
     </body>

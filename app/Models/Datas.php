@@ -31,7 +31,7 @@ class Datas extends Model
         'data_inicio_beneficio',
         'data_cessacao_beneficio',
         'especie_do_beneficio',
-        'data_do_beneficio',
+        'especie_do_beneficio_outros',
         'data_proximo_contato_form',
         'data_realizacao_exame',
         'data_de_contato_form',

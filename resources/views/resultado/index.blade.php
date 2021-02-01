@@ -72,6 +72,12 @@
                                             <i class="fa fa-plus"></i>
                                         </button>
                                     @endif
+
+                                    @if ($data['cod'] === 'INSS')
+                                        <button id="afastamentoInssLabel" class="btn btn-sm btn-info btn-outline font-10 m-b-5 btn-plus" type="button" data-toggle="modal" data-target="#afastamentoInss" onclick='afastamentoInss(`{!! json_encode($resultado) !!}`,`{!!($nome)!!}`)'>
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    @endif
                                 @endisset
                             </td>
                         @endforeach
@@ -156,7 +162,7 @@
         $(`#atestadoCid_categoria_id`).attr('title', result.cid_categoria_id);
         var cidSubCategoria = result.cid_sub_categoria_id.substring(0,80)+'...';
         $(`#atestadoCid_sub_categoria_id`).text(cidSubCategoria);
-        $(`#atestadoCid_categoria_id`).attr('title', result.cid_sub_categoria_id);
+        $(`#atestadoCid_sub_categoria_id`).attr('title', result.cid_sub_categoria_id);
 
         $('#encaminhado_inss').prop('checked', result.encaminhado_inss);
         $(`#data_proximo_contato`).val(result.data_proximo_contato);
@@ -223,6 +229,70 @@
                 toastr.error(error)
             }
         });
+    }
+
+    function afastamentoInss(resultado, nome) {
+        let result = JSON.parse(resultado);
+        console.log(result);
+        var tel = (result.telefone) ? result.telefone : 'Sem Telefone';
+
+        $(`#afastamentoInssId`).text(result.data_id);
+        $(`#afastamentoInss_id`).text(result.data_id);
+        $(`#afastamentoInssNome`).text(nome);
+        $(`#afastamentoInssTelefone`).text(tel);
+
+        function jText(id, res, value) {
+            if (res != null) {
+                $(`#${id}`).text(value).removeClass('text-warning font-semibold');
+            } else {
+                $(`#${id}`).text('Campo não preenchido').addClass('text-warning font-semibold');
+            }
+        }
+
+        jText(
+            'afastamentoInssData_inicio_beneficio',
+            result.data_inicio_beneficio,
+            moment(result.data_inicio_beneficio, "YYYY-MM-DD").format("DD/MM/YYYY")
+        );
+        jText(
+            'afastamentoInssData_cessacao_beneficio',
+            result.data_cessacao_beneficio,
+            moment(result.data_cessacao_beneficio, "YYYY-MM-DD").format("DD/MM/YYYY")
+        );
+        jText(
+            'afastamentoInssEspecie_do_beneficio',
+            result.especie_do_beneficio,
+            result.especie_do_beneficio
+        );
+
+        $(`#afastamentoInssMotivo`).text(result.motivo);
+        var cidCategoria = result.cid_categoria_id.substring(0,60)+'...';
+        $(`#afastamentoInssCid_categoria_id`).text(cidCategoria);
+        $(`#afastamentoInssCid_categoria_id`).attr('title', result.cid_categoria_id);
+        var cidSubCategoria = result.cid_sub_categoria_id.substring(0,80)+'...';
+        $(`#afastamentoInssCid_sub_categoria_id`).text(cidSubCategoria);
+        $(`#afastamentoInssCid_sub_categoria_id`).attr('title', result.cid_sub_categoria_id);
+
+        jText(
+            'afastamentoInssData_proximo_contato_form',
+            result.data_proximo_contato_form,
+            moment(result.data_proximo_contato_form, "YYYY-MM-DD").format("DD/MM/YYYY")
+        );
+        jText(
+            'afastamentoInssData_realizacao_exame',
+            result.data_realizacao_exame,
+            moment(result.data_realizacao_exame, "YYYY-MM-DD").format("DD/MM/YYYY")
+        );
+        jText(
+            'afastamentoInssData_de_contato_form',
+            result.data_de_contato_form,
+            moment(result.data_de_contato_form, "YYYY-MM-DD").format("DD/MM/YYYY")
+        );
+        jText(
+            'afastamentoInssObservacao',
+            result.observacao[0],
+            result.observacao
+        );
     }
 
     $("#hospitais_todos").change(function(event) {

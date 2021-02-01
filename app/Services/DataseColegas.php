@@ -243,9 +243,14 @@ class DataseColegas
         'datas.data_final',
         'datas.motivo',
         'datas.motivoSelect',
+        'datas.data_inicio_beneficio',
+        'datas.data_cessacao_beneficio',
+        'datas.especie_do_beneficio',
+        'datas.especie_do_beneficio_outros',
         'datas.data_proximo_contato_form',
         'datas.data_realizacao_exame',
         'datas.data_de_contato_form',
+        'datas.observacao as observacao_data',
         'datas.covid')
         ->orderBy('colegas.nome')
         ->get();

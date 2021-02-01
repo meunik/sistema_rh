@@ -69,6 +69,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/editTel', 'FormController@editTel');
     Route::post('/atestadoFile', 'FormController@atestadoFile');
     Route::post('/atestadoFormResult', 'FormController@atestadoFormResult');
+    Route::get('/vacinaTabela', 'FormController@vacinaTabela');
+    Route::get('/vacinaData', 'FormController@vacinaData');
+    Route::post('/vacinaSave', 'FormController@vacinaSave');
 
     Route::get('/datas', 'DatasController@index')->name('datas');
     Route::get('/atestadoHistoricoDatas', 'DatasController@atestadoHistoricoDatas');
@@ -93,6 +96,7 @@ Auth::routes();
 
 Route::get('/', function () { return redirect('/form'); });
 Route::get('/index', function () { return redirect('/form'); });
+// Route::get('/teste', 'TesteController@index');
 
 // Route::get('/login', function () { return redirect('/aviso'); })->name('login');
 // Route::get('/aviso', function () { return view('aviso'); })->name('aviso');

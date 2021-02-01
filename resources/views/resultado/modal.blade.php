@@ -16,7 +16,7 @@
                     <div class="row p-b-10">
                         <div class="col-sm-2 row m-0 text-left">
                             <b class="col-12 m-0">#</b>
-                            <p id="atestadoId" class="col-12 b-b-1">0321</p>
+                            <p id="atestadoId" class="col-12 b-b-1"></p>
 
                             <input type="text" class="d-none" autocomplete="off" name="atestado_id" id="atestado_id" readonly>
                         </div>
@@ -108,6 +108,93 @@
                         </table>
                     </div>
                 </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- /Atestado -->
+
+<!-- Afastamento INSS -->
+<div class="modal fade" id="afastamentoInss" tabindex="-1" role="dialog" aria-labelledby="afastamentoInss" style="display: none;">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form id="afastamentoInssFIleForm">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="afastamentoInssFIle_label">
+                        <span class="text-info font-16 m-b-5">
+                            <i class="fa fa-plus"></i> Afastamento INSS
+                        </span>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row p-b-10">
+                        <div class="col-sm-2 row m-0 text-left">
+                            <b class="col-12 m-0">#</b>
+                            <p id="afastamentoInssId" class="col-12 b-b-1"></p>
+
+                            <input type="text" class="d-none" autocomplete="off" name="afastamentoInss_id" id="afastamentoInss_id" readonly>
+                        </div>
+                        <div class="col-sm-7 row m-0 text-left">
+                            <b class="col-12 m-0">Nome:</b>
+                            <p id="afastamentoInssNome" class="col-12 b-b-1"></p>
+                        </div>
+                        <div class="col-sm-3 row m-0 text-left">
+                            <b class="col-12 m-0">Telefone:</b>
+                            <p id="afastamentoInssTelefone" class="col-12 b-b-1"></p>
+                        </div>
+                    </div>
+                    <div class="row p-b-10">
+                        <div class="col-sm-3 row m-0 text-left">
+                            <b class="col-12 m-0">Data Início Benefício:</b>
+                            <p id="afastamentoInssData_inicio_beneficio" class="col-12 b-b-1"></p>
+                        </div>
+                        <div class="col-sm-4 row m-0 text-left">
+                            <b class="col-12 m-0">Data Cessação Benefício:</b>
+                            <p id="afastamentoInssData_cessacao_beneficio" class="col-12 b-b-1"></p>
+                        </div>
+                        <div class="col-sm-5 row m-0 text-left">
+                            <b class="col-12 m-0">Espécie do Benefício:</b>
+                            <p id="afastamentoInssEspecie_do_beneficio" class="col-12 b-b-1"></p>
+                        </div>
+                    </div>
+                    <div class="row p-b-10">
+                        <div class="col-sm-3 row m-0 text-left">
+                            <b class="col-12 m-0">Motivo:</b>
+                            <p id="afastamentoInssMotivo" class="col-12 b-b-1"></p>
+                        </div>
+                        <div class="col-sm-4 row m-0 text-left">
+                            <b class="col-12 m-0">CID Categoria:</b>
+                            <p id="afastamentoInssCid_categoria_id" class="col-12 b-b-1" data-toggle="tooltip" data-placement="bottom"></p>
+                        </div>
+                        <div class="col-sm-5 row m-0 text-left">
+                            <b class="col-12 m-0">CID Subcategoria:</b>
+                            <p id="afastamentoInssCid_sub_categoria_id" class="col-12 b-b-1" data-toggle="tooltip" data-placement="bottom"></p>
+                        </div>
+                    </div>
+                    <div class="row p-b-10">
+                        <div class="col-sm-3 row m-0 text-left">
+                            <b class="col-12 m-0">Data Próximo Contato:</b>
+                            <p id="afastamentoInssData_proximo_contato_form" class="col-12 b-b-1"></p>
+                        </div>
+                        <div class="col-sm-4 row m-0 text-left">
+                            <b class="col-12 m-0">Data Realização Exame:</b>
+                            <p id="afastamentoInssData_realizacao_exame" class="col-12 b-b-1"></p>
+                        </div>
+                        <div class="col-sm-5 row m-0 text-left">
+                            <b class="col-12 m-0">Data de Contato:</b>
+                            <p id="afastamentoInssData_de_contato_form" class="col-12 b-b-1"></p>
+                        </div>
+                    </div>
+                    <div class="row p-b-10">
+                        <div class="col-sm-12 row m-0 text-left">
+                            <b class="col-12 m-0">Observação:</b>
+                            <p id="afastamentoInssObservacao" class="col-12 b-b-1"></p>
+                        </div>
+                    </div>
+                </div>
+
             </form>
         </div>
     </div>
