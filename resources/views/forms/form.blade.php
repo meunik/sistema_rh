@@ -513,63 +513,8 @@
             url: "/vacinaTabela?id="+id,
             success: function(data){
                 $("#vacinaModa_body").html(data);
-
-                // console.log(data.nome);
-                // $("#vacinaModalUnidade").text(data.unidade);
-                // $("#vacinaModal_id").text(data.id);
-                // $("#vacinaModalNome").text(data.nome);
-                // $("#vacinaModalCargoFuncao").text(data.funcao);
-
-                // var elems = document.querySelectorAll('.js-switch');
-
-                // for (var i = 0; i < elems.length; i++) {
-                //     var switchery = new Switchery(elems[i]);
-                // }
             }
         });
-
-
-        // const vacinaTable = $('#vacinaResultado').DataTable({
-        //     ajax: {
-        //         "url": "/vacinaData?id="+id,
-        //     },
-        //     language: { "url": "/Portuguese-Brasil.json" },
-		// 	columns: [
-		// 		{/*unidade, nome, funcao*/
-		// 			data: null,
-		// 		    orderable: false,
-		// 		    searchable: false,
-		// 			render: (row) => {
-        //                 console.log(row);
-        //                 var unidade = (row.unidade) ? row.unidade : "";
-        //                 var id = (row.id) ? row.id : "";
-        //                 var nome = (row.nome) ? row.nome : "";
-        //                 var funcao = (row.funcao) ? row.funcao : "";
-		// 				var html = `
-        //                     <div class="row p-b-10">
-        //                         <div class="col-sm-12 row m-0 text-left">
-        //                             <b class="col-sm-3 m-0">Unidade:</b>
-        //                             <p id="vacinaModalUnidade" class="col-sm-9 m-0">${unidade}</p>
-
-        //                             <input type="text" class="d-none" autocomplete="off" name="vacinaModal_id" id="vacinaModal_id" value="${id}" readonly>
-        //                         </div>
-        //                         <div class="col-sm-12 row m-0 text-left">
-        //                             <b class="col-sm-3 m-0">Nome:</b>
-        //                             <p id="vacinaModalNome" class="col-sm-9 m-0">${nome}</p>
-        //                         </div>
-        //                         <div class="col-sm-12 row m-0 text-left">
-        //                             <b class="col-sm-3 m-0">Cargo/Função:</b>
-        //                             <p id="vacinaModalCargoFuncao" class="col-sm-9 m-0">${funcao}</p>
-        //                         </div>
-        //                     </div>`;
-		// 				return html;
-		// 			},
-        //             createdCell: function (td, row) {
-        //                 $(td).css('min-width', '200px');
-        //             },
-        //         }
-		// 	],
-        // });
     }
 
     $(document).ready( function () {

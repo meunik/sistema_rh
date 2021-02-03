@@ -202,7 +202,7 @@ class FormController extends Controller
             'colegas.secao',
             'hospitais.nome as unidade',
             'hospitais.id as hospitais_id',
-            'vacinas.*',
+            'vacinas.*'
         )
         ->get();
 

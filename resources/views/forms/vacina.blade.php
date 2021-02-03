@@ -1,5 +1,5 @@
 
-@include('header')
+{{-- @include('header') --}}
 
 <div id="formDivVacina" class="col-sm-12 row p-0 m-t-20">
     <div>
@@ -177,6 +177,17 @@
                     <b class="col-sm-12 col-xs-12 row m-0 p-l-10 p-r-10 text-left">Dose Anual</b>
                 </div>
             </div>
+
+            <div class="col-sm-12 row p-b-10">
+                <div class="col-sm-12 col-xs-12 row m-0 p-0">
+                    <h4 class="col-sm-12 col-xs-12 m-0 p-l-0 p-r-0 font-semibold text-center">
+                        Observações
+                    </h4>
+                </div>
+                <div class="col-xs-12 row p-10 borda-1 rounded box-shadow-vacinas borda-color-vacina">
+                    <div id="obervacao" class="col-sm-12 col-xs-12 row m-0 p-0 text-left"></div>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -250,20 +261,49 @@
             ) {
                 return data[stringId];
             } else {
-                var html = `<b class="col-xs-12 m-t-10 p-l-10 font-bold text-davita">${moment(data[stringId]).format('DD/MM/YYYY')}</b>`;
-                return html;
+                if ((stringId.substr(-5) === 'valor') || (stringId === 'obervacao')) {
+                    var html = `<b class="col-xs-12 m-t-10 p-l-10 font-bold text-davita">${data[stringId]}</b>`;
+                    return html;
+                } else {
+                    var html = `<b class="col-xs-12 m-t-10 p-l-10 font-bold text-davita">${moment(data[stringId]).format('DD/MM/YYYY')}</b>`;
+                    return html;
+                }
             }
         } else {
-            var valid = varificaPassouDataValidade(diasValidade, stringIdRequisito, data[stringIdRequisito]);
-            var html = `<div class="text-left form-group row m-0 p-5">
-                <div id="div_date${stringId}" class="text-left form-group row m-0 m-t-5">
-                    ${valid.message}
-                    <div class="${valid.hasError}">
-                        <input type="date" class="form-control rounded" autocomplete="off" name="data_cessacao_beneficio" value="" id="date${stringId}" onchange="saveVacina(${id}, '${stringId}', this.value)">
+            if (stringId.substr(-5) === 'valor') {
+                var valid = varificaPassouDataValidade(diasValidade, stringIdRequisito, data[stringIdRequisito]);
+                var html = `<div class="text-left form-group row m-0 p-5">
+                    <div id="div_valor${stringId}" class="text-left form-group row m-0 m-t-5">
+                        ${valid.message}
+                        <div class="${valid.hasError}">
+                            <input type="text" class="form-control rounded" autocomplete="off" value="" id="valor${stringId}" placeholder="Valor" onchange="saveVacina(${id}, '${stringId}', this.value)">
+                        </div>
                     </div>
-                </div>
-            </div>`;
-            return html;
+                </div>`;
+                return html;
+            } else if (stringId === 'obervacao') {
+                var valid = varificaPassouDataValidade(diasValidade, stringIdRequisito, data[stringIdRequisito]);
+                var html = `<div class="text-left form-group row m-0 p-5">
+                    <div id="div_valor${stringId}" class="text-left form-group row m-0 m-t-5">
+                        ${valid.message}
+                        <div class="${valid.hasError}">
+                            <textarea class="form-control rounded" autocomplete="off" autocomplete="off" value="" id="valor${stringId}" onchange="saveVacina(${id}, '${stringId}', this.value)" placeholder="Observação..." maxlength="500"></textarea>
+                        </div>
+                    </div>
+                </div>`;
+                return html;
+            } else {
+                var valid = varificaPassouDataValidade(diasValidade, stringIdRequisito, data[stringIdRequisito]);
+                var html = `<div class="text-left form-group row m-0 p-5">
+                    <div id="div_date${stringId}" class="text-left form-group row m-0 m-t-5">
+                        ${valid.message}
+                        <div class="${valid.hasError}">
+                            <input type="date" class="form-control rounded" autocomplete="off" value="" id="date${stringId}" onchange="saveVacina(${id}, '${stringId}', this.value)">
+                        </div>
+                    </div>
+                </div>`;
+                return html;
+            }
         }
     }
 
@@ -297,7 +337,7 @@
         $("#igg_data").html(showOrInset(data, "igg_data", false, false));
         $("#igg_valor").html(showOrInset(data, "igg_valor", false, false));
 
-        // $("#obervacao").html(showOrInset(data, "obervacao", false, false));
+        $("#obervacao").html(showOrInset(data, "obervacao", false, false));
     }
 
     function vacinaModa(id) {
