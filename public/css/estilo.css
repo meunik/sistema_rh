@@ -319,6 +319,19 @@ iframe.oi {
 .b-b-1 {
     border-bottom: 1px solid #00000017;
 }
+.b-l-vacina {
+    border-left: 1px solid #cccccc !important;
+}
+.b-r-lateral {
+    border-right: 1px solid #cccccc !important;
+    border-right: 1px solid #cccccc !important;
+}
+.b-r-vacina {
+    border-right: 1px solid #cccccc !important;
+}
+.b-b-none {
+    border-bottom: 0px solid #ffffff00 !important;
+}
 .borda-1 {
     border: 1px solid #00000017;
 }
@@ -801,6 +814,9 @@ ul.li-hriz li {
     padding: 0px;
     margin: 0px;
 }
+.m-0 {
+    margin: 0px !important;
+}
 .background-tabelas-graficos {
     background: #00bbd97a !important;
     border-bottom: 1px solid #85deed !important;
@@ -937,6 +953,9 @@ ul.li-hriz li {
     }
     .c2 {
         display: none;
+    }
+    .col-xs-12.row.p-10.borda-1.rounded.box-shadow-vacinas.borda-color-vacina {
+        font-size: 11px;
     }
 }
 

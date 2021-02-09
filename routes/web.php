@@ -15,6 +15,17 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/absenteismo-departamento', 'AbsenteismoDepartamentoController@index');
         Route::get('/absenteismo-unidade', 'AbsenteismoUnidadeController@index');
         Route::get('/dias-afastamento', 'DiasAfastamentoController@index');
+        Route::get('/vacinas', 'VacinasController@index');
+        Route::get('/vacinaTabela', 'VacinasController@vacinaTabela');
+        Route::get('/vacinaData', 'VacinasController@vacinaData');
+        Route::post('/vacinaSave', 'VacinasController@vacinaSave');
+    });
+
+    Route::group(['namespace' => 'Relatorios'], function (){
+        Route::get('/vacinaTabela', 'VacinasController@vacinaTabela');
+        Route::get('/vacinaData', 'VacinasController@vacinaData');
+        Route::get('/vacinaDataTable', 'VacinasController@vacinaDataTable');
+        Route::post('/vacinaSave', 'VacinasController@vacinaSave');
     });
 
     Route::group(['prefix'=>'/graficos', 'namespace' => 'Graficos'], function (){
@@ -45,10 +56,10 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/totalAtestados', 'CidController@totalAtestados');
             Route::get('/qtdDiasPerdidosMes', 'CidController@qtdDiasPerdidosMes');
         });
-        // Route::group(['prefix'=>'/inss'], function (){
-        //     Route::get('', 'InssController@index');
-        //     Route::get('/getdata', 'InssController@returnDataTables');
-        // });
+        Route::group(['prefix'=>'/inss'], function (){
+            Route::get('', 'InssController@index');
+            Route::get('/getdata', 'InssController@returnDataTables');
+        });
     });
 
 
@@ -69,9 +80,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/editTel', 'FormController@editTel');
     Route::post('/atestadoFile', 'FormController@atestadoFile');
     Route::post('/atestadoFormResult', 'FormController@atestadoFormResult');
-    Route::get('/vacinaTabela', 'FormController@vacinaTabela');
-    Route::get('/vacinaData', 'FormController@vacinaData');
-    Route::post('/vacinaSave', 'FormController@vacinaSave');
 
     Route::get('/datas', 'DatasController@index')->name('datas');
     Route::get('/atestadoHistoricoDatas', 'DatasController@atestadoHistoricoDatas');

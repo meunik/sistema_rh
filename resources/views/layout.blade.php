@@ -64,6 +64,9 @@
                                         <a href="/relatorios/dias-afastamento"><i class="fa fa-bar-chart-o"></i> Tabela de afastados</a>
                                     </li>
                                     @endif
+                                    <li>
+                                        <a href="/relatorios/vacinas"><i class="fa fa-bar-chart-o"></i> Vacinas </a>
+                                    </li>
                                 </ul>
                             </li>
                             @if(Auth::user()->is_admin != null)
@@ -82,9 +85,9 @@
                                     <li>
                                         <a href="/graficos/cid"><i class="fa fa-bar-chart-o"></i> CID</a>
                                     </li>
-                                    {{-- <li>
+                                    <li>
                                         <a href="/graficos/inss"><i class="fa fa-bar-chart-o"></i> Afastadis Pelo INSS</a>
-                                    </li> --}}
+                                    </li>
                                 </ul>
                             </li>
                             @endif

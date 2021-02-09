@@ -7,14 +7,11 @@ use Illuminate\Support\Carbon;
 
 class InssService
 {
-    public static function colagasComAtestados($esteMes, $hospitais)
+    public static function colagasAfastados($hospitais)
     {
-        $data = Datas::where('cod', 'AT')
-        ->where('data_inicial', '<=', $esteMes['hoje'])
-        ->where('data_inicial', '>=', $esteMes['umMesAtraz'])
+        $data = Datas::whereIn('hospitais.id', $hospitais)
         ->join('colegas', 'datas.colegas_id', '=', 'colegas.id')
         ->join('hospitais', 'colegas.hospitais_id', '=', 'hospitais.id')
-        ->whereIn('hospitais.id', $hospitais)
         ->select(
             'colegas.nome',
             'colegas.hospitais_id as hospital_id',
@@ -22,10 +19,7 @@ class InssService
             'datas.encaminhado_inss',
             'datas.data_inicial',
             'datas.retornou',
-            'datas.data_inicial',
-            'datas.dias_atestado',
-            'datas.data_final',
-            'datas.data_de_contato'
+            'datas.cod',
         )
         ->get();
 
@@ -33,44 +27,74 @@ class InssService
     }
 
     /**
-     *  Dados da coluna "Quantidade atestados"
-     *  Retorna {"cid_id": quantidade,...}
+     *  Dados da coluna "Total Afastados pelo INSS"
+     *  Retorna {"hospital_id": quantidade,...}
      */
-    public static function totalDeAtestados($data)
+    public static function totalDeAfastados($data)
     {
         $resultados = array();
         $resultados['total'] = 0;
+
         foreach ($data as $dt) {
-            if (isset($resultados[$dt->cid_id])) {
-                $resultados[$dt->cid_id] = $resultados[$dt->cid_id] + 1;
+
+            if (($dt->cod === 'INSS')&&($dt->retornou != 1)) {
+                $resultados[$dt->hospital_id] = isset($resultados[$dt->hospital_id]) ? $resultados[$dt->hospital_id] + 1 : 1;
+                $resultados['total']++;
             } else {
-                $resultados[$dt->cid_id] = 1;
+                $resultados[$dt->hospital_id] = isset($resultados[$dt->hospital_id]) ? $resultados[$dt->hospital_id] : 0;
             }
-            $resultados['total']++;
         }
 
 		return $resultados;
     }
 
     /**
-     *  Dados da coluna "Quantidade dias perdidos mês"
-     *  Retorna {"cid_id": quantidade,...}
+     *  Dados da coluna "Afastados pelo INSS no período"
+     *  Retorna {"hospital_id": quantidade,...}
      */
-    public static function qtdDiasPerdidosMes($data)
+    public static function totalDeAfastadosPeriodo($data, $esteMes)
+    {
+        $resultados = array();
+        $resultados['total'] = 0;
+
+        foreach ($data as $dt) {
+            if (($dt->data_inicial >= $esteMes['umMesAtraz'])&&($dt->data_inicial <= $esteMes['hoje'])) {
+                $mes = true;
+            } else {
+                $mes = false;
+            }
+
+            if (($dt->cod === 'INSS')&&($mes === true)) {
+                $resultados[$dt->hospital_id] = isset($resultados[$dt->hospital_id]) ? $resultados[$dt->hospital_id] + 1 : 1;
+                $resultados['total']++;
+            } else {
+                $resultados[$dt->hospital_id] = isset($resultados[$dt->hospital_id]) ? $resultados[$dt->hospital_id] : 0;
+            }
+        }
+
+		return $resultados;
+    }
+
+    /**
+     *  Dados da coluna "Colegas q retornaram de afastamento do INSS no período"
+     *  Retorna {"hospital_id": quantidade,...}
+     */
+    public static function colegasRetornaramPeriodo($data, $esteMes)
     {
         $resultados = array();
         $resultados['total'] = 0;
         foreach ($data as $dt) {
+            if (($dt->data_inicial >= $esteMes['umMesAtraz'])&&($dt->data_inicial <= $esteMes['hoje'])) {
+                $mes = true;
+            } else {
+                $mes = false;
+            }
 
-            $data_inicial = Carbon::parse($dt->data_inicial);
-            $data_final = Carbon::parse($dt->data_final);
-            $diffInDays =  $data_inicial->diffInDays($data_final) + 1;
-
-            if (($dt->data_final != null) && ($diffInDays <= 366)) {
-                $resultados[$dt->cid_id] = isset($resultados[$dt->cid_id]) ? $resultados[$dt->cid_id] + $diffInDays : $diffInDays;
+            if (($dt->cod === 'INSS')&&($dt->retornou === 1)&&($mes === true)) {
+                $resultados[$dt->hospital_id] = isset($resultados[$dt->hospital_id]) ? $resultados[$dt->hospital_id] + 1 : 1;
                 $resultados['total']++;
             } else {
-                $resultados[$dt->cid_id] = isset($resultados[$dt->cid_id]) ? $resultados[$dt->cid_id] : 0;
+                $resultados[$dt->hospital_id] = isset($resultados[$dt->hospital_id]) ? $resultados[$dt->hospital_id] : 0;
             }
         }
 

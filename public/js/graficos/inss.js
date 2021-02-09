@@ -9,10 +9,10 @@ $(document).ready( function () {
         dom: 'Bfrtip',
         buttons: [ 'copy', 'excel', 'pdf' ],
         columns: [
-            { data: 'cid', className: 'text-left' },
-            { data: 'grupoCidResumido', className: 'text-center' },
-            { data: 'totalDeAtestados', className: 'text-center' },
-            { data: 'qtdDiasPerdidosMes', className: 'text-center' },
+            { data: 'hospital_nome', className: 'text-left' },
+            { data: 'totalDeAfastados', className: 'text-center' },
+            { data: 'totalDeAfastadosPeriodo', className: 'text-center' },
+            { data: 'colegasRetornaramPeriodo', className: 'text-center' },
         ],
     });
 });

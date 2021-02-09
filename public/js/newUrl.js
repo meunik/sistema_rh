@@ -8,6 +8,6 @@
  *  } params
  */
 var newUrl = function newUrl(params) {
-    var url = '/resultado?' + jQuery.param(params);
+    var url = window.location.pathname+'?' + jQuery.param(params);
     window.location.href = url;
 };

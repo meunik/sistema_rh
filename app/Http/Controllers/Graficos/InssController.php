@@ -15,111 +15,59 @@ class InssController extends Controller
     }
     public function index()
     {
-        $data = $this->base();
+        // $esteMes = FiltroService::esteMes();
+        // $hospitais = UserService::hospitaisVinculadosOnlyId();
+        // $data = InssService::colagasAfastados($hospitais);
 
-        // $totalDeAtestados = InssService::totalDeAtestados($data);
-        // $qtdDiasPerdidosMes = InssService::qtdDiasPerdidosMes($data);
+        // $totalDeAfastados = InssService::totalDeAfastados($data);
+        // $totalDeAfastadosPeriodo = InssService::totalDeAfastadosPeriodo($data, $esteMes);
+        // $colegasRetornaramPeriodo = InssService::colegasRetornaramPeriodo($data, $esteMes);
 
         // foreach ($data as $dt) {
-        //     $cidCompleto = $dt->cid_categoria.' - '.$dt->cid_nome;
-
-        //     $resultados[$dt->cid_id] = [
-        //         "cid" => $cidCompleto,
-        //         "grupoCidResumido" => $dt->cid_categoria,
-        //         "totalDeAtestados" => $totalDeAtestados[$dt->cid_id],
-        //         "qtdDiasPerdidosMes" => $qtdDiasPerdidosMes[$dt->cid_id],
+        //     $resultados[$dt->hospital_id] = [
+        //         "hospital_nome" => $dt->hospital_nome,
+        //         "totalDeAfastados" => $totalDeAfastados[$dt->hospital_id],
+        //         "totalDeAfastadosPeriodo" => $totalDeAfastadosPeriodo[$dt->hospital_id],
+        //         "colegasRetornaramPeriodo" => $colegasRetornaramPeriodo[$dt->hospital_id],
         //     ];
         // }
         // $resultados['total'] = [
         //     "cid" => 'TOTAL',
-        //     "grupoCidResumido" => '',
-        //     "totalDeAtestados" => $totalDeAtestados['total'],
-        //     "qtdDiasPerdidosMes" => $qtdDiasPerdidosMes['total'],
+        //     "totalDeAfastados" => $totalDeAfastados['total'],
+        //     "totalDeAfastadosPeriodo" => $totalDeAfastadosPeriodo['total'],
+        //     "colegasRetornaramPeriodo" => $colegasRetornaramPeriodo['total'],
         // ];
 
-        // echo json_encode($data);
-        exit;
+        // echo json_encode($resultados);
+        // exit;
 
         return view('graficos.inss');
     }
 
-    public function base()
+    public function returnDataTables()
     {
         $esteMes = FiltroService::esteMes();
         $hospitais = UserService::hospitaisVinculadosOnlyId();
-        $data = InssService::colagasComAtestados($esteMes, $hospitais);
-		return $data;
-    }
+        $data = InssService::colagasAfastados($hospitais);
 
-    public function returnDataTables()
-    {
-        $data = $this->base();
-
-        $totalDeAtestados = InssService::totalDeAtestados($data);
-        $qtdDiasPerdidosMes = InssService::qtdDiasPerdidosMes($data);
+        $totalDeAfastados = InssService::totalDeAfastados($data);
+        $totalDeAfastadosPeriodo = InssService::totalDeAfastadosPeriodo($data, $esteMes);
+        $colegasRetornaramPeriodo = InssService::colegasRetornaramPeriodo($data, $esteMes);
 
         foreach ($data as $dt) {
-            $cidCompleto = $dt->cid_categoria.' - '.$dt->cid_nome;
-
-            $resultados[$dt->cid_id] = [
-                "cid" => $cidCompleto,
-                "grupoCidResumido" => $dt->cid_categoria,
-                "totalDeAtestados" => $totalDeAtestados[$dt->cid_id],
-                "qtdDiasPerdidosMes" => $qtdDiasPerdidosMes[$dt->cid_id],
+            $resultados[$dt->hospital_id] = [
+                "hospital_nome" => $dt->hospital_nome,
+                "totalDeAfastados" => $totalDeAfastados[$dt->hospital_id],
+                "totalDeAfastadosPeriodo" => $totalDeAfastadosPeriodo[$dt->hospital_id],
+                "colegasRetornaramPeriodo" => $colegasRetornaramPeriodo[$dt->hospital_id],
             ];
         }
         $resultados['total'] = [
-            "cid" => 'TOTAL',
-            "grupoCidResumido" => '',
-            "totalDeAtestados" => $totalDeAtestados['total'],
-            "qtdDiasPerdidosMes" => $qtdDiasPerdidosMes['total'],
+            "hospital_nome" => 'TOTAL',
+            "totalDeAfastados" => $totalDeAfastados['total'],
+            "totalDeAfastadosPeriodo" => $totalDeAfastadosPeriodo['total'],
+            "colegasRetornaramPeriodo" => $colegasRetornaramPeriodo['total'],
         ];
-
-		return DataTables::of($resultados)->make(true);
-    }
-
-    /**
-     *  "Quatidade de atestados por grupo CID"
-     */
-    public function totalAtestados()
-    {
-        $data = $this->base();
-        $totalDeAtestados = InssService::totalDeAtestados($data);
-
-        $retorno[] = ['', 'Atestados'];
-        foreach ($data as $dt) {
-            $retorno[$dt->cid_id] = [
-                $dt->cid_categoria,
-                $totalDeAtestados[$dt->cid_id]
-            ];
-        }
-
-        foreach ($retorno as $result) {
-            $resultados[] = $result;
-        }
-
-		return DataTables::of($resultados)->make(true);
-    }
-
-    /**
-     *  "Quantidade de dias perdidos por grupo CID"
-     */
-    public function qtdDiasPerdidosMes()
-    {
-        $data = $this->base();
-        $qtdDiasPerdidosMes = InssService::qtdDiasPerdidosMes($data);
-
-        $retorno[] = ['', 'Atestados'];
-        foreach ($data as $dt) {
-            $retorno[$dt->cid_id] = [
-                $dt->cid_categoria,
-                $qtdDiasPerdidosMes[$dt->cid_id]
-            ];
-        }
-
-        foreach ($retorno as $result) {
-            $resultados[] = $result;
-        }
 
 		return DataTables::of($resultados)->make(true);
     }

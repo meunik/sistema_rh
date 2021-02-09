@@ -6,35 +6,19 @@
 @section('content')
 <div class="container-fluid">
     <div class="white-box">
-
-        <b class="text-danger">OBS:</b>
-        <li>Clique ou passe o mouse nas barras dos gráficos para mais detalhes(nome e valor).</li>
-        <li>Os gáficos seguem a mesma ordem da tabela no final da página</li>
-        <br>
-
-        <div class="col-sm-12 m-t-40 p-0">
-            <div id="totalAtestadosCharts" style="height: 300px;"></div>
-        </div>
-        <div class="col-sm-12 m-t-20 m-b-40 p-0">
-            <div id="qtdDiasPerdidosMesCharts" style="height: 300px;"></div>
-        </div>
-
-        {{-- <div class="col-sm-6 m-t-20 m-b-40 p-0">
-            <div id="totalAtestadosPie" style="height: 500px;"></div>
-        </div>
-        <div class="col-sm-6 m-t-20 m-b-40 p-0">
-            <div id="qtdDiasPerdidosMesPie" style="height: 500px;"></div>
-        </div> --}}
+        <h3 class="box-title m-b-0">INSS</h3>
+        {{-- <p class="m-b-0">Dados referentes aos últimos 30 dias</p> --}}
+        <hr class="m-t-5">
 
         <div class="col-sm-12 row p-0">
             <div class="col-sm-12 table-responsive p-0 p-r-10">
                 <table id="resultado" class="table table-bordered table-condensed">
                     <thead>
                         <tr>
-                            <th class="text-center font-12 p-3">Grupo CID</th>
-                            <th class="text-center font-12 p-3">Grupo CID resumido</th>
-                            <th class="text-center font-12 p-3">Total de Atestados</th>
-                            <th class="text-center font-12 p-3">Quantidade dias perdidos mês</th>
+                            <th class="text-center font-12 p-3">Unidade</th>
+                            <th class="text-center font-12 p-3">Total Afastados pelo INSS</th>
+                            <th class="text-center font-12 p-3">Afastados pelo INSS nos últimos 30 dias</th>
+                            <th class="text-center font-12 p-3">Colegas q retornaram de afastamento do INSS no período</th>
                         </tr>
                     </thead>
                     <tbody>
