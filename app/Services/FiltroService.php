@@ -36,6 +36,29 @@ class FiltroService
         return $query;
     }
 
+    /**
+     *  Filtra por datas
+     */
+    public static function filtroDatas($request)
+    {
+        $query['inicial'] = $request->query('inicial');
+        $query['final'] = $request->query('final');
+
+        if($query['inicial'] == null) {
+            $query['inicial'] = Carbon::today();
+        } else {
+            $query['inicial'] = Carbon::parse($query['inicial']);
+        }
+
+        if($query['final'] == null) {
+            $query['final'] = Carbon::today();
+        } else {
+            $query['final'] = Carbon::parse($query['final']);
+        }
+
+        return $query;
+    }
+
     public static function esteMes()
     {
         $now = Carbon::now();

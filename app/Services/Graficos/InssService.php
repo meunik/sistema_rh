@@ -3,7 +3,6 @@
 namespace App\Services\Graficos;
 
 use App\Models\Datas;
-use Illuminate\Support\Carbon;
 
 class InssService
 {
@@ -19,7 +18,7 @@ class InssService
             'datas.encaminhado_inss',
             'datas.data_inicial',
             'datas.retornou',
-            'datas.cod',
+            'datas.cod'
         )
         ->get();
 
@@ -58,7 +57,7 @@ class InssService
         $resultados['total'] = 0;
 
         foreach ($data as $dt) {
-            if (($dt->data_inicial >= $esteMes['umMesAtraz'])&&($dt->data_inicial <= $esteMes['hoje'])) {
+            if (($dt->data_inicial >= $esteMes['inicial'])&&($dt->data_inicial <= $esteMes['final'])) {
                 $mes = true;
             } else {
                 $mes = false;
@@ -84,7 +83,7 @@ class InssService
         $resultados = array();
         $resultados['total'] = 0;
         foreach ($data as $dt) {
-            if (($dt->data_inicial >= $esteMes['umMesAtraz'])&&($dt->data_inicial <= $esteMes['hoje'])) {
+            if (($dt->data_inicial >= $esteMes['inicial'])&&($dt->data_inicial <= $esteMes['final'])) {
                 $mes = true;
             } else {
                 $mes = false;

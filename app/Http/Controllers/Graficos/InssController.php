@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Graficos;
 
+use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 use App\Services\Graficos\InssService;
@@ -15,38 +16,12 @@ class InssController extends Controller
     }
     public function index()
     {
-        // $esteMes = FiltroService::esteMes();
-        // $hospitais = UserService::hospitaisVinculadosOnlyId();
-        // $data = InssService::colagasAfastados($hospitais);
-
-        // $totalDeAfastados = InssService::totalDeAfastados($data);
-        // $totalDeAfastadosPeriodo = InssService::totalDeAfastadosPeriodo($data, $esteMes);
-        // $colegasRetornaramPeriodo = InssService::colegasRetornaramPeriodo($data, $esteMes);
-
-        // foreach ($data as $dt) {
-        //     $resultados[$dt->hospital_id] = [
-        //         "hospital_nome" => $dt->hospital_nome,
-        //         "totalDeAfastados" => $totalDeAfastados[$dt->hospital_id],
-        //         "totalDeAfastadosPeriodo" => $totalDeAfastadosPeriodo[$dt->hospital_id],
-        //         "colegasRetornaramPeriodo" => $colegasRetornaramPeriodo[$dt->hospital_id],
-        //     ];
-        // }
-        // $resultados['total'] = [
-        //     "cid" => 'TOTAL',
-        //     "totalDeAfastados" => $totalDeAfastados['total'],
-        //     "totalDeAfastadosPeriodo" => $totalDeAfastadosPeriodo['total'],
-        //     "colegasRetornaramPeriodo" => $colegasRetornaramPeriodo['total'],
-        // ];
-
-        // echo json_encode($resultados);
-        // exit;
-
         return view('graficos.inss');
     }
 
-    public function returnDataTables()
+    public function returnDataTables(Request $request)
     {
-        $esteMes = FiltroService::esteMes();
+        $esteMes = FiltroService::filtroDatas($request);
         $hospitais = UserService::hospitaisVinculadosOnlyId();
         $data = InssService::colagasAfastados($hospitais);
 

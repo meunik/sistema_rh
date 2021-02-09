@@ -20,23 +20,6 @@ class VacinasController extends Controller
         $hospitalId = $request->query('hospital');
         $hospital = Hospitais::where('id',$hospitalId)->select('nome')->first();
 
-        // $resultados = Colegas::where('colegas.id', $id)
-        // $resultados = Colegas::where('hospitais.id', $hospitalId)
-        // ->leftJoin('hospitais', 'colegas.hospitais_id', '=', 'hospitais.id')
-        // ->leftJoin('vacinas', 'colegas.id', '=', 'vacinas.colegas_id')
-        // ->select(
-        //     'colegas.id as colega_id',
-        //     'colegas.nome',
-        //     'colegas.funcao',
-        //     'colegas.secao',
-        //     'hospitais.nome as unidade',
-        //     'hospitais.id as hospitais_id',
-        //     'vacinas.*'
-        // )
-        // ->get();
-        // echo $resultados;
-        // exit;
-
         return view('relatorios.vacinas', compact('hospital'));
     }
 
