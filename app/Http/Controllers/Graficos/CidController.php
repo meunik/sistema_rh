@@ -34,11 +34,12 @@ class CidController extends Controller
         $qtdDiasPerdidosMes = CidService::qtdDiasPerdidosMes($data);
 
         foreach ($data as $dt) {
-            $cidCompleto = $dt->cid_categoria.' - '.$dt->cid_nome;
+            $categoria = '('.$dt->cid_categoria_inicio.' - '.$dt->cid_categoria_fim.')';
+            $cidCompleto = $categoria.' '.$dt->cid_nome;
 
             $resultados[$dt->cid_id] = [
                 "cid" => $cidCompleto,
-                "grupoCidResumido" => $dt->cid_categoria,
+                "grupoCidResumido" => $categoria,
                 "totalDeAtestados" => $totalDeAtestados[$dt->cid_id],
                 "qtdDiasPerdidosMes" => $qtdDiasPerdidosMes[$dt->cid_id],
             ];
@@ -63,8 +64,9 @@ class CidController extends Controller
 
         $retorno[] = ['', 'Atestados'];
         foreach ($data as $dt) {
+            $categoria = '('.$dt->cid_categoria_inicio.' - '.$dt->cid_categoria_fim.')';
             $retorno[$dt->cid_id] = [
-                $dt->cid_categoria,
+                $categoria,
                 $totalDeAtestados[$dt->cid_id]
             ];
         }
@@ -86,8 +88,9 @@ class CidController extends Controller
 
         $retorno[] = ['', 'Atestados'];
         foreach ($data as $dt) {
+            $categoria = '('.$dt->cid_categoria_inicio.' - '.$dt->cid_categoria_fim.')';
             $retorno[$dt->cid_id] = [
-                $dt->cid_categoria,
+                $categoria,
                 $qtdDiasPerdidosMes[$dt->cid_id]
             ];
         }

@@ -149,8 +149,6 @@
                 {/*nome*/
                     className: 'text-center b-r-vacina',
 					data: null,
-				    orderable: false,
-				    searchable: false,
 					render: (row) => {
                         var nome = (row.nome) ? row.nome : "";
 						return `<div class="label label-table text-dark font-12 p-0">${nome}</div>`;

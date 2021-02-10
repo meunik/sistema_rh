@@ -243,6 +243,8 @@ class DataseColegas
         'datas.data_final',
         'datas.motivo',
         'datas.motivoSelect',
+        'datas.atestadoFIle',
+        'datas.atestadoNomeFIle',
         'datas.data_inicio_beneficio',
         'datas.data_cessacao_beneficio',
         'datas.especie_do_beneficio',

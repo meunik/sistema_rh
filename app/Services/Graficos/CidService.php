@@ -14,15 +14,16 @@ class CidService
         ->where('data_inicial', '>=', $esteMes['umMesAtraz'])
         ->join('colegas', 'datas.colegas_id', '=', 'colegas.id')
         ->join('hospitais', 'colegas.hospitais_id', '=', 'hospitais.id')
-        ->join('cid_subcategoria', 'datas.cid_sub_categoria_id', '=', 'cid_subcategoria.id')
+        ->join('cid_categoria', 'datas.cid_categoria_id', '=', 'cid_categoria.id')
         ->whereIn('hospitais.id', $hospitais)
         ->select(
             'colegas.nome',
             'colegas.hospitais_id as hospital_id',
             'hospitais.nome as hospital_nome',
-            'cid_subcategoria.id as cid_id',
-            'cid_subcategoria.nome as cid_nome',
-            'cid_subcategoria.categoria as cid_categoria',
+            'cid_categoria.id as cid_id',
+            'cid_categoria.nome as cid_nome',
+            'cid_categoria.inicio as cid_categoria_inicio',
+            'cid_categoria.fim as cid_categoria_fim',
             'datas.cids_id as cid_antigo',
             'datas.data_inicial',
             'datas.dias_atestado',

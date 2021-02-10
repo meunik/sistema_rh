@@ -1,6 +1,7 @@
 @extends('layout')
 
 @section('head')
+<link href="{{URL::asset('plugins/components/custom-select/custom-select.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -36,6 +37,7 @@
 @endsection
 
 @section('script')
+<script src="{{URL::asset('plugins/components/custom-select/custom-select.min.js')}}" type="text/javascript"></script>
 
 <script>
 
@@ -294,6 +296,7 @@
     }
 
     function salvarForm(indexLinha) {
+
         let submitButton = $(`#submit${indexLinha}`);
         let tr = submitButton.closest('tr');
 
@@ -301,6 +304,22 @@
         let inputData_inicial = date;
 
         let inputId = tr.find( "[name='id']" ).val();
+
+        var atestadoNomeFIle_input = $("#atestadoNomeFIle_input"+inputId).val();
+        var atestadoFIle_input = $("#atestadoFIle_input"+inputId).val();
+        if ((atestadoNomeFIle_input != '')||(atestadoFIle_input != '')) {
+            var v = false;
+            if ((atestadoNomeFIle_input == '')&&(atestadoFIle_input != '')) {
+                toastr.error('Para salvar arquivo o campo "Nome do arquivo" é obrigatório');
+                v = true;
+            }
+            if ((atestadoFIle_input == '')&&(atestadoNomeFIle_input != '')) {
+                toastr.error('Para salvar arquivo o campo "Adicionar arquivo" é obrigatório');
+                v = true;
+            }
+            if (v == true) return null;
+        }
+
         let inputTipo = tr.find( "[name='tipo']" ).val();
         let inputMedico = tr.find( "[name='medico']" ).val();
         let inputCrm = tr.find( "[name='crm']" ).val();
@@ -361,6 +380,8 @@
 
         let json = data
 
+        var sucesso = false;
+
         $.ajax({
             type: "POST",
             url: "/form",
@@ -369,8 +390,12 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function(data){
-                toastr.success(data)
-                window.setTimeout(function(){location.reload()},2000)
+                if (($("#atestadoNomeFIle_input"+inputId).val() != '')&&($("#atestadoFIle_input"+inputId).val() != '')) {
+                    $("#atestadoFIle_id"+inputId).val(data);
+                    atestadoFileSubmit(inputId);
+                }
+                toastr.success('Registrado com sucesso!');
+                window.setTimeout(function(){location.reload()},2000);
             },
             dataType: "text",
             error: function(error) {
@@ -455,14 +480,8 @@
         }
     };
 
-    function atestadoFIle(id) {
-        $("#atestadoFIle_id").val(id);
-        $("#atestadoNomeFIle_input").val(null);
-        $("#atestadoFIle_input").val(null);
-    };
-
-    function atestadoFileSubmit() {
-        var formData = new FormData($("#atestadoFIleForm").get(0));
+    function atestadoFileSubmit(id) {
+        var formData = new FormData($(`#atestadoFIleForm${id}`).get(0));
 
         $.ajax({
             async: true,
@@ -485,12 +504,12 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function(data){
-                toastr.success("Salvo com sucesso!")
-                window.setTimeout(function(){location.reload()},2000)
+                toastr.success("Arquivo salvo com sucesso!")
+                // window.setTimeout(function(){location.reload()},2000)
             },
             error: function(error) {
                 var error = JSON.parse(error.responseText).error
-                toastr.error(error)
+                toastr.error('Falha ao salvar os campos "Nome do arquivo" ou "Adicionar arquivo".')
             }
         });
     };
@@ -610,7 +629,7 @@
                                             Médico:
                                         </label>
                                         <div class="">
-                                            <input type="text" class="form-control w-200" autocomplete="off" name="medico" value="${medico}" id="medico${id}" placeholder="Médico">
+                                            <input type="text" class="form-control w-200" autocomplete="off" name="medico" value="${medico}" id="medico${id}" placeholder="Médico" maxlength="191">
                                         </div>
                                     </div>`;
 						return html;
@@ -631,7 +650,7 @@
                                             CRM:
                                         </label>
                                         <div class="">
-                                            <input type="text" class="form-control w-200" autocomplete="off" name="crm" value="${crm}" id="crm${id}" placeholder="CRM">
+                                            <input type="text" class="form-control w-200" autocomplete="off" name="crm" value="${crm}" id="crm${id}" placeholder="CRM" maxlength="191">
                                         </div>
                                     </div>`;
 						return html;
@@ -780,7 +799,7 @@
                         var html1 = `<div class="text-left form-group row m-0">
                                         <label for="cidCategoria${id}" class="control-label p-0">CID Categoria:</label>
                                         <div class="">
-                                            <select id="cidCategoria${id}" name="cidCategoria" class="form-control w-130" autocomplete="off" style="width: 250px;" onchange="cidSubCategoria(this.value, ${id}, null)">
+                                            <select id="cidCategoria${id}" name="cidCategoria" class="form-control select2 w-130" autocomplete="off" style="width: 250px;" onchange="cidSubCategoria(this.value, ${id}, null)">
                                                 <option selected disabled>Selecione</option>
                                                 <option value="1" ${selected[1]}>(A00 - B99) Algumas doenças infecciosas e parasitárias</option>
                                                 <option value="2" ${selected[2]}>(C00 - D48) Neoplasias [tumores]</option>
@@ -845,7 +864,7 @@
                         var html = `<div class="text-left form-group row m-0">
                                         <label for="cidSubCategoria${id}" class="control-label p-0">CID Subcategoria:</label>
                                         <div class="">
-                                            <select id="cidSubCategoriaSelect${id}" name="cidSubCategoria" class="form-control w-130" autocomplete="off" style="width: 250px;">
+                                            <select id="cidSubCategoriaSelect${id}" name="cidSubCategoria" class="form-control w-130 select2" autocomplete="off" style="width: 250px;">
                                                 <option selected disabled>Selecione</option>`+options+
                                             `</select>
                                         </div>
@@ -1057,14 +1076,33 @@
 				    orderable: false,
 				    searchable: false,
 					render: (row) => {
-                        var id = row.data_id;
-                        // var id = row.id;
-						var html = `<div class="text-left p-0">
-                                        <label for="atestadoFIleLabel${id}" class="col-sm-12 control-label p-0">Adicionar arquivo:</label>
-                                        <button id="atestadoFIleLabel${id}" class="btn btn-sm btn-info btn-outline font-16 m-b-5" type="button" data-toggle="modal" data-target="#atestadoFIle" onclick="atestadoFIle('${id}')">
-                                            <i class="fa fa-plus"></i> Arquivo <i class="fa fa-file"></i>
-                                        </button>
-                                    </div>`;
+                        var data_id = (row.data_id) ? row.data_id : "";
+                        var id = row.id;
+
+                        var atestadoNomeFIle = (row.atestadoNomeFIle) ? row.atestadoNomeFIle : "";
+                        if (row.atestadoFIle) {
+                            var inputFile = `<b id="atestadoFIle_input${id}" class="font-bold text-danger">Atestado já foi upado.</b>`;
+                        } else {
+                            var inputFile = `<label for="atestadoFIle_input${id}" class="col-sm-4 col-xs-4 control-label p-0 m-t-10 p-r-5 text-right">Adicionar arquivo:</label>
+                            <div class="col-sm-8 col-xs-8 p-0">
+                                <input type="file" class="form-control w-130" autocomplete="off" name="atestadoFIle_input" id="atestadoFIle_input${id}" placeholder="Adicionar arquivo" style="width: 350px;">
+                            </div>`;
+                        }
+
+                        var html = `<div class="text-left form-group row m-0" style="width: 400px;">
+                            <form id="atestadoFIleForm${id}">
+                                <div class="form-group m-0">
+                                    <label for="atestadoNomeFIle_input${id}" class="col-sm-4 col-xs-4 control-label p-0 m-t-10 p-r-5 text-right">Nome do arquivo:</label>
+                                    <div class="col-sm-8 col-xs-8 p-0">
+                                        <input type="text" class="form-control w-130" autocomplete="off" name="atestadoNomeFIle_input" value="${atestadoNomeFIle}" id="atestadoNomeFIle_input${id}" placeholder="Nome do arquivo" maxlength="191" style="width: 350px;">
+
+                                        <input type="text" class="d-none" autocomplete="off" value="${data_id}" name="atestadoFIle_id" id="atestadoFIle_id${id}" readonly>
+                                    </div>
+                                    ${inputFile}
+                                </div>
+                            </form>
+                        </div>`;
+
 						return html;
 					},
                     createdCell: function (td, row) {
@@ -1236,6 +1274,9 @@
                     },
 				},
 			],
+            initComplete: function( settings, json ) {
+                $(".select2").select2();
+            }
         });
 
         var data = getUrlParameter('data');

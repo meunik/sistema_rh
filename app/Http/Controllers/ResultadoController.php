@@ -137,7 +137,7 @@ class ResultadoController extends Controller
 
                 $resultados[$colega->nome]['datas'][$i]['cod'] = 'X';
                 $resultados[$colega->nome]['situacao'] = 'Ativo';
-                $resultados[$colega->nome]['cid'] = isset($data->cids_id)?$data->cids_id:'-';
+                $resultados[$colega->nome]['cid'] = $this->cidResultado($data);
                 $resultados[$colega->nome]['colega_id'] = $colega->id;
 
                 $resultados[$colega->nome]['data_inicio_beneficio'] = isset($data->data_inicio_beneficio)?$data->data_inicio_beneficio:null;
@@ -328,6 +328,18 @@ class ResultadoController extends Controller
             return $string;
         } else {
             return 'Sem CID Subcategoria';
+        }
+    }
+
+    public function cidResultado($data)
+    {
+        if (isset($data->cids_id)) {
+            return $data->cids_id;
+        } elseif (isset($data->cid_sub_categoria_id)) {
+            $cidSubCategoria = CidSubcategoria::find($data->cid_sub_categoria_id);
+            return $cidSubCategoria->categoria;
+        } else {
+            return '-';
         }
     }
 }

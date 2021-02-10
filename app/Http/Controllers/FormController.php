@@ -98,7 +98,7 @@ class FormController extends Controller
 
         if($data) {
             DB::commit();
-            return response('Registrado com sucesso!');
+            return response()->json($data->id);
         } else {
             DB::rollBack();
             return response()->json(['error' => 'Erro Desconhecido!'],404);
@@ -145,11 +145,8 @@ class FormController extends Controller
 
     public function atestadoFile(Request $request)
     {
-        $colegas = Datas::find($request->atestadoFIle_id);
+        $datas = Datas::find($request->atestadoFIle_id);
 
-        if ($colegas === null) {
-            return response()->json(['error' => 'Primeiro salve o atestado depois cadastre o arquivo.'],404);
-        }
         if ($request->atestadoNomeFIle_input === null) {
             return response()->json(['error' => 'O campo "Nome do arquivo" é obrigatório!'],404);
         }
@@ -158,9 +155,9 @@ class FormController extends Controller
         }
 
         $arquivo = $request->file('atestadoFIle_input')->store('atestados');
-        $colegas->atestadoFIle = $arquivo;
-        $colegas->atestadoNomeFIle = $request->atestadoNomeFIle_input;
-        $colegas->save();
+        $datas->atestadoFIle = $arquivo;
+        $datas->atestadoNomeFIle = $request->atestadoNomeFIle_input;
+        $datas->save();
     }
 
     public function atestadoFormResult(Request $request)
