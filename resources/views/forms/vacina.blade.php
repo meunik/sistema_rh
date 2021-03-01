@@ -247,7 +247,7 @@
             },
             success: function(data){
                 toastr.success('Salvo com sucesso!')
-                window.setTimeout(function(){location.reload()},2000)
+                // window.setTimeout(function(){location.reload()},2000)
             },
             dataType: "text",
             error: function(error) {

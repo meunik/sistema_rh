@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class UserService
 {
     /**
-     *  Filtra os hospitais de a cordo com o nivel de permissÃ£o do user
+     *  Filtra os hospitais de a cordo com o nivel de permiss«ªo do user
      *  Retorna id e nome
      */
     public static function hospitaisVinculados()
@@ -28,7 +28,7 @@ class UserService
         }
     }
     /**
-     *  Filtra os hospitais de a cordo com o nivel de permissÃ£o do user
+     *  Filtra os hospitais de a cordo com o nivel de permiss«ªo do user
      *  Retorna id
      */
     public static function hospitaisVinculadosOnlyId()

@@ -105,7 +105,3 @@ Auth::routes();
 Route::get('/', function () { return redirect('/form'); });
 Route::get('/index', function () { return redirect('/form'); });
 // Route::get('/teste', 'TesteController@index');
-
-// Route::get('/login', function () { return redirect('/aviso'); })->name('login');
-// Route::get('/aviso', function () { return view('aviso'); })->name('aviso');
-/** para o aviso editar arquivo App\Exceptions\Handler */

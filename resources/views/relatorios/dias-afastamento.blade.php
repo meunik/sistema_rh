@@ -9,10 +9,10 @@
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered table-condensed">
-                    <thead>
-                        <tr class="info">
-                            <th class="text-center" colspan="4">ANÁLISE NO PERÍODO</th>
-                        </tr>
+                <thead>
+                    <tr class="info">
+                        <th class="text-center" colspan="4">ANÁLISE NO PERÍODO</th>
+                    </tr>
                         <tr class="active">
                             <th class="text-center"></th>
                             <th class="text-center">Colegas que retornaram</th>

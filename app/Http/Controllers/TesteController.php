@@ -13,10 +13,12 @@ class TesteController extends Controller
     }
     public function index()
     {
-        $colegas = Colegas::select('nome', 'hospitais_id')->get();
-        foreach ($colegas as $col) {
-            $this->funcao($col);
-        }
+        echo 'Pagina para rodar scripts';
+        exit;
+        // $colegas = Colegas::select('nome', 'hospitais_id')->get();
+        // foreach ($colegas as $col) {
+        //     $this->funcao($col);
+        // }
     }
     public function funcao($col)
     {

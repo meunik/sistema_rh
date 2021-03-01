@@ -30,7 +30,7 @@
             <div class="col-md-12 m-t-10">
                 <form method="POST" id="criarClinica" @if(isset($user->id)) action="/users" @else action="/usersCreate" @endif>
                 @if(isset($user->id))
-                    <input type="hidden" name="_method" value="put"/>
+                    <input type="hidden" name="_method" value="put" />
                 @endif
                 @csrf
                     <input type="hidden" name="id" value="{{ isset($user->id) ? $user->id : '' }}" />

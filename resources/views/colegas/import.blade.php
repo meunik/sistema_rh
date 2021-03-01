@@ -13,7 +13,7 @@
                             <div class="col-xs-12 p-0 m-b-10">
                                 <div class="form-group">
                                     <div class="col-sm-6">
-                                        <input id="FileImport" type="file" name="fileUpload" accept=".csv">
+                                        <input id="FileImport" type="file" name="fileUpload" accept=".csv"> 
                                     </div>
                                 </div>
                             </div>
