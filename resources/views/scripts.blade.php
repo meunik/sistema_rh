@@ -28,7 +28,7 @@
 <script src="{{URL::asset('js/toastr.min.js')}}" type="text/javascript"></script>
 <script>
     toastr.options.closeButton = true;
-    toastr.options.preventDuplicates = true;
+    toastr.options.preventDuplicates = false;
     toastr.options.progressBar = true;
     toastr.options.positionClass = 'toast-bottom-right';
 </script>

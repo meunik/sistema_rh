@@ -80,6 +80,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/editTel', 'FormController@editTel');
     Route::post('/atestadoFile', 'FormController@atestadoFile');
     Route::post('/atestadoFormResult', 'FormController@atestadoFormResult');
+    Route::get('/atestadoFileLink', 'FormController@atestadoFileLink');
 
     Route::get('/datas', 'DatasController@index')->name('datas');
     Route::get('/atestadoHistoricoDatas', 'DatasController@atestadoHistoricoDatas');

@@ -9,7 +9,8 @@ use Illuminate\Support\Carbon;
 use Yajra\DataTables\DataTables;
 
 use TJGazel\Toastr\Facades\Toastr;
-use Illuminate\Support\Facades\{DB, Auth};
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\{DB, Auth, Response};
 use App\Services\{DataseColegas, FormService};
 use App\Models\{Datas, Colegas, Covid, Hospitais};
 
@@ -171,5 +172,11 @@ class FormController extends Controller
         if(isset($request->observacao_inss)){$data->observacao_inss = $request->observacao_inss;}
 
         $data->save();
+    }
+
+    public function atestadoFileLink(Request $request)
+    {
+        $file = 'app/'.$request->file;
+        return response()->file(storage_path($file));
     }
 }

@@ -81,15 +81,23 @@ class VacinasController extends Controller
      */
     public function vacinaSave(Request $request)
     {
-        $exists = Vacinas::where('colegas_id', $request->id)->exists();
+        $stringId = $request->stringId;
+        $value = $request->value;
+        $id = $request->id;
+
+        $exists = Vacinas::where('colegas_id', $id)->exists();
+
         if ($exists != true) {
-            $vacina = Vacinas::create([
-                'colegas_id' => $request->id,
-                $request->stringId => $request->value
-            ]);
+            $arrCreate = ['colegas_id' => $id];
+            for ($i=0; $i < count($stringId); $i++) {
+                $arrCreate[$stringId[$i]] = $value[$i];
+            }
+            $vacina = Vacinas::create($arrCreate);
         } else {
-            $vacina = Vacinas::where('colegas_id', $request->id)->first();
-            if(isset($request->value)){$vacina[$request->stringId] = $request->value;}
+            $vacina = Vacinas::where('colegas_id', $id)->first();
+            for ($i=0; $i < count($stringId); $i++) {
+                $vacina[$stringId[$i]] = $value[$i];
+            }
             $vacina->save();
         }
     }

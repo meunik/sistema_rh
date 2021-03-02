@@ -1080,8 +1080,12 @@
                         var id = row.id;
 
                         var atestadoNomeFIle = (row.atestadoNomeFIle) ? row.atestadoNomeFIle : "";
+                        var atestadoFIle = (row.atestadoFIle) ? row.atestadoFIle : "";
+
                         if (row.atestadoFIle) {
-                            var inputFile = `<b id="atestadoFIle_input${id}" class="font-bold text-danger">Atestado já foi upado.</b>`;
+                            var inputFile = `<div class="text-center">
+                                <b id="atestadoFIle_input${id}" class="font-bold text-danger">Atestado já anexado.</b> <a href="atestadoFileLink?file=${atestadoFIle}" target="_blank">Exibir arquivo</a>
+                            </div>`;
                         } else {
                             var inputFile = `<label for="atestadoFIle_input${id}" class="col-sm-4 col-xs-4 control-label p-0 m-t-10 p-r-5 text-right">Adicionar arquivo:</label>
                             <div class="col-sm-8 col-xs-8 p-0">
