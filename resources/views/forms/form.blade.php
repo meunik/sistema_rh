@@ -304,26 +304,14 @@
         let inputData_inicial = date;
 
         let inputId = tr.find( "[name='id']" ).val();
+        let inputCod = tr.find( "[name='cod']" ).val();
 
         var atestadoNomeFIle_input = $("#atestadoNomeFIle_input"+inputId).val();
         var atestadoFIle_input = $("#atestadoFIle_input"+inputId).val();
-        if ((atestadoNomeFIle_input != '')||(atestadoFIle_input != '')) {
-            var v = false;
-            if ((atestadoNomeFIle_input == '')&&(atestadoFIle_input != '')) {
-                toastr.error('Para salvar arquivo o campo "Nome do arquivo" é obrigatório');
-                v = true;
-            }
-            if ((atestadoFIle_input == '')&&(atestadoNomeFIle_input != '')) {
-                toastr.error('Para salvar arquivo o campo "Adicionar arquivo" é obrigatório');
-                v = true;
-            }
-            if (v == true) return null;
-        }
 
         let inputTipo = tr.find( "[name='tipo']" ).val();
         let inputMedico = tr.find( "[name='medico']" ).val();
         let inputCrm = tr.find( "[name='crm']" ).val();
-        let inputCod = tr.find( "[name='cod']" ).val();
         let inputData_inicio_beneficio = tr.find( "[name='data_inicio_beneficio']" ).val();
         let inputData_cessacao_beneficio = tr.find( "[name='data_cessacao_beneficio']" ).val();
         let inputEspecie_do_beneficio = tr.find( "[name='especie_do_beneficio']" ).val();
@@ -390,7 +378,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function(data){
-                if (($("#atestadoNomeFIle_input"+inputId).val() != '')&&($("#atestadoFIle_input"+inputId).val() != '')) {
+                if (($("#atestadoNomeFIle_input"+inputId).val() != '')||($("#atestadoFIle_input"+inputId).val() != '') && (inputCod === 'AT')) {
                     $("#atestadoFIle_id"+inputId).val(data);
                     atestadoFileSubmit(inputId);
                 }
@@ -509,7 +497,8 @@
             },
             error: function(error) {
                 var error = JSON.parse(error.responseText).error
-                toastr.error('Falha ao salvar os campos "Nome do arquivo" ou "Adicionar arquivo".')
+                console.log(error);
+                if (error) toastr.error(error);
             }
         });
     };
@@ -873,7 +862,13 @@
 					},
                     createdCell: function (td, row) {
                         $(td).attr('id', 'cidSubCategoria'+row.id);
-                        if (row.cid_categoria_id === null) $(td).attr('class', 'd-none')
+                        switch (row.cod) {
+                            case 'AT': break;
+                            case 'INSS': break;
+                            default:
+                                $(td).attr('class', 'd-none')
+                                break;
+                        }
                     },
 				},
 				{/*covid*/

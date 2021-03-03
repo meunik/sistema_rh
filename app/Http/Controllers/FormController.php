@@ -147,12 +147,14 @@ class FormController extends Controller
     public function atestadoFile(Request $request)
     {
         $datas = Datas::find($request->atestadoFIle_id);
-
-        if ($request->atestadoNomeFIle_input === null) {
-            return response()->json(['error' => 'O campo "Nome do arquivo" é obrigatório!'],404);
-        }
-        if ($request->atestadoFIle_input === null) {
-            return response()->json(['error' => 'O campo "Adicionar arquivo" é obrigatório!'],404);
+        if (!isset($datas->atestadoFIle)) {
+            if ($request->atestadoNomeFIle_input === null) {
+                return response()->json(['error' => 'O campo "Nome do arquivo" é obrigatório!'], 404);
+            } else if ($request->atestadoFIle_input === null) {
+                return response()->json(['error' => 'O campo "Adicionar arquivo" é obrigatório!'], 404);
+            } elseif (($request->atestadoFIle_input === null)&&($request->atestadoNomeFIle_input === null)) {
+                return response()->json(['error' => null], 404);
+            }
         }
 
         $arquivo = $request->file('atestadoFIle_input')->store('atestados');
