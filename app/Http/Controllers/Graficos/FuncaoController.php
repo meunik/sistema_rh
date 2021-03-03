@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Graficos;
 
+use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 use App\Services\Graficos\FuncaoService;
@@ -18,17 +19,17 @@ class FuncaoController extends Controller
         return view('graficos.funcao');
     }
 
-    public function base()
+    public function base(Request $request)
     {
-        $esteMes = FiltroService::esteMes();
+        $esteMes = FiltroService::filtroDatas($request);
         $hospitais = UserService::hospitaisVinculadosOnlyId();
         $data = FuncaoService::colagasComAtestados($esteMes, $hospitais);
 		return $data;
     }
 
-    public function returnDataTables()
+    public function returnDataTables(Request $request)
     {
-        $data = $this->base();
+        $data = $this->base($request);
 
         $totalDeAtestados = FuncaoService::totalDeAtestados($data);
         $atestadosPorAcidenteOuDoenca = FuncaoService::atestadosPorAcidenteOuDoenca($data);
@@ -61,9 +62,9 @@ class FuncaoController extends Controller
     /**
      *  "Quatidade de atestados por função"
      */
-    public function totalAtestados()
+    public function totalAtestados(Request $request)
     {
-        $data = $this->base();
+        $data = $this->base($request);
         $totalDeAtestados = FuncaoService::totalDeAtestados($data);
 
         $retorno[] = ['', 'Atestados'];
@@ -84,9 +85,9 @@ class FuncaoController extends Controller
     /**
      *  "Quantidade de dias perdidos por função"
      */
-    public function qtdDiasPerdidosMes()
+    public function qtdDiasPerdidosMes(Request $request)
     {
-        $data = $this->base();
+        $data = $this->base($request);
         $qtdDiasPerdidosMes = FuncaoService::qtdDiasPerdidosMes($data);
 
         $retorno[] = ['', 'Atestados'];

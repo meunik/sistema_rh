@@ -38,5 +38,9 @@ $(document).ready( function () {
     var inicial = getUrlParameter('inicial');
     var final = getUrlParameter('final');
 
-    if(inicial && final) tabela(inicial, final);
+    if(inicial && final) {
+        tabela(inicial, final);
+        $("#data_inicial").val(inicial);
+        $("#data_final").val(final);
+    }
 });

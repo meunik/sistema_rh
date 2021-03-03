@@ -1,10 +1,12 @@
+var inicial = getUrlParameter('inicial');
+var final = getUrlParameter('final');
 
 /** Quatidade de atestados por função **/
-    function totalAtestados() {
+    function totalAtestados(inicial, final) {
         var resultado;
         $.ajax({
             type: "GET",
-            url: `/graficos/funcao/totalAtestados`,
+            url: `/graficos/funcao/totalAtestados?inicial=${inicial}&final=${final}`,
             dataType: "JSON",
             async: false,
             headers: {
@@ -20,9 +22,11 @@
         return resultado;
     };
 
-    var totalAtestados = totalAtestados().data;
-    google.charts.load('current', {'packages':['bar']});
-    google.charts.setOnLoadCallback(totalAtestadosCharts);
+    if(inicial && final) {
+        var totalAtestados = totalAtestados(inicial, final).data;
+        google.charts.load('current', {'packages':['bar']});
+        google.charts.setOnLoadCallback(totalAtestadosCharts);
+    }
 
     function totalAtestadosCharts() {
         var data = google.visualization.arrayToDataTable(totalAtestados);
@@ -58,11 +62,11 @@
 /** /Quatidade de atestados por função **/
 
 /** Quantidade de dias perdidos por função **/
-    function qtdDiasPerdidosMes() {
+    function qtdDiasPerdidosMes(inicial, final) {
         var resultado;
         $.ajax({
             type: "GET",
-            url: `/graficos/funcao/qtdDiasPerdidosMes`,
+            url: `/graficos/funcao/qtdDiasPerdidosMes?inicial=${inicial}&final=${final}`,
             dataType: "JSON",
             async: false,
             headers: {
@@ -78,9 +82,11 @@
         return resultado;
     };
 
-    var qtdDiasPerdidosMes = qtdDiasPerdidosMes().data;
-    google.charts.load('current', {'packages':['bar']});
-    google.charts.setOnLoadCallback(qtdDiasPerdidosMesCharts);
+    if(inicial && final) {
+        var qtdDiasPerdidosMes = qtdDiasPerdidosMes(inicial, final).data;
+        google.charts.load('current', {'packages':['bar']});
+        google.charts.setOnLoadCallback(qtdDiasPerdidosMesCharts);
+    }
 
     function qtdDiasPerdidosMesCharts() {
         var data = google.visualization.arrayToDataTable(qtdDiasPerdidosMes);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Graficos;
 
+use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 use App\Services\Graficos\CidService;
@@ -18,17 +19,17 @@ class CidController extends Controller
         return view('graficos.cid');
     }
 
-    public function base()
+    public function base(Request $request)
     {
-        $esteMes = FiltroService::esteMes();
+        $esteMes = FiltroService::filtroDatas($request);
         $hospitais = UserService::hospitaisVinculadosOnlyId();
         $data = CidService::colagasComAtestados($esteMes, $hospitais);
 		return $data;
     }
 
-    public function returnDataTables()
+    public function returnDataTables(Request $request)
     {
-        $data = $this->base();
+        $data = $this->base($request);
 
         $totalDeAtestados = CidService::totalDeAtestados($data);
         $qtdDiasPerdidosMes = CidService::qtdDiasPerdidosMes($data);
@@ -57,9 +58,9 @@ class CidController extends Controller
     /**
      *  "Quatidade de atestados por grupo CID"
      */
-    public function totalAtestados()
+    public function totalAtestados(Request $request)
     {
-        $data = $this->base();
+        $data = $this->base($request);
         $totalDeAtestados = CidService::totalDeAtestados($data);
 
         $retorno[] = ['', 'Atestados'];
@@ -81,9 +82,9 @@ class CidController extends Controller
     /**
      *  "Quantidade de dias perdidos por grupo CID"
      */
-    public function qtdDiasPerdidosMes()
+    public function qtdDiasPerdidosMes(Request $request)
     {
-        $data = $this->base();
+        $data = $this->base($request);
         $qtdDiasPerdidosMes = CidService::qtdDiasPerdidosMes($data);
 
         $retorno[] = ['', 'Atestados'];
