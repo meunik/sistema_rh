@@ -10,8 +10,8 @@ class CovidService
     public static function colagasComCovid($esteMes, $hospitais)
     {
         $data = Datas::where('cod', 'CO')
-        ->where('data_inicial', '<=', $esteMes['hoje'])
-        ->where('data_inicial', '>=', $esteMes['umMesAtraz'])
+        ->where('data_inicial', '<=', $esteMes['final'])
+        ->where('data_inicial', '>=', $esteMes['inicial'])
         ->join('colegas', 'datas.colegas_id', '=', 'colegas.id')
         ->join('hospitais', 'colegas.hospitais_id', '=', 'hospitais.id')
         ->whereIn('hospitais.id', $hospitais)

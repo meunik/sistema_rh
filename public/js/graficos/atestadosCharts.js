@@ -1,10 +1,12 @@
+var inicial = getUrlParameter('inicial');
+var final = getUrlParameter('final');
 
 /** Quantidade de atestados por unidade **/
-    function qtdAtestadosPorHosp() {
+    function qtdAtestadosPorHosp(inicial, final) {
         var resultado;
         $.ajax({
             type: "GET",
-            url: `/graficos/atestados/qtdAtestadosPorHosp`,
+            url: `/graficos/atestados/qtdAtestadosPorHosp?inicial=${inicial}&final=${final}`,
             dataType: "JSON",
             async: false,
             headers: {
@@ -20,9 +22,11 @@
         return resultado;
     };
 
-    var qtdAtestadosPorHosp = qtdAtestadosPorHosp().data;
-    google.charts.load('current', {'packages':['bar']});
-    google.charts.setOnLoadCallback(qtdAtestadosPorHospCharts);
+    if(inicial && final) {
+        var qtdAtestadosPorHosp = qtdAtestadosPorHosp(inicial, final).data;
+        google.charts.load('current', {'packages':['bar']});
+        google.charts.setOnLoadCallback(qtdAtestadosPorHospCharts);
+    }
 
     function qtdAtestadosPorHospCharts() {
         var data = google.visualization.arrayToDataTable(qtdAtestadosPorHosp);
@@ -58,11 +62,11 @@
 /** /Quantidade de atestados por unidade **/
 
 /** Quantidade de dias perdidos por unidade **/
-    function qtdDiasPerdidosPorHosp() {
+    function qtdDiasPerdidosPorHosp(inicial, final) {
         var resultado;
         $.ajax({
             type: "GET",
-            url: `/graficos/atestados/qtdDiasPerdidosPorHosp`,
+            url: `/graficos/atestados/qtdDiasPerdidosPorHosp?inicial=${inicial}&final=${final}`,
             dataType: "JSON",
             async: false,
             headers: {
@@ -78,9 +82,11 @@
         return resultado;
     };
 
-    var qtdDiasPerdidosPorHosp = qtdDiasPerdidosPorHosp().data;
-    google.charts.load('current', {'packages':['bar']});
-    google.charts.setOnLoadCallback(qtdDiasPerdidosPorHospCharts);
+    if(inicial && final) {
+        var qtdDiasPerdidosPorHosp = qtdDiasPerdidosPorHosp(inicial, final).data;
+        google.charts.load('current', {'packages':['bar']});
+        google.charts.setOnLoadCallback(qtdDiasPerdidosPorHospCharts);
+    }
 
     function qtdDiasPerdidosPorHospCharts() {
         var data = google.visualization.arrayToDataTable(qtdDiasPerdidosPorHosp);

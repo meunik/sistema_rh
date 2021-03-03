@@ -1,10 +1,12 @@
+var inicial = getUrlParameter('inicial');
+var final = getUrlParameter('final');
 
 /** Total casos COVID por unidade **/
-    function totalCasosCovid() {
+    function totalCasosCovid(inicial, final) {
         var resultado;
         $.ajax({
             type: "GET",
-            url: `/graficos/covid/totalCasosCovid`,
+            url: `/graficos/covid/totalCasosCovid?inicial=${inicial}&final=${final}`,
             dataType: "JSON",
             async: false,
             headers: {
@@ -20,9 +22,11 @@
         return resultado;
     };
 
-    var totalCasosCovid = totalCasosCovid().data;
-    google.charts.load('current', {packages:['corechart']});
-    google.charts.setOnLoadCallback(totalCasosCovidPie);
+    if(inicial && final) {
+        var totalCasosCovid = totalCasosCovid(inicial, final).data;
+        google.charts.load('current', {packages:['corechart']});
+        google.charts.setOnLoadCallback(totalCasosCovidPie);
+    }
 
     function totalCasosCovidPie() {
         var data = google.visualization.arrayToDataTable(totalCasosCovid);
@@ -40,11 +44,11 @@
 /** /Total casos COVID por unidade **/
 
 /** Quantidade de dias perdidos por unidade **/
-    function qtdDiasPerdidosMes() {
+    function qtdDiasPerdidosMes(inicial, final) {
         var resultado;
         $.ajax({
             type: "GET",
-            url: `/graficos/covid/qtdDiasPerdidosMes`,
+            url: `/graficos/covid/qtdDiasPerdidosMes?inicial=${inicial}&final=${final}`,
             dataType: "JSON",
             async: false,
             headers: {
@@ -60,9 +64,11 @@
         return resultado;
     };
 
-    var qtdDiasPerdidosMes = qtdDiasPerdidosMes().data;
-    google.charts.load('current', {packages:['corechart']});
-    google.charts.setOnLoadCallback(qtdDiasPerdidosMesPie);
+    if(inicial && final) {
+        var qtdDiasPerdidosMes = qtdDiasPerdidosMes(inicial, final).data;
+        google.charts.load('current', {packages:['corechart']});
+        google.charts.setOnLoadCallback(qtdDiasPerdidosMesPie);
+    }
 
     function qtdDiasPerdidosMesPie() {
         var data = google.visualization.arrayToDataTable(qtdDiasPerdidosMes);

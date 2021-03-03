@@ -10,8 +10,8 @@ class AtestadosService
     public static function colagasComAtestados($esteMes, $hospitais)
     {
         $data = Datas::where('cod', 'AT')
-        ->where('data_inicial', '<=', $esteMes['hoje'])
-        ->where('data_inicial', '>=', $esteMes['umMesAtraz'])
+        ->where('data_inicial', '<=', $esteMes['final'])
+        ->where('data_inicial', '>=', $esteMes['inicial'])
         ->join('colegas', 'datas.colegas_id', '=', 'colegas.id')
         ->join('hospitais', 'colegas.hospitais_id', '=', 'hospitais.id')
         ->whereIn('hospitais.id', $hospitais)

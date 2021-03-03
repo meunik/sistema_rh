@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Graficos;
 
+use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 use App\Services\{UserService, FiltroService};
@@ -18,17 +19,17 @@ class CovidController extends Controller
         return view('graficos.covid');
     }
 
-    public function base()
+    public function base(Request $request)
     {
-        $esteMes = FiltroService::esteMes();
+        $esteMes = FiltroService::filtroDatas($request);
         $hospitais = UserService::hospitaisVinculadosOnlyId();
         $data = CovidService::colagasComCovid($esteMes, $hospitais);
 		return $data;
     }
 
-    public function returnDataTables()
+    public function returnDataTables(Request $request)
     {
-        $data = $this->base();
+        $data = $this->base($request);
 
         $colegasAtivos = ColegasAtivos::qtd();
         $totalDeCovid = CovidService::totalDeCovid($data);
@@ -73,9 +74,9 @@ class CovidController extends Controller
     /**
      *  "Total casos COVID por unidade"
      */
-    public function totalCasosCovid()
+    public function totalCasosCovid(Request $request)
     {
-        $data = $this->base();
+        $data = $this->base($request);
         $totalDeCovid = CovidService::totalDeCovid($data);
 
         $retorno[] = ['', 'Casos de COVID'];
@@ -96,9 +97,9 @@ class CovidController extends Controller
     /**
      *  "Quantidade de dias perdidos por unidade"
      */
-    public function qtdDiasPerdidosMes()
+    public function qtdDiasPerdidosMes(Request $request)
     {
-        $data = $this->base();
+        $data = $this->base($request);
         $qtdDiasPerdidosMes = CovidService::qtdDiasPerdidosMes($data);
 
         $retorno[] = ['', 'Casos de COVID'];

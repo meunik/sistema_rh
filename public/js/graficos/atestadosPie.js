@@ -1,10 +1,12 @@
+var inicial = getUrlParameter('inicial');
+var final = getUrlParameter('final');
 
 /** Distribuição atestados **/
-    function totalQtdDias() {
+    function totalQtdDias(inicial, final) {
         var resultado;
         $.ajax({
             type: "GET",
-            url: `/graficos/atestados/totalQtdDias`,
+            url: `/graficos/atestados/totalQtdDias?inicial=${inicial}&final=${final}`,
             dataType: "JSON",
             async: false,
             headers: {
@@ -20,9 +22,11 @@
         return resultado;
     };
 
-    var dados = totalQtdDias().data;
-    google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(totalQtdDiasPie);
+    if(inicial && final) {
+        var dados = totalQtdDias(inicial, final).data;
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(totalQtdDiasPie);
+    }
 
     function totalQtdDiasPie() {
         var data = google.visualization.arrayToDataTable([
@@ -43,11 +47,11 @@
 /** /Distribuição atestados **/
 
 /** Top 5 unidades com maior quantidade de atestados **/
-    function topCincoQtdAtestados() {
+    function topCincoQtdAtestados(inicial, final) {
         var resultado;
         $.ajax({
             type: "GET",
-            url: `/graficos/atestados/topCincoQtdAtestados`,
+            url: `/graficos/atestados/topCincoQtdAtestados?inicial=${inicial}&final=${final}`,
             dataType: "JSON",
             async: false,
             headers: {
@@ -63,9 +67,11 @@
         return resultado;
     };
 
-    var topCincoQtdAtestados = topCincoQtdAtestados().data;
-    google.charts.load('current', {packages:['corechart']});
-    google.charts.setOnLoadCallback(topCincoQtdAtestadosPie);
+    if(inicial && final) {
+        var topCincoQtdAtestados = topCincoQtdAtestados(inicial, final).data;
+        google.charts.load('current', {packages:['corechart']});
+        google.charts.setOnLoadCallback(topCincoQtdAtestadosPie);
+    }
 
     function topCincoQtdAtestadosPie() {
         var data = google.visualization.arrayToDataTable([
@@ -88,11 +94,11 @@
 /** /Top 5 unidades com maior quantidade de atestados **/
 
 /** Top 5 unidades com maior quantidade de dias perdidos **/
-    function topCincoQtdDiasPerdidos() {
+    function topCincoQtdDiasPerdidos(inicial, final) {
         var resultado;
         $.ajax({
             type: "GET",
-            url: `/graficos/atestados/topCincoQtdDiasPerdidos`,
+            url: `/graficos/atestados/topCincoQtdDiasPerdidos?inicial=${inicial}&final=${final}`,
             dataType: "JSON",
             async: false,
             headers: {
@@ -108,9 +114,11 @@
         return resultado;
     };
 
-    var topCincoQtdDiasPerdidos = topCincoQtdDiasPerdidos().data;
-    google.charts.load('current', {packages:['corechart']});
-    google.charts.setOnLoadCallback(topCincoQtdDiasPerdidosPie);
+    if(inicial && final) {
+        var topCincoQtdDiasPerdidos = topCincoQtdDiasPerdidos(inicial, final).data;
+        google.charts.load('current', {packages:['corechart']});
+        google.charts.setOnLoadCallback(topCincoQtdDiasPerdidosPie);
+    }
 
     function topCincoQtdDiasPerdidosPie() {
         var data = google.visualization.arrayToDataTable([
@@ -133,11 +141,11 @@
 /** /Top 5 unidades com maior quantidade de dias perdidos **/
 
 /** Quantidade de atestados por unidade **/
-    function qtdAtestadosPorHosp() {
+    function qtdAtestadosPorHosp(inicial, final) {
         var resultado;
         $.ajax({
             type: "GET",
-            url: `/graficos/atestados/qtdAtestadosPorHosp`,
+            url: `/graficos/atestados/qtdAtestadosPorHosp?inicial=${inicial}&final=${final}`,
             dataType: "JSON",
             async: false,
             headers: {
@@ -153,9 +161,11 @@
         return resultado;
     };
 
-    var qtdAtestadosPorHosp = qtdAtestadosPorHosp().data;
-    google.charts.load('current', {packages:['corechart']});
-    google.charts.setOnLoadCallback(qtdAtestadosPorHospPie);
+    if(inicial && final) {
+        var qtdAtestadosPorHosp = qtdAtestadosPorHosp(inicial, final).data;
+        google.charts.load('current', {packages:['corechart']});
+        google.charts.setOnLoadCallback(qtdAtestadosPorHospPie);
+    }
 
     function qtdAtestadosPorHospPie() {
         var data = google.visualization.arrayToDataTable(qtdAtestadosPorHosp);
@@ -173,11 +183,11 @@
 /** /Quantidade de atestados por unidade **/
 
 /** Quantidade de dias perdidos por unidade **/
-    function qtdDiasPerdidosPorHosp() {
+    function qtdDiasPerdidosPorHosp(inicial, final) {
         var resultado;
         $.ajax({
             type: "GET",
-            url: `/graficos/atestados/qtdDiasPerdidosPorHosp`,
+            url: `/graficos/atestados/qtdDiasPerdidosPorHosp?inicial=${inicial}&final=${final}`,
             dataType: "JSON",
             async: false,
             headers: {
@@ -193,9 +203,11 @@
         return resultado;
     };
 
-    var qtdDiasPerdidosPorHosp = qtdDiasPerdidosPorHosp().data;
-    google.charts.load('current', {packages:['corechart']});
-    google.charts.setOnLoadCallback(qtdDiasPerdidosPorHospPie);
+    if(inicial && final) {
+        var qtdDiasPerdidosPorHosp = qtdDiasPerdidosPorHosp(inicial, final).data;
+        google.charts.load('current', {packages:['corechart']});
+        google.charts.setOnLoadCallback(qtdDiasPerdidosPorHospPie);
+    }
 
     function qtdDiasPerdidosPorHospPie() {
         var data = google.visualization.arrayToDataTable(qtdDiasPerdidosPorHosp);

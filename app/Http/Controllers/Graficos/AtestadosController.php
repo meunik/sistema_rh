@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Graficos;
 
+use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 use App\Services\{UserService, FiltroService};
@@ -18,17 +19,17 @@ class AtestadosController extends Controller
         return view('graficos.atestados');
     }
 
-    public function base()
+    public function base(Request $request)
     {
-        $esteMes = FiltroService::esteMes();
+        $esteMes = FiltroService::filtroDatas($request);
         $hospitais = UserService::hospitaisVinculadosOnlyId();
         $data = AtestadosService::colagasComAtestados($esteMes, $hospitais);
 		return $data;
     }
 
-    public function returnDataTables()
+    public function returnDataTables(Request $request)
     {
-        $data = $this->base();
+        $data = $this->base($request);
 
         $colegasAtivos = ColegasAtivos::qtd();
         $totalDeAtestados = AtestadosService::totalDeAtestados($data);
@@ -80,9 +81,9 @@ class AtestadosController extends Controller
      *  "Distribuição atestados"
      *  Um array com somente os totais de quantidades de dias.
      */
-    public function totalQtdDias()
+    public function totalQtdDias(Request $request)
     {
-        $data = $this->base();
+        $data = $this->base($request);
 
         $atestados1Ou2Dias = AtestadosService::atestados1Ou2Dias($data);
         $atestados3A15Dias = AtestadosService::atestados3A15Dias($data);
@@ -99,9 +100,9 @@ class AtestadosController extends Controller
     /**
      *  "Quantidade de atestados por unidade"
      */
-    public function qtdAtestadosPorHosp()
+    public function qtdAtestadosPorHosp(Request $request)
     {
-        $data = $this->base();
+        $data = $this->base($request);
 
         $totalDeAtestados = AtestadosService::totalDeAtestados($data);
 
@@ -123,9 +124,9 @@ class AtestadosController extends Controller
     /**
      *  "Quantidade de dias perdidos por unidade"
      */
-    public function qtdDiasPerdidosPorHosp()
+    public function qtdDiasPerdidosPorHosp(Request $request)
     {
-        $data = $this->base();
+        $data = $this->base($request);
 
         $qtdDiasPerdidosMes = AtestadosService::qtdDiasPerdidosMes($data);
 
@@ -147,9 +148,9 @@ class AtestadosController extends Controller
     /**
      *  "Top 5 unidades com maior quantidade de atestados"
      */
-    public function topCincoQtdAtestados()
+    public function topCincoQtdAtestados(Request $request)
     {
-        $data = $this->base();
+        $data = $this->base($request);
 
         $totalDeAtestados = AtestadosService::totalDeAtestados($data);
         foreach ($data as $dt) {
@@ -173,9 +174,9 @@ class AtestadosController extends Controller
     /**
      *  "Top 5 unidades com maior quantidade de dias perdidos"
      */
-    public function topCincoQtdDiasPerdidos()
+    public function topCincoQtdDiasPerdidos(Request $request)
     {
-        $data = $this->base();
+        $data = $this->base($request);
 
         $qtdDiasPerdidosMes = AtestadosService::qtdDiasPerdidosMes($data);
         foreach ($data as $dt) {
