@@ -11,16 +11,11 @@
         <hr class="m-t-5">
 
         <div id="cidTabela" class="col-sm-12 row p-0 d-none">
-            <b class="text-danger">OBS:</b>
-            <li>Clique ou passe o mouse nas barras dos gráficos para mais detalhes(nome e valor).</li>
-            <li>Os gáficos seguem a mesma ordem da tabela no final da página</li>
-            <br>
-
-            <div class="col-sm-12 m-t-40 p-0">
-                <div id="totalAtestadosCharts" style="height: 300px;"></div>
+            <div class="col-sm-6 m-t-20 m-b-40 p-0">
+                <div id="totalAtestadosPie" style="height: 500px;"></div>
             </div>
-            <div class="col-sm-12 m-t-20 m-b-40 p-0">
-                <div id="qtdDiasPerdidosMesCharts" style="height: 300px;"></div>
+            <div class="col-sm-6 m-t-20 m-b-40 p-0">
+                <div id="qtdDiasPerdidosMesPie" style="height: 500px;"></div>
             </div>
 
             <div class="col-sm-12 row p-0">
@@ -54,6 +49,6 @@
 
 <!-- Graficos Column -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript" src="../js/graficos/cidCharts.js"></script>
+    <script type="text/javascript" src="../js/graficos/cidPie.js"></script>
 <!-- /Graficos Column -->
 @endsection

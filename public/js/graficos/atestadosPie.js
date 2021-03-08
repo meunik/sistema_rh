@@ -68,7 +68,7 @@ var final = getUrlParameter('final');
     };
 
     if(inicial && final) {
-        var topCincoQtdAtestados = topCincoQtdAtestados(inicial, final).data;
+        var topQtdAtestados = topCincoQtdAtestados(inicial, final).data;
         google.charts.load('current', {packages:['corechart']});
         google.charts.setOnLoadCallback(topCincoQtdAtestadosPie);
     }
@@ -140,7 +140,7 @@ var final = getUrlParameter('final');
     }
 /** /Top 5 unidades com maior quantidade de dias perdidos **/
 
-/** Quantidade de atestados por unidade **/
+/** Quantidade de atestados por unidade (FORMATO PIZZA)
     function qtdAtestadosPorHosp(inicial, final) {
         var resultado;
         $.ajax({
@@ -180,9 +180,9 @@ var final = getUrlParameter('final');
         var chart = new google.visualization.PieChart(document.getElementById('qtdAtestadosPorHospPie'));
         chart.draw(data, options);
     }
-/** /Quantidade de atestados por unidade **/
+/Quantidade de atestados por unidade **/
 
-/** Quantidade de dias perdidos por unidade **/
+/** Quantidade de dias perdidos por unidade (FORMATO PIZZA)
     function qtdDiasPerdidosPorHosp(inicial, final) {
         var resultado;
         $.ajax({
@@ -222,4 +222,4 @@ var final = getUrlParameter('final');
         var chart = new google.visualization.PieChart(document.getElementById('qtdDiasPerdidosPorHospPie'));
         chart.draw(data, options);
     }
-/** /Quantidade de dias perdidos por unidade **/
+/Quantidade de dias perdidos por unidade **/

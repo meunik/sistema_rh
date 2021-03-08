@@ -159,14 +159,19 @@ class AtestadosController extends Controller
                 "hospital_nome" => $dt->hospital_nome
             ];
         }
-        rsort($resultados);
-        $return = [
-            "posicao1" => $resultados[0],
-            "posicao2" => $resultados[1],
-            "posicao3" => $resultados[2],
-            "posicao4" => $resultados[3],
-            "posicao5" => $resultados[4],
+
+        $return = [];
+        $returnNull = [
+            "totalDeAtestados" => 0,
+            "hospital_nome" => 'Nenhum dado encontrado'
         ];
+
+        if (isset($resultados)) rsort($resultados);
+
+        for ($i=0; $i < 5; $i++) {
+            $i2 = $i+1;
+            $return["posicao$i2"] = isset($resultados[$i]) ? $resultados[$i] : $returnNull;
+        }
 
 		return DataTables::of($return)->make(true);
     }
@@ -185,14 +190,19 @@ class AtestadosController extends Controller
                 "hospital_nome" => $dt->hospital_nome
             ];
         }
-        rsort($resultados);
-        $return = [
-            "posicao1" => $resultados[0],
-            "posicao2" => $resultados[1],
-            "posicao3" => $resultados[2],
-            "posicao4" => $resultados[3],
-            "posicao5" => $resultados[4],
+
+        $return = [];
+        $returnNull = [
+            "qtdDiasPerdidosMes" => 0,
+            "hospital_nome" => 'Nenhum dado encontrado'
         ];
+
+        if (isset($resultados)) rsort($resultados);
+
+        for ($i=0; $i < 5; $i++) {
+            $i2 = $i+1;
+            $return["posicao$i2"] = isset($resultados[$i]) ? $resultados[$i] : $returnNull;
+        }
 
 		return DataTables::of($return)->make(true);
     }
